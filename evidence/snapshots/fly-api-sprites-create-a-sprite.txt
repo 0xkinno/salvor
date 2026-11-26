@@ -1,0 +1,231 @@
+SOURCE: https://docs.fly.io/sprites/api/sprites/create-a-sprite.md
+RETRIEVED: 2026-11-26 (UTC)
+----
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.fly.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Create a sprite
+
+> Create a new sprite with a unique name in your organization
+
+
+
+## OpenAPI
+
+````yaml /sprites/api/openapi.json post /v1/sprites
+openapi: 3.1.0
+info:
+  title: Sprites API
+  version: 0.1.12
+  x-sprite-env-version: 0.0.5
+servers:
+  - url: https://api.sprites.dev
+security: []
+paths:
+  /v1/sprites:
+    post:
+      tags:
+        - Sprites
+      summary: Create a sprite
+      description: Create a new sprite with a unique name in your organization
+      operationId: sprites_create_post
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSpriteRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpriteResponse'
+          description: Created
+        '400':
+          description: Invalid request parameters
+        '401':
+          description: Missing or invalid authentication
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    CreateSpriteRequest:
+      description: Create sprite request
+      properties:
+        name:
+          description: Unique name for the sprite within the organization
+          example: my-sprite
+          type: string
+        url_settings:
+          $ref: '#/components/schemas/UrlSettingsRequest'
+          description: URL access configuration
+          example:
+            auth: public
+      required:
+        - name
+      type: object
+    SpriteResponse:
+      description: Sprite resource
+      properties:
+        created_at:
+          description: Creation timestamp (ISO 8601)
+          example: '2024-01-15T10:30:00Z'
+          format: date-time
+          type: string
+        environment_version:
+          description: Version of the sprite environment image.
+          example: v0.0.1-rc48
+          type:
+            - string
+            - 'null'
+        id:
+          description: Unique sprite identifier
+          example: sprite-01234567-89ab-cdef-0123-456789abcdef
+          type: string
+        labels:
+          description: Labels assigned to the sprite. Omitted when empty.
+          example:
+            - production
+          items:
+            type: string
+          type: array
+        last_running_at:
+          description: >-
+            When the sprite was last observed running (ISO 8601), null if not
+            tracked
+          example: '2024-01-15T14:20:00Z'
+          format: date-time
+          type:
+            - string
+            - 'null'
+        last_warming_at:
+          description: >-
+            When the sprite was last observed warming (ISO 8601), null if not
+            tracked
+          example: '2024-01-15T14:22:00Z'
+          format: date-time
+          type:
+            - string
+            - 'null'
+        name:
+          description: Sprite name within the organization
+          example: my-dev-sprite
+          type: string
+        organization:
+          description: Organization slug
+          example: my-org
+          type: string
+        services:
+          description: >
+            Compute-provider sprites only: registered services by name. In
+            single-sprite
+
+            responses, each service with an endpoint also says where it is
+            reached, decided
+
+            when the request is handled; lists omit these fields.
+
+            `public_url` (HTTP only) is the service's own public address.
+
+            `exposure` is `public` when that URL answers anonymously, because a
+            service
+
+            grant admits the `sprite_public_internet` source; `authenticated`
+            when it
+
+            needs sprite URL auth; `internal` for TCP, which has no public URL.
+
+            `internal_url` is how other sprites in the organization call it,
+            subject
+
+            to a service grant. `grants` lists the service grants that reach it.
+          example:
+            api:
+              endpoint:
+                port: 8080
+                protocol: http
+              exposure: authenticated
+              grants: []
+              internal_url: http://api--my-sprite--default.sprite.internal
+              public_url: https://api--my-sprite--default--my-org.sprites.app
+          type: object
+        status:
+          description: Runtime status
+          enum:
+            - cold
+            - warm
+            - running
+          example: cold
+          type: string
+        updated_at:
+          description: Last update timestamp (ISO 8601)
+          example: '2024-01-15T14:22:00Z'
+          format: date-time
+          type: string
+        url:
+          description: Sprite HTTP endpoint URL
+          example: https://name-random-alphanumeric.sprites.app
+          type: string
+        url_settings:
+          description: URL access configuration
+          example:
+            auth: sprite
+          oneOf:
+            - $ref: '#/components/schemas/UrlSettings'
+            - type: 'null'
+        version:
+          description: Version configured for or currently running on the sprite.
+          example: v0.0.1-rc48
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+        - organization
+        - url
+        - status
+        - created_at
+        - updated_at
+      type: object
+    UrlSettingsRequest:
+      description: URL settings request
+      properties:
+        auth:
+          description: 'Authentication type (default: sprite)'
+          enum:
+            - sprite
+            - public
+          example: sprite
+          type: string
+      required: []
+      type: object
+    UrlSettings:
+      description: URL access settings
+      properties:
+        auth:
+          description: Authentication type
+          enum:
+            - sprite
+            - public
+          example: sprite
+          type: string
+        private_access:
+          description: Who may access a sprite-authenticated URL.
+          enum:
+            - admins
+            - organization
+          example: admins
+          type: string
+      required:
+        - auth
+      type: object
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+
+````

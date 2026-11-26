@@ -1,0 +1,110 @@
+SOURCE: https://docs.fly.io/sprites/api/exec/execute-command.md
+RETRIEVED: 2026-11-26 (UTC)
+----
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.fly.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Execute Command
+
+> Execute a command via simple HTTP POST (non-TTY only). Simpler alternative for exec for environments that can't handle websockets.
+
+
+
+## OpenAPI
+
+````yaml /sprites/api/openapi.json post /v1/sprites/{name}/exec
+openapi: 3.1.0
+info:
+  title: Sprites API
+  version: 0.1.12
+  x-sprite-env-version: 0.0.5
+servers:
+  - url: https://api.sprites.dev
+security: []
+paths:
+  /v1/sprites/{name}/exec:
+    post:
+      tags:
+        - Exec
+      summary: Execute Command
+      description: >-
+        Execute a command via simple HTTP POST (non-TTY only). Simpler
+        alternative for exec for environments that can't handle websockets.
+      operationId: sprite_env_execute__command
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: Command to execute (can be repeated for command + args)
+          in: query
+          name: cmd
+          required: true
+          schema:
+            description: Command to execute (can be repeated for command + args)
+            type: string
+        - description: >-
+            Explicit path to executable (defaults to first `cmd` value or
+            `bash`)
+          in: query
+          name: path
+          required: false
+          schema:
+            description: >-
+              Explicit path to executable (defaults to first `cmd` value or
+              `bash`)
+            type: string
+        - description: 'Enable stdin from request body (default: `false`)'
+          in: query
+          name: stdin
+          required: false
+          schema:
+            description: 'Enable stdin from request body (default: `false`)'
+            type: boolean
+        - description: Environment variables in `KEY=VALUE` format (can be repeated)
+          in: query
+          name: env
+          required: false
+          schema:
+            description: Environment variables in `KEY=VALUE` format (can be repeated)
+            type: string
+        - description: Working directory for the command
+          in: query
+          name: dir
+          required: false
+          schema:
+            description: Working directory for the command
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              format: binary
+              maxLength: 10485760
+              type: string
+        description: >-
+          Raw bytes forwarded to stdin when `stdin=true`. Empty or omitted when
+          stdin is disabled.
+        required: false
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request - Invalid request body
+        '404':
+          description: Not Found - Resource not found
+        '413':
+          description: Payload Too Large - Stdin exceeds 10 MiB
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+
+````

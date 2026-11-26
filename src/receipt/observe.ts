@@ -1,0 +1,92 @@
+// Runs inside slv-r-<id>. One job, one URL. Reads typed fields from the Apify dataset, scores the
+// match with Pinecone, asks Jev, writes the evidence, checkpoints, reports typed fields only.
+// Untrusted page text is read here and never leaves this Sprite.
+import { readFileSync, existsSync, writeFileSync } from "node:fs";
+import { datasetItemsFor, normalizeListing, type ListingFields } from "../connectors/apify.ts";
+import { matchListing, type Match } from "../connectors/pinecone.ts";
+import { decide, type JevAnswer } from "../connectors/jev.ts";
+import { sabotage, mode } from "../sabotage.ts";
+import { DIR, writeEvidence, checkpoint } from "./evidence.ts";
+
+export type Job = {
+  id: string;
+  sprite: string;
+  line: { raw_text: string; paid_cents: number; qty: number };
+  listing_url: string;
+  retailer: "target" | "bestbuy";
+  clause: { id: string; text: string };
+};
+
+export type Report = {
+  job_id: string;
+  run_id: string;
+  decision: "observed" | "stale" | "error";
+  reason?: string;
+  observed_at: string;
+  listing?: ListingFields;
+  match?: Match | { error: string };
+  jev?: JevAnswer | { error: string };
+  evidence_path?: string;
+  evidence_day?: string;
+  sha256?: string;
+  checkpoint?: string | null;
+  checkpoint_ms?: number;
+  sabotage: string;
+  calls: { provider: string; route: string; status: number; ms: number }[];
+};
+
+export function readJob(): Job {
+  return JSON.parse(readFileSync(`${DIR}/job.json`, "utf8"));
+}
+
+const reportPath = () => `${DIR}/report.json`;
+
+export function lastReport(): Report | null {
+  return existsSync(reportPath()) ? (JSON.parse(readFileSync(reportPath(), "utf8")) as Report) : null;
+}
+
+export async function observe(runId: string, datasetId: string, observedAt: string, calls: Report["calls"]): Promise<Report> {
+  const job = readJob();
+  const prev = lastReport();
+  if (prev && prev.run_id === runId) return prev;     // a repeated wake for the same run returns the same report
+
+  const finish = (r: Omit<Report, "job_id" | "run_id" | "sabotage" | "calls" | "observed_at">): Report => {
+    const full: Report = { job_id: job.id, run_id: runId, observed_at: observedAt, sabotage: mode(), calls, ...r };
+    writeFileSync(reportPath(), JSON.stringify(full));
+    return full;
+  };
+
+  let items;
+  try { items = await datasetItemsFor(datasetId, job.listing_url); }
+  catch (e) { return finish({ decision: "error", reason: `could not read the dataset: ${(e as Error).message}` }); }
+  if (!items.length) return finish({ decision: "stale", reason: `no observation for this URL in run ${runId}` });
+
+  let listing: ListingFields;
+  try { listing = normalizeListing(items[0], observedAt, job.retailer === "target" ? "Target" : "Best Buy"); }
+  catch (e) { return finish({ decision: "error", reason: `unreadable listing: ${(e as Error).message}` }); }
+
+  // Typed fields only go further. The sabotage hooks act on the typed copy, never on raw text.
+  let typed = sabotage("variant", listing as unknown as Record<string, unknown>) as unknown as ListingFields;
+  typed = sabotage("poison", typed as unknown as Record<string, unknown>) as unknown as ListingFields;
+  const forModels = { title: typed.title, brand: typed.brand, variant: typed.variant, sku: typed.sku, seller: typed.seller, in_stock: typed.in_stock };
+
+  let match: Match | { error: string };
+  try { match = await matchListing(job.line, forModels); }
+  catch (e) { match = { error: `pinecone: ${(e as Error).message}` }; }
+
+  let jev: JevAnswer | { error: string };
+  try { jev = await decide({ raw_text: job.line.raw_text, retailer: job.retailer }, forModels, job.clause); }
+  catch (e) { jev = { error: `jev: ${(e as Error).message}` }; }
+
+  const day = observedAt.slice(0, 10);
+  const evidence = { job_id: job.id, run_id: runId, observed_at: observedAt, apify_dataset: datasetId, listing, listing_as_sent_to_models: forModels, match, jev };
+  const ev = writeEvidence(day, evidence);
+  let cp: { id: string | null; ms: number; raw: string };
+  try { cp = checkpoint(`obs ${job.id} ${day} ${ev.sha256.slice(0, 12)}`); }
+  catch (e) { cp = { id: null, ms: 0, raw: String((e as Error).message) }; }
+
+  return finish({
+    decision: "observed", listing, match, jev, evidence_path: ev.path, evidence_day: day, sha256: ev.sha256,
+    checkpoint: cp.id, checkpoint_ms: cp.ms,
+  });
+}

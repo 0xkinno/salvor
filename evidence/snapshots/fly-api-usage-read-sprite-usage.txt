@@ -1,0 +1,185 @@
+SOURCE: https://docs.fly.io/sprites/api/usage/read-sprite-usage.md
+RETRIEVED: 2026-11-26 (UTC)
+----
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.fly.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Read sprite usage
+
+> CPU and reserved-memory usage for a sprite. Includes deleted sprites with retained usage.
+
+
+
+## OpenAPI
+
+````yaml /sprites/api/openapi.json get /v1/usage/{sprite}
+openapi: 3.1.0
+info:
+  title: Sprites API
+  version: 0.1.12
+  x-sprite-env-version: 0.0.5
+servers:
+  - url: https://api.sprites.dev
+security: []
+paths:
+  /v1/usage/{sprite}:
+    get:
+      tags:
+        - Usage
+      summary: Read sprite usage
+      description: >-
+        CPU and reserved-memory usage for a sprite. Includes deleted sprites
+        with retained usage.
+      operationId: usage_show_get
+      parameters:
+        - in: path
+          name: sprite
+          required: true
+          schema:
+            type: string
+        - description: Inclusive start time in ISO8601 format.
+          in: query
+          name: start
+          required: true
+          schema:
+            description: Inclusive start time in ISO8601 format.
+            example: '2026-10-01T00:00:00Z'
+            format: date-time
+            type: string
+        - description: Exclusive end time in ISO8601 format. Defaults to now.
+          in: query
+          name: end
+          required: false
+          schema:
+            description: Exclusive end time in ISO8601 format. Defaults to now.
+            example: '2026-10-02T00:00:00Z'
+            format: date-time
+            type: string
+        - description: >-
+            Bucket duration, such as 1h, or auto. Minimum 1s. Omit for a single
+            total.
+          in: query
+          name: interval
+          required: false
+          schema:
+            description: >-
+              Bucket duration, such as 1h, or auto. Minimum 1s. Omit for a
+              single total.
+            example: 1h
+            type: string
+        - description: Sprite's cluster. Defaults to default.
+          in: query
+          name: cluster_id
+          required: false
+          schema:
+            description: Sprite's cluster. Defaults to default.
+            example: default
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageResponse'
+          description: Success
+        '400':
+          description: Invalid request parameters
+        '401':
+          description: Missing or invalid authentication
+        '403':
+          description: usage.read or full access without sprite restrictions is required
+        '404':
+          description: Sprite not found
+        '422':
+          description: Too many results. Choose a larger interval or shorter period.
+        '502':
+          description: Internal error
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    UsageResponse:
+      description: Recorded provider usage in time buckets
+      properties:
+        end:
+          description: Exclusive end in UTC.
+          format: date-time
+          type: string
+        interval:
+          description: Resolved bucket duration, or null when interval is omitted.
+          type:
+            - string
+            - 'null'
+        partial:
+          description: >-
+            True when missing minute records were detected. Returned totals
+            include available records only and may understate usage. False means
+            no gaps were detected, not proof of complete collection.
+          type: boolean
+        start:
+          description: Inclusive start in UTC.
+          format: date-time
+          type: string
+        usage:
+          description: >-
+            Available usage ordered by start time and sprite. Missing records
+            contribute zero to these sums. Check partial before treating them as
+            complete totals.
+          items:
+            $ref: '#/components/schemas/UsageBucket'
+          type: array
+      required:
+        - start
+        - end
+        - interval
+        - partial
+        - usage
+      type: object
+    UsageBucket:
+      description: Recorded provider usage in one time bucket
+      properties:
+        cpu_time_sec:
+          description: CPU usage in seconds.
+          example: 123.45
+          type: number
+        end:
+          description: Exclusive bucket end in UTC. The final bucket may be shorter.
+          format: date-time
+          type: string
+        last_recorded_at:
+          description: Latest observation in the bucket, or null if none exists.
+          format: date-time
+          type:
+            - string
+            - 'null'
+        reserved_memory_byte_sec:
+          description: >-
+            Reserved memory usage in byte-seconds: max_ram_gb while running, or
+            for a Sprite running with dynamic memory the memory its host
+            measures it holding.
+          example: 3865470566400
+          type: number
+        sprite_ref:
+          description: >-
+            Cluster/name, present for single-sprite queries and sprite
+            breakdowns.
+          example: default/demo
+          type: string
+        start:
+          description: Inclusive bucket start in UTC.
+          format: date-time
+          type: string
+      required:
+        - start
+        - end
+        - last_recorded_at
+        - cpu_time_sec
+        - reserved_memory_byte_sec
+      type: object
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+
+````

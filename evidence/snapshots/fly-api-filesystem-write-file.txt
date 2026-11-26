@@ -1,0 +1,115 @@
+SOURCE: https://docs.fly.io/sprites/api/filesystem/write-file.md
+RETRIEVED: 2026-11-26 (UTC)
+----
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.fly.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Write File
+
+> Write file contents to the sprite filesystem. Request body contains raw file bytes.
+
+
+
+## OpenAPI
+
+````yaml /sprites/api/openapi.json put /v1/sprites/{name}/fs/write
+openapi: 3.1.0
+info:
+  title: Sprites API
+  version: 0.1.12
+  x-sprite-env-version: 0.0.5
+servers:
+  - url: https://api.sprites.dev
+security: []
+paths:
+  /v1/sprites/{name}/fs/write:
+    put:
+      tags:
+        - Filesystem
+      summary: Write File
+      description: >-
+        Write file contents to the sprite filesystem. Request body contains raw
+        file bytes.
+      operationId: sprite_env_write__file
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: Path to the file to write
+          in: query
+          name: path
+          required: true
+          schema:
+            description: Path to the file to write
+            type: string
+        - description: Working directory for resolving relative paths
+          in: query
+          name: workingDir
+          required: true
+          schema:
+            description: Working directory for resolving relative paths
+            type: string
+        - description: File permissions in octal (e.g., '0644')
+          in: query
+          name: mode
+          required: false
+          schema:
+            description: File permissions in octal (e.g., '0644')
+            type: string
+        - description: Create parent directories if they don't exist
+          in: query
+          name: mkdir
+          required: false
+          schema:
+            description: Create parent directories if they don't exist
+            type: boolean
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              format: binary
+              maxLength: 16777216
+              type: string
+        description: Raw file bytes to write.
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WriteResponse'
+          description: Success
+        '400':
+          description: Bad Request - Invalid request body
+        '404':
+          description: Not Found - Resource not found
+        '413':
+          description: Payload Too Large - File contents exceed 16 MiB
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    WriteResponse:
+      properties:
+        mode:
+          type: string
+        path:
+          type: string
+        size:
+          type: integer
+      required:
+        - path
+        - size
+        - mode
+      type: object
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+
+````
