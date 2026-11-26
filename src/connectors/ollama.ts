@@ -6,7 +6,7 @@ import { call } from "../gateway.ts";
 const CONN = "ollama-hands";
 
 export const TEXT_MODEL = process.env.OLLAMA_TEXT_MODEL ?? "gpt-oss:120b";
-export const VISION_MODEL = process.env.OLLAMA_VISION_MODEL ?? "qwen3-vl:235b";
+export const VISION_MODEL = process.env.OLLAMA_VISION_MODEL ?? "gemma4:31b";
 
 export type ReceiptLine = { raw_text: string; paid_cents: number; qty: number };
 export type ReadReceipt = { retailer: string | null; purchased_date: string | null; order_total_cents: number | null; lines: ReceiptLine[]; model: string };
