@@ -135,7 +135,7 @@ async function fleetView() {
 
 let statusCache: { at: number; v: unknown } | null = null;
 const HANDS_PROBES: [string, string, string][] = [
-  ["box-hands", "GET", "/2.0/users/me"], ["mail-hands", "GET", "/v0/auth/me"], ["ollama-hands", "GET", "/api/tags"], ["sprites-api-hands", "GET", "/v1/sprites?prefix=slv-home"],
+  ["box-hands", "GET", "/2.0/users/me"], ["mail-hands", "GET", "/v0/auth/me"], ["ollama-hands", "GET", "/api/tags"], ["sprites-api-hands", "GET", "/v1/sprites"],
 ];
 async function statusView() {
   if (statusCache && Date.now() - statusCache.at < 20_000) return statusCache.v;
@@ -145,7 +145,7 @@ async function statusView() {
     const d = await discover(true);
     gw = { ok: true, mode: gatewayMode(), url: d.url === REAL_LIST ? "https://api.sprites.dev/v1/gateway/list" : "local emulator", connections: d.conns.map((c) => ({ name: c.name, provider: c.provider })) };
   } catch (e) { gw = { ok: false, mode: gatewayMode(), error: String((e as Error).message).slice(0, 160), connections: [] }; }
-  const handsConns = await Promise.all(HANDS_PROBES.map(([c, m, p]) => (gw.connections.some((x: any) => x.name === c) ? probe(c, m, p) : Promise.resolve({ conn: c, ok: false, status: 0, ms: 0, at, note: "not granted to slv-home" }))));
+  const handsConns = await Promise.all(HANDS_PROBES.map(([c, m, p]) => (gw.ok ? probe(c, m, p) : Promise.resolve({ conn: c, ok: false, status: 0, ms: 0, at, note: "gateway not reachable" }))));
   const eyes = ["apify-eyes", "jev-eyes", "pinecone-read"].map((c) => {
     const p = c === "apify-eyes" ? "apify" : c === "jev-eyes" ? "jev-eyes" : "pinecone-read";
     const r = db().prepare("SELECT status, route, at, ms FROM sponsor_calls WHERE provider=? ORDER BY at DESC LIMIT 1").get(p) as any;

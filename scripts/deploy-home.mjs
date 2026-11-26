@@ -54,6 +54,13 @@ for (const f of files) {
 }
 console.log(`uploaded ${n} files to ${ROOT}`);
 
+// ---- 2b. Q1 answer: the platform refuses a connector that points at the Sprites API, so home holds
+// one Sprites token in a 0600 file (rung b). It is shown on /proof as the single credential on any Sprite.
+if (process.env.HOME_SPRITES_TOKEN) {
+  const w = await sp("PUT", `/v1/sprites/${HOME}/fs/write?path=${encodeURIComponent(`${ROOT}/secrets/sprites-token`)}&mkdir=true&mode=0600`, new TextEncoder().encode(process.env.HOME_SPRITES_TOKEN), { headers: { "content-type": "application/octet-stream" } });
+  console.log(`home token file (rung b): HTTP ${w.status}`);
+}
+
 // ---- 3. secrets that guard Salvor's own routes (they open no partner account)
 mkdirSync(".salvor-local", { recursive: true });
 const sf = ".salvor-local/secrets.json";
@@ -62,7 +69,8 @@ for (const k of ["SALVOR_HOUSEHOLD_TOKEN", "SALVOR_HOOK_SECRET", "SALVOR_TICK_SE
 writeFileSync(sf, JSON.stringify(secrets, null, 2), { mode: 0o600 });
 
 // ---- 4. the service
-const env = { PORT: "8080", NODE_NO_WARNINGS: "1", SALVOR_PUBLIC_DEMO: "1", ...secrets, ...extraEnv };
+const pass = Object.fromEntries(["SALVOR_TEST_INBOX", "SALVOR_INBOX", "SALVOR_APIFY_TASK", "SALVOR_BOX_POLL", "OLLAMA_VISION_MODEL", "OLLAMA_TEXT_MODEL", "JEV_ROUTE"].filter((k) => process.env[k]).map((k) => [k, process.env[k]]));
+const env = { ...(process.env.HOME_SPRITES_TOKEN ? { SALVOR_SPRITES_RUNG: "b" } : {}), PORT: "8080", NODE_NO_WARNINGS: "1", SALVOR_PUBLIC_DEMO: "1", SPRITE_NAME: HOME, SALVOR_DB: `${ROOT}/data/salvor.db`, ...pass, ...secrets, ...extraEnv };
 if (Object.values(env).some((v) => String(v).includes(","))) { console.error("service env values may not contain commas"); process.exit(1); }
 const envArg = Object.entries(env).map(([k, v]) => `${k}=${v}`).join(",");
 await run(HOME, ["sprite-env", "services", "delete", "web"]).catch(() => {});

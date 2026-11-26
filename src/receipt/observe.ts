@@ -92,7 +92,7 @@ export async function decideFromItems(
   const evidence = { job_id: job.id, run_id: runId, observed_at: observedAt, apify_dataset: datasetId, listing, listing_as_sent_to_models: forModels, match, jev };
   const ev = writeEvidence(day, evidence);
   let cp: { id: string | null; ms: number; raw: string };
-  try { cp = checkpoint(`obs ${job.id} ${day} ${ev.sha256.slice(0, 12)}`); }
+  try { cp = checkpoint(`obs ${job.id} ${day} sha256:${ev.sha256}`); }
   catch (e) { cp = { id: null, ms: 0, raw: String((e as Error).message) }; }
 
   return finish({

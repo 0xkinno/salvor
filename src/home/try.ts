@@ -3,12 +3,17 @@
 // Nothing about the visitor is kept: the pool Sprite is restored to newborn after use. Capped.
 import { createHash } from "node:crypto";
 import * as sprites from "../connectors/sprites.ts";
-import { db, event } from "./db.ts";
+import { db, event, kvGet, kvSet } from "./db.ts";
 import { WORKER_PATH, workerBundle, EYES_EGRESS, EYES_LABEL } from "./fleet.ts";
 import { evaluate } from "../policy/engine.ts";
 import { gate } from "../policy/gate.ts";
 import { fmt } from "../policy/money.ts";
 import type { Report } from "../receipt/observe.ts";
+
+// The "newborn" checkpoint id is read from the platform when the pool is made (Fly takes an automatic v1 at
+// creation, so newborn is usually v2). It is kept in the ledger so a restart does not lose it.
+const newbornCache = new Map<string, string>();
+export function newbornId(name: string): string { return newbornCache.get(name) ?? kvGet(`newborn:${name}`) ?? "v1"; }
 
 export const POOL_NAMES = ["slv-r-try-1", "slv-r-try-2", "slv-r-try-3"];
 export const CAPS = { per_hour_total: 3, per_visitor_per_hour: 1 };
@@ -75,7 +80,7 @@ export async function runTry(input: TryInput, visitor: string, paidCents: number
   } finally {
     // The visitor's data does not stay: restore the pool Sprite to its newborn checkpoint.
     setTimeout(() => {
-      sprites.restore(name, "v0").catch((e) => event("try_restore_failed", { sprite: name, error: String(e.message).slice(0, 120) })).finally(() => busy.delete(name));
+      sprites.restore(name, newbornId(name)).catch((e) => event("try_restore_failed", { sprite: name, error: String(e.message).slice(0, 120) })).finally(() => busy.delete(name));
     }, process.env.SALVOR_TRY_RESTORE_MS ? Number(process.env.SALVOR_TRY_RESTORE_MS) : 60_000);
   }
 }
@@ -89,7 +94,8 @@ export async function ensurePool() {
     const l = await sprites.setLabels(n, [EYES_LABEL]);
     await sprites.writeFile(n, WORKER_PATH, workerBundle(), "0755");
     await sprites.setNetworkPolicy(n, EYES_EGRESS);
-    if (created) await sprites.checkpoint(n, "newborn");
+    const cp = await sprites.checkpoint(n, "newborn");
+    if (cp.id) { newbornCache.set(n, cp.id); kvSet(`newborn:${n}`, cp.id); }
     out.push({ name: n, created, labels: l.ok });
   }
   return out;

@@ -48,7 +48,7 @@ export async function info(name: string): Promise<SpriteInfo> {
 }
 
 export async function list(prefix = "slv-"): Promise<SpriteInfo[]> {
-  const j: any = await (await ok(await api("GET", `/v1/sprites?prefix=${encodeURIComponent(prefix)}`), "list")).json();
+  const j: any = await (await ok(await api("GET", "/v1/sprites"), "list")).json();
   const arr: SpriteInfo[] = Array.isArray(j) ? j : j.sprites ?? [];
   return arr.filter((s) => s.name.startsWith(prefix));
 }

@@ -20,8 +20,9 @@ const HANDS = policyMode === "prefix" ? { name_prefix: "slv-home" } : { sprite_l
 const WANT = [
   { name: "apify-eyes", provider: "apify", key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: ["/v2/acts/*", "/v2/datasets/*", "/v2/actor-runs/*", "/v2/actor-tasks/*"] } },
   { name: "jev-eyes", provider: "typesafe", key: "TYPESAFE_API_KEY", policy: { ...EYES, allowed_endpoints: [JEV_ROUTE] } },
-  { name: "pinecone-read", provider: "pinecone", key: "PINECONE_API_KEY", policy: { ...EYES, allowed_endpoints: ["/embed", "/rerank"] } },
-  { name: "pinecone-write", provider: "pinecone", key: "PINECONE_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/embed", "/rerank"] } },
+  // Fly allows one dedicated connector per provider, so eyes and hands each get a named custom connector.
+  { name: "pinecone-read", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...EYES, allowed_endpoints: ["/embed", "/rerank"] } },
+  { name: "pinecone-write", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/embed", "/rerank"] } },
   { name: "ollama-hands", provider: "ollama", key: "OLLAMA_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/api/chat", "/api/tags"] } },
   { name: "mail-hands", provider: "agentmail", key: "AGENTMAIL_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/v0/auth/me", "/v0/inboxes/*"] } },
 ];
@@ -36,15 +37,17 @@ for (const w of WANT) {
   const key = process.env[w.key];
   if (!key) { console.log(`skip ${w.name}: ${w.key} not set`); result[w.name] = { skipped: `${w.key} not set` }; continue; }
   // 1. the dedicated provider connector (BYOK). 2. If the platform refuses, a custom API connector.
-  let r = await sp("POST", "/v1/oauth/connections/api_key", { provider: w.provider, api_key: key, access_policy: w.policy });
+  let r = w.custom
+    ? await sp("POST", "/v1/oauth/connections/custom_api", { name: w.name, base_api_url: w.custom.base, access_token: key, auth_method: "custom_header", auth_custom_header_name: w.custom.header, test_url: w.custom.test, access_policy: w.policy })
+    : await sp("POST", "/v1/oauth/connections/api_key", { provider: w.provider, api_key: key, access_policy: w.policy });
   appendLog(log, { step: `create ${w.name}`, route: "api_key", status: r.status, body: r.json ?? r.text.slice(0, 300) });
   const id = r.json?.connection?.id ?? r.json?.id;
   if (r.ok && id) {
     // Try to give it a distinct display name so the app can find it by name.
-    const rn = await sp("PATCH", `/v1/oauth/connections/${id}`, { display_name: w.name });
+    const rn = w.custom ? { ok: true, status: 0, json: null, text: "" } : await sp("PATCH", `/v1/oauth/connections/${id}`, { display_name: w.name });
     appendLog(log, { step: `rename ${w.name}`, status: rn.status, body: rn.json ?? rn.text.slice(0, 200) });
     result[w.name] = { id, via: "dedicated connector", renamed: rn.ok, policy: w.policy, gateway_base_url: r.json?.connection?.gateway_base_url ?? null };
-    console.log(`ok   ${w.name} (${w.provider}) id=${id} renamed=${rn.ok}`);
+    console.log(`ok   ${w.name} (${w.provider ?? "custom"}) id=${id} renamed=${rn.ok}`);
   } else {
     result[w.name] = { failed: true, status: r.status, body: r.json ?? r.text.slice(0, 200) };
     console.log(`FAIL ${w.name}: HTTP ${r.status} ${r.text.slice(0, 160)}`);
