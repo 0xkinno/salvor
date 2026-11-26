@@ -19,12 +19,9 @@ README or UI line claims a platform result for these steps.
 |---|---|
 | One Sprite per receipt | A poisoned page and the user's email credential share one process; per-receipt cost cannot be metered; there is no unit to retire when the right expires |
 | Egress lock | An instruction hidden in a page could make the reader fetch anything |
-| Access policy (labels or name prefix) | A reader could send email or write to Box |
+| Access policy (labels or name prefix) | A reader could send email |
 | Checkpoint as evidence | The evidence exists only in our database, which we can edit; the tamper test (P5e) could not exist |
 | Usage API | Cost is our estimate |
-| Jev | No claim is ever prepared; the ablation (P3) compares with a plain LLM |
-| Pinecone | Receipt lines do not find their listing; recall is measured with and without |
+| Pinecone | Receipt lines do not find their listing; ranking accuracy is measured with Pinecone and with plain word overlap |
 | Apify | No reading and no clock |
-| Box | No evidence the store can open |
-| Ollama | No receipt intake |
-| AgentMail | Forwarded order emails cannot be ingested |
+| AgentMail | Orders cannot come in, and Salvor cannot ask or deliver |

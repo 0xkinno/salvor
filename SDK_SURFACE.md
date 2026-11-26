@@ -16,48 +16,16 @@ Connection: `apify-eyes`
 |---|---|---|
 | POST | `/v2/acts/:x/run-sync-get-dataset-items?timeout=:x&clean=true` | `src/connectors/apify.ts:15` |
 
-## TypeSafe Jev
-
-Connection: `jev-eyes`
-
-| Method | Path | Where |
-|---|---|---|
-| POST | `(route, see the route list in the file)` | `src/connectors/jev.ts:66` |
-
 ## Pinecone
 
 Connection: `pinecone-read / pinecone-write / pinecone-index-*`
 
 | Method | Path | Where |
 |---|---|---|
-| POST | `/embed` | `src/connectors/pinecone.ts:15` |
-| POST | `/rerank` | `src/connectors/pinecone.ts:25` |
-| POST | `/vectors/upsert` | `src/connectors/pinecone.ts:65` |
-| POST | `/query` | `src/connectors/pinecone.ts:74` |
-
-## Ollama Cloud
-
-Connection: `ollama-hands`
-
-| Method | Path | Where |
-|---|---|---|
-| POST | `/api/chat` | `src/connectors/ollama.ts:15` |
-| GET | `/api/tags` | `src/connectors/ollama.ts:25` |
-
-## Box
-
-Connection: `box-hands`
-
-| Method | Path | Where |
-|---|---|---|
-| GET | `/2.0/users/me` | `src/connectors/box.ts:9` |
-| POST | `/2.0/folders` | `src/connectors/box.ts:12` |
-| GET | `/2.0/folders/:x/items?fields=id,name,type,modified_at,description&limit=200` | `src/connectors/box.ts:26` |
-| POST | `/2.0/files/content` | `src/connectors/box.ts:34` |
-| POST | `/2.0/files/:x/content` | `src/connectors/box.ts:41` |
-| GET | `/2.0/files/:x/content` | `src/connectors/box.ts:51` |
-| PUT | `/2.0/:x/:x?fields=shared_link` | `src/connectors/box.ts:57` |
-| PUT | `/2.0/files/:x` | `src/connectors/box.ts:66` |
+| POST | `/embed` | `src/connectors/pinecone.ts:22` |
+| POST | `/rerank` | `src/connectors/pinecone.ts:32` |
+| POST | `/vectors/upsert` | `src/connectors/pinecone.ts:72` |
+| POST | `/query` | `src/connectors/pinecone.ts:81` |
 
 ## AgentMail
 
@@ -78,7 +46,7 @@ Connection: `sprites-api-hands`
 |---|---|---|
 | POST | `/v1/sprites` | `src/connectors/sprites.ts:42` |
 | GET | `/v1/sprites/:x` | `src/connectors/sprites.ts:47` |
-| GET | `/v1/sprites?prefix=:x` | `src/connectors/sprites.ts:51` |
+| GET | `/v1/sprites` | `src/connectors/sprites.ts:51` |
 | DELETE | `/v1/sprites/:x` | `src/connectors/sprites.ts:58` |
 | POST | `/v1/sprites/:x/policy/network` | `src/connectors/sprites.ts:77` |
 | GET | `/v1/sprites/:x/policy/network` | `src/connectors/sprites.ts:80` |
@@ -95,6 +63,6 @@ Connection: `sprites-api-hands`
 | Where | Line |
 |---|---|
 | `src/receipt/evidence.ts:27` | const raw = execFileSync("sprite-env", ["checkpoints", "create", "--comment", comment.slice(0, 200)], { encodi |
-| `src/receipt/worker.ts:40` | try { policy = JSON.parse(readFileSync("/.sprite/policy/network.json", "utf8")); } catch (e) { policy = { unre |
-| `src/receipt/worker.ts:43` | try { writeFileSync("/.sprite/policy/network.json", "{}"); results.policy_writable = true; } catch { results.p |
-| `src/receipt/worker.ts:52` | try { labels = execFileSync("sprite-env", ["info"], { encoding: "utf8", timeout: 8000 }).slice(0, 400); } catc |
+| `src/receipt/worker.ts:39` | try { policy = JSON.parse(readFileSync("/.sprite/policy/network.json", "utf8")); } catch (e) { policy = { unre |
+| `src/receipt/worker.ts:42` | try { writeFileSync("/.sprite/policy/network.json", "{}"); results.policy_writable = true; } catch { results.p |
+| `src/receipt/worker.ts:51` | try { labels = execFileSync("sprite-env", ["info"], { encoding: "utf8", timeout: 8000 }).slice(0, 400); } catc |

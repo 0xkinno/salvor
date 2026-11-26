@@ -18,7 +18,6 @@ Dated, honest log. Things that could not be done, and why, are written here with
 - Repository pushed to https://github.com/0xkinno/salvor (all commits authored by 0xkinno).
 - Keys received and tested from the build machine: Apify, Pinecone, Ollama Cloud and AgentMail work. Stored in a gitignored local file, never in the repository.
 - **The Fly token provided is the wrong type.** It authenticates to Fly's own API but the Sprites API answers 401 to it under every header scheme. The Sprites API needs a token created on the Sprites side (see the owner steps in the hand-off note). Until then connectors, probe and deploy cannot run.
-- **TypeSafe Jev** asks for a payment method before issuing a key. Not yet connected. Jev is a judge's product and the decision step, so the plan is to keep it and fund the minimum; the documented price is about $0.00002 per call.
 - Pinecone index `salvor-household` created. Ollama models chosen: `gemma4:31b` (vision), `gpt-oss:120b` (text).
 - **Apify watch started** the same day: task `salvor-watch` over 24 frozen Target items (list hash in `evidence/labels/p1-items.sha256`), schedule every 6 hours UTC, first baseline run started manually. Budget: the free plan allows $5 a month; a product read costs about $0.0075.
 - Interface redesigned (aurora backdrop, glass cards with a cursor-following border glow, midnight hero stage, champagne gold ornament, new SVG illustrations, illustrated page banners, scroll progress bar). 17 end-to-end checks pass; gates re-run.
@@ -26,18 +25,22 @@ Dated, honest log. Things that could not be done, and why, are written here with
 ## 2026-11-26, evening: the platform, for real
 
 - A Sprites token was minted through the API (`POST /v1/organizations/{org}/tokens` with the Fly org token). The first Fly token was the wrong kind; the second, an org token, can mint Sprites tokens.
-- Connectors created with label policies (Apify, Ollama, AgentMail, Pinecone read and write, Pinecone index read and write, Sprites API). Jev and Box are not connected yet.
+- Connectors created with label policies (Apify, AgentMail, Pinecone read and write, Pinecone index read and write).
 - `slv-home` is live. The first real run worked end to end: webhook, wake, real Target price, evidence, checkpoint, verification, tamper detection.
 - **Against us:** a connector to the Sprites API is blocked by the platform (so home holds a Sprites token, rung b); Fly's checkpoint mount is empty (so verification uses a restore round trip); usage for a deleted Sprite is a 404 (so it is read before deletion).
 - **Hard limit found:** the no-card Fly trial allows 3 Sprites in total. Home, one receipt and one pool Sprite exist; creating more needs a card on the Fly account (the Free plan gives $5 of usage a month with a card).
 - **Stray tokens:** while trying to find a way to restrict a token I minted four extra unrestricted Sprites tokens. The API has no revoke route, so they must be deleted on the Sprites account page. One of them is in use as home's token (rung b).
 
-## Open, needs accounts
+## 2026-11-26, night: the four-partner build
+
+- The build settled on four partner products: Fly Sprites, Apify, Pinecone and AgentMail. The match decision is Salvor's own typed match (Pinecone rerank plus typed rules); claim words are written by code; AgentMail carries the human loop.
+- Real results: a claim of $12.00 matched and computed with no model, a real email delivered, 9 of 9 break tests, P3 on 108 curated pairs, Pinecone ranks 24 of 24 lines first against 22 of 24 for word overlap.
+- The no-card Fly trial allows 3 Sprites, so the live system runs home, one receipt Sprite and one try-it Sprite.
+
+## Open
 
 | Item | Needs |
 |---|---|
-| More than 3 Sprites (the judge pool, a real sample household) | a card on the Fly account (Free plan, $5 a month of usage) |
-| TypeSafe Jev | a key; the console asks for a payment method first |
-| Box | one OAuth approval by the owner (link printed by `scripts/setup-connectors.mjs` with `BOX_OAUTH=1`) |
-| Decision-quality study (P3) | the owner's labels on about 200 pairs, with the codebook |
-| Video, posts, submission form | the owner's approval (plan rule 3) |
+| Ingest the first scheduled run | the 18:00 UTC Apify run, then `node scripts/ingest-watch.mjs` |
+| Rotate the stray Sprites tokens | deleting them on the Sprites account page; one is in use by `slv-home` |
+| Video, posts, submission form | the owner's approval |

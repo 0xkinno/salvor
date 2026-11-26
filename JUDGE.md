@@ -10,18 +10,18 @@ Three paths on the live site. No login. The same text is on `/judge`.
 
 ## 3 minutes
 
-1. Open the receipt with money owed. Read the then and now ladder, Jev's probabilities and the store's own clause with its source and checked date.
-2. Press **Verify this claim**. Salvor reads Fly's read-only checkpoint copy of the evidence and shows both hashes.
+1. Open the receipt with money owed. Read the then and now ladder, the match scores and the store's own clause with its source and checked date.
+2. Press **Verify this claim**. Salvor reads Fly's own checkpoint copy of the evidence and shows both hashes.
 3. `/fleet` Every Sprite with its label, one-name network rule, checkpoints and CPU time, read from Fly now.
 4. `/proof` What is measured and what is not, break tests with failures kept.
 
 ## 10 minutes
 
 1. `/how` The diagram, where intelligence is and is not, the delete test for each Sprite feature.
-2. `/proof` Curated and wild rates apart, Jev against a plain LLM on the same split, cost per receipt from Fly's meter.
+2. `/proof` Curated and wild rates apart, Pinecone against plain word overlap on the same lines, cost per receipt from Fly's meter.
 3. `/api/status` Raw measured status with timestamps. `/api/stats` recomputes the headline from the ledger.
 4. Trigger a failure: on a receipt with a question, answer "a different one", or give `/try` a link to a different variant. Salvor drops the claim and says why.
-5. Offline proof: `node scripts/verify-claim.mjs <claim id>` re-verifies a claim from a terminal.
+5. Offline proof: `node scripts/verify-claim.mjs <url> <claim id>` re-verifies a claim from a terminal.
 
 ## What is deliberately not here
 

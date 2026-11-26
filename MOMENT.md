@@ -38,12 +38,12 @@ read from Fly's usage API (P4) and shown on `/proof` once measured.
 
 Salvor hands Teresa a claim packet: the receipt line, the then-and-now price, the store's own clause with its
 source and checked date, the deadline, and evidence the platform holds a copy of (a checkpoint id and a hash). It
-is filed in her Box with a shared link. A claim email goes to the owner's test inbox during the hackathon, or a
+is served as a page the store could open and emailed to her. During the hackathon the email goes to the owner's test inbox, or a
 three-line script is shown to say at Guest Services or paste into chat.
 
 ## What the human does that software cannot
 
-She confirms the item when Jev is unsure ("is this the 6 quart, not the 8 quart?"), approves the claim, and makes
+She confirms the item when Salvor is unsure ("is this the 6 quart, not the 8 quart?"), approves the claim, and makes
 the ask, because the store only pays the customer. Only her confirmations become lasting facts.
 
 ## Everyone assumes X, in reality Y

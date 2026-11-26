@@ -9,8 +9,8 @@ Nothing here is submitted or posted until the owner approves (plan rule 3). Dead
 | Field | Value |
 |---|---|
 | Link to code | https://github.com/0xkinno/salvor (public; set when the repository exists) |
-| Link to demo | the `slv-home` Sprite URL, plus the video link. Both go in the description |
-| One or two sentences | Salvor gives every receipt its own sleeping Fly Sprite. It wakes when Apify sees the price fall, lets TypeSafe Jev decide whether the store owes you, and files a claim packet in your Box. |
+| Link to demo | https://slv-home-b6y6f.sprites.app, plus the video link. Both go in the description |
+| One or two sentences | Salvor gives every receipt its own sleeping Fly Sprite. It wakes when Apify sees the price fall, matches the listing with Pinecone, and emails you the claim through AgentMail. |
 
 Replace the last sentence with the generated numbers from `docs/FACTS.json` once they exist.
 
@@ -26,8 +26,8 @@ The first line is the hook, not the tech. The real numbers replace the example o
 
 1. 0:00 Hook, spoken, with the real item and real prices from the recorded run.
 2. 0:20 The household: each receipt with its own Sprite, most asleep.
-3. 0:35 One receipt: then and now, Jev's decision, the clause with its source.
-4. 0:50 Verify this claim: both hashes from Fly's read-only copy.
+3. 0:35 One receipt: then and now, the match, the clause with its source.
+4. 0:50 Verify this claim: both hashes from Fly's own copy.
 5. 1:05 A failure on purpose: a different variant is dropped and Salvor says why.
 6. 1:20 Fly dashboard beside `/fleet`: the same Sprites, labels and egress rule.
 7. 1:35 Proof page: the number, the misses, the cost per receipt.
