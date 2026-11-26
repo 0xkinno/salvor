@@ -23,12 +23,21 @@ Dated, honest log. Things that could not be done, and why, are written here with
 - **Apify watch started** the same day: task `salvor-watch` over 24 frozen Target items (list hash in `evidence/labels/p1-items.sha256`), schedule every 6 hours UTC, first baseline run started manually. Budget: the free plan allows $5 a month; a product read costs about $0.0075.
 - Interface redesigned (aurora backdrop, glass cards with a cursor-following border glow, midnight hero stage, champagne gold ornament, new SVG illustrations, illustrated page banners, scroll progress bar). 17 end-to-end checks pass; gates re-run.
 
+## 2026-11-26, evening: the platform, for real
+
+- A Sprites token was minted through the API (`POST /v1/organizations/{org}/tokens` with the Fly org token). The first Fly token was the wrong kind; the second, an org token, can mint Sprites tokens.
+- Connectors created with label policies (Apify, Ollama, AgentMail, Pinecone read and write, Pinecone index read and write, Sprites API). Jev and Box are not connected yet.
+- `slv-home` is live. The first real run worked end to end: webhook, wake, real Target price, evidence, checkpoint, verification, tamper detection.
+- **Against us:** a connector to the Sprites API is blocked by the platform (so home holds a Sprites token, rung b); Fly's checkpoint mount is empty (so verification uses a restore round trip); usage for a deleted Sprite is a 404 (so it is read before deletion).
+- **Hard limit found:** the no-card Fly trial allows 3 Sprites in total. Home, one receipt and one pool Sprite exist; creating more needs a card on the Fly account (the Free plan gives $5 of usage a month with a card).
+- **Stray tokens:** while trying to find a way to restrict a token I minted four extra unrestricted Sprites tokens. The API has no revoke route, so they must be deleted on the Sprites account page. One of them is in use as home's token (rung b).
+
 ## Open, needs accounts
 
 | Item | Needs |
 |---|---|
-| Connectors, probe, deploy of `slv-home`, the webhook, the judge pool | a Sprites API token created on the Sprites side |
+| More than 3 Sprites (the judge pool, a real sample household) | a card on the Fly account (Free plan, $5 a month of usage) |
 | TypeSafe Jev | a key; the console asks for a payment method first |
-| Box | one OAuth approval by the owner (printed by `scripts/setup-connectors.mjs` with `BOX_OAUTH=1`) |
+| Box | one OAuth approval by the owner (link printed by `scripts/setup-connectors.mjs` with `BOX_OAUTH=1`) |
 | Decision-quality study (P3) | the owner's labels on about 200 pairs, with the codebook |
 | Video, posts, submission form | the owner's approval (plan rule 3) |

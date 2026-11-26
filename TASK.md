@@ -15,15 +15,15 @@ when the task is about the platform.
 
 ## Phase 1. Probe the platform (G5)
 - [ ] Connectors created with the policy table; `scripts/setup-connectors.mjs` written and syntax checked (7e0dbb3); needs: `SPRITES_TOKEN` and the partner keys, Box needs one OAuth click
-- [ ] `slv-home` created, service on 8080, app deployed at the final URL, reachability check; `scripts/deploy-home.mjs` written (7e0dbb3); needs: `SPRITES_TOKEN`
-- [ ] `scripts/probe.mjs` answers Q1 to Q17; `PLATFORM_PROBE.md` written; rungs chosen; script written (7e0dbb3); needs: `SPRITES_TOKEN`
+- [x] `slv-home` created, service on 8080, app live at https://slv-home-b6y6f.sprites.app, health and status answer (a20f642)
+- [x] `scripts/probe.mjs` run on the real account; `PLATFORM_PROBE.md` written; Q1 to Q4, Q7, Q8, Q12, Q16 answered and rungs chosen in `FINDINGS.md` (a20f642). Q9 Jev route and Q10 Box still open
 - [x] Apify actor chosen by measured completeness: `apify/e-commerce-scraping-tool` read 10 of 10 Target pages (price and title; no seller or regular price). Recorded in `FINDINGS.md` Q9
 
 ## Phase 2. The mechanism (G3)
 - [x] `src/gateway.ts` with durable counters; `/api/status` measured, including an unreachable gateway shown as unreachable (5dbc3f0, tests in `test/server.test.ts`)
-- [ ] `fleet.birth` creates a labelled, egress-locked receipt Sprite with worker and job, checkpoint "newborn". Passes on the emulator (de71d72); needs: the platform
-- [ ] `observe` runs end to end in a receipt Sprite on a real Target URL; evidence, checkpoint, report. Passes on the emulator; needs: platform and Apify
-- [ ] `notary.verifyEvidence` reads the file from the read-only mount and matches the hash. Logic and tamper case pass on the emulator; needs: the platform mount (Q4)
+- [x] `fleet.birth` creates a labelled, egress-locked receipt Sprite with worker and job, checkpoint "newborn": real Sprite `slv-r-3b9f` born in 649 ms (a20f642)
+- [x] `observe` ran in a real receipt Sprite on a real Target item from a real Apify run: price $47.99, evidence file, checkpoint v3, report (a20f642). The Jev step is pending its key, so the decision was a labelled "ask"
+- [x] `notary.verifyEvidence` on the real platform: Fly's checkpoint mount is empty, so the verifier uses a restore round trip plus a checkpoint-comment witness. Match, and tamper detected (live file edited, platform copy still matches) (a20f642)
 - [x] Delete tests written in `DISCOVERY.md` (b97ae59)
 
 ## Phase 3. The decision and the money
@@ -40,7 +40,7 @@ when the task is about the platform.
 - [x] House-style filter on all model output; amount-in-text check (fda4d7c era, `src/house/style.ts`, `test/house.test.ts`, c3a4961)
 
 ## Phase 5. The clock and the unattended run
-- [ ] `scripts/setup-apify.mjs` creates the schedule and webhook; written (7e0dbb3); needs: `APIFY_TOKEN` and the live URL
+- [x] `scripts/setup-apify.mjs` created the task, the 6-hour schedule and the webhook to `slv-home` (a20f642)
 - [x] Webhook handler: verify secret, idempotent by run id, wake receipt Sprites (pool of 3) (5dbc3f0; secret, duplicate and bad payload tested in `test/server.test.ts`, idempotent wake in `test/pipeline.test.ts`)
 - [x] Backup knock: GitHub Actions cron calling `/tick` with a secret; both wake sources named in README (4a98a81). Needs the repository secrets once the repo exists
 - [ ] First unattended run recorded (nobody started it); evidence in `evidence/runs/`. The Apify schedule (every 6 hours) and a baseline run started 2026-11-26; ingestion into run files needs the ingest script after the watch has data
