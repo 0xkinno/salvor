@@ -69,7 +69,7 @@ for (const k of ["SALVOR_HOUSEHOLD_TOKEN", "SALVOR_HOOK_SECRET", "SALVOR_TICK_SE
 writeFileSync(sf, JSON.stringify(secrets, null, 2), { mode: 0o600 });
 
 // ---- 4. the service
-const pass = Object.fromEntries(["SALVOR_TEST_INBOX", "SALVOR_INBOX", "SALVOR_APIFY_TASK", "SALVOR_BOX_POLL", "OLLAMA_VISION_MODEL", "OLLAMA_TEXT_MODEL", "JEV_ROUTE"].filter((k) => process.env[k]).map((k) => [k, process.env[k]]));
+const pass = Object.fromEntries(["SALVOR_TEST_INBOX", "SALVOR_INBOX", "SALVOR_APIFY_TASK", "SALVOR_POOL", "SALVOR_URL"].filter((k) => process.env[k]).map((k) => [k, process.env[k]]));
 const env = { ...(process.env.HOME_SPRITES_TOKEN ? { SALVOR_SPRITES_RUNG: "b" } : {}), PORT: "8080", NODE_NO_WARNINGS: "1", SALVOR_PUBLIC_DEMO: "1", SPRITE_NAME: HOME, SALVOR_DB: `${ROOT}/data/salvor.db`, ...pass, ...secrets, ...extraEnv };
 if (Object.values(env).some((v) => String(v).includes(","))) { console.error("service env values may not contain commas"); process.exit(1); }
 const envArg = Object.entries(env).map(([k, v]) => `${k}=${v}`).join(",");

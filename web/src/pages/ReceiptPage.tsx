@@ -5,7 +5,7 @@ import { useGet, post, money, when, dateOnly } from "../api";
 import { Banner } from "../ui/Art";
 import { GlowCard, StatusChip, Loading, ErrorBox, Eyebrow } from "../ui/bits";
 
-type Obs = { id: string; observed_at: string; price_cents: number | null; regular_cents: number | null; decision: string; why: string | null; jev_same_item: string | null; jev_same_conf: number | null; jev_owed_p: number | null; checkpoint_id: string | null; evidence_sha256: string | null; owed_cents: number | null; apify_run_id: string | null };
+type Obs = { m_model: string | null; id: string; observed_at: string; price_cents: number | null; regular_cents: number | null; decision: string; why: string | null; m_same: string | null; m_conf: number | null; m_clause_p: number | null; checkpoint_id: string | null; evidence_sha256: string | null; owed_cents: number | null; apify_run_id: string | null };
 type Detail = any;
 
 const SAME = ["exact", "other_variant", "other_product", "cannot_tell"] as const;
@@ -56,19 +56,20 @@ export default function ReceiptPage() {
         </GlowCard>
 
         <GlowCard className="p-6">
-          <p className="eyebrow">What Jev decided</p>
-          {last?.jev_same_item ? (
+          <p className="eyebrow">How it was matched</p>
+          {last?.m_same ? (
             <div className="mt-4 space-y-3">
               {SAME.map((c) => {
-                const p = c === last.jev_same_item ? last.jev_same_conf ?? 0 : null;
+                const p = c === last.m_same ? last.m_conf ?? 0 : null;
                 return (
-                  <div key={c}><div className="flex justify-between text-[14px]"><span className={c === last.jev_same_item ? "font-semibold" : "text-muted"}>{c.replace("_", " ")}</span><span className="num">{p !== null ? `${Math.round(p * 100)}%` : ""}</span></div>
+                  <div key={c}><div className="flex justify-between text-[14px]"><span className={c === last.m_same ? "font-semibold" : "text-muted"}>{c.replace("_", " ")}</span><span className="num">{p !== null ? `${Math.round(p * 100)}%` : ""}</span></div>
                     <div className="mt-1 h-2 rounded bg-paper2"><motion.div className={`h-2 rounded ${c === "exact" ? "bg-owed" : "bg-violet"}`} initial={{ width: 0 }} animate={{ width: `${(p ?? 0) * 100}%` }} transition={{ duration: 0.8 }} /></div></div>
                 );
               })}
-              <p className="text-[14px]">Clause applies: <span className="num font-semibold">{last.jev_owed_p != null ? `${Math.round(last.jev_owed_p * 100)}%` : "n/a"}</span>. Jev never sees an amount.</p>
+              <p className="text-[14px]">Clause applies: <span className="num font-semibold">{last.m_clause_p != null ? `${Math.round(last.m_clause_p * 100)}%` : "n/a"}</span>. The decision step never sees an amount.</p>
+              <p className="mono text-[12px] text-muted">{last.m_model ?? "decider not recorded"}</p>
             </div>
-          ) : <p className="mt-4 text-muted">No decision yet. Jev answers when the Sprite takes a reading.</p>}
+          ) : <p className="mt-4 text-muted">No decision yet. It is made when the Sprite takes a reading.</p>}
           <p className="mt-4 text-[13px] text-muted">Window: {d.days_left} days left, until {when(d.window_ends_at)}.</p>
         </GlowCard>
       </section>
@@ -128,7 +129,6 @@ export default function ReceiptPage() {
             </div>
             <p className="mt-4 rounded-xl bg-paper2 p-4 text-[15px]">{claim.packet.words}</p>
             <p className="mt-2 text-[12px] text-muted">Words by: {claim.packet.words_source}. The amounts were inserted by code and checked against the ledger.</p>
-            {claim.shared_link && <p className="mt-3 text-[14px]">Evidence folder in Box: <a href={claim.shared_link} target="_blank" rel="noreferrer">{claim.shared_link}</a></p>}
             <p className="mono mt-3 break-all text-[12px] text-muted">digest {claim.digest}</p>
             {claim.approved_at ? (
               <p className="mt-5 font-semibold text-owed-ink">Approved {when(claim.approved_at)} via {claim.channel ?? "script"}.</p>

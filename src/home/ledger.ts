@@ -3,7 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { db, event } from "./db.ts";
 import { applicableClauses, evaluate, clauseById, type Line, type TypedListing, type Verdict } from "../policy/engine.ts";
-import { gate, DEFAULT_THRESHOLDS, type Decision, type Thresholds, type JevRead } from "../policy/gate.ts";
+import { gate, DEFAULT_THRESHOLDS, type Decision, type Thresholds, type MatchRead } from "../policy/gate.ts";
 import { digestOf, issueApproval, newClaimId, writeWords, type Packet } from "./claims.ts";
 import type { Report } from "../receipt/observe.ts";
 
@@ -50,7 +50,7 @@ export function watching(): any[] {
 export type Ingested = { decision: Decision; why: string; observation_id: string; claim_id: string | null; ask_id: string | null; verdict: Verdict | null };
 
 export async function ingestReport(
-  lineId: string, report: Report, opts: { now?: Date; thresholds?: Thresholds; draft?: ((f: any) => Promise<string>) | null } = {},
+  lineId: string, report: Report, opts: { now?: Date; thresholds?: Thresholds } = {},
 ): Promise<Ingested> {
   const now = opts.now ?? new Date();
   const line = lineRow(lineId);
@@ -70,20 +70,22 @@ export async function ingestReport(
   const l = report.listing;
   const typed: TypedListing = { price_cents: l.price_cents, regular_cents: l.regular_cents, seller: l.seller, in_stock: l.in_stock, flags: l.flags, observed_at: report.observed_at };
   const verdict = evaluate({ paid_cents: line.paid_cents, qty: line.qty, purchased_date: line.purchased_at, retailer: line.retailer }, typed, now);
-  const jev: JevRead | null = report.jev && !("error" in report.jev) ? { same: report.jev.same, sameConf: report.jev.sameConf, owedP: report.jev.owedP } : null;
-  const g = gate(verdict, jev, Boolean(line.confirmed_by_human), opts.thresholds ?? DEFAULT_THRESHOLDS);
+  const read: MatchRead | null = report.read && !("error" in report.read) ? { same: report.read.same, sameConf: report.read.sameConf, owedP: report.read.owedP } : null;
+  const g = gate(verdict, read, Boolean(line.confirmed_by_human), opts.thresholds ?? DEFAULT_THRESHOLDS);
 
   db().prepare(
     `INSERT INTO observations (id,line_id,observed_at,price_cents,regular_cents,seller,in_stock,apify_run_id,checkpoint_id,evidence_sha256,evidence_day,
-      jev_same_item,jev_same_conf,jev_owed_p,decision,why,owed_cents,clause_id,deadline) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      m_same,m_conf,m_clause_p,decision,why,owed_cents,clause_id,deadline,m_model) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
   ).run(...common, l.price_cents, l.regular_cents, l.seller, l.in_stock === null ? null : l.in_stock ? 1 : 0, report.run_id, report.checkpoint ?? null,
-    report.sha256 ?? null, report.evidence_day ?? null, jev?.same ?? null, jev?.sameConf ?? null, jev?.owedP ?? null, g.decision, g.why,
-    verdict.owed_cents, verdict.clause_id, verdict.deadline);
+    report.sha256 ?? null, report.evidence_day ?? null, read?.same ?? null, read?.sameConf ?? null, read?.owedP ?? null, g.decision, g.why,
+    verdict.owed_cents, verdict.clause_id, verdict.deadline, report.read && !("error" in report.read) ? report.read.model : null);
   event("observation", { obs: obsId, line: lineId, decision: g.decision, owed_cents: verdict.owed_cents });
 
   let claimId: string | null = null, askId: string | null = null;
   if (g.decision === "owed" && verdict.owed_cents > 0 && verdict.clause_id && verdict.deadline) {
-    claimId = await createClaim(lineId, obsId, verdict, report, line, opts.draft ?? null);
+    claimId = await createClaim(lineId, obsId, verdict, report, line);
+    // A ready claim supersedes an open question. This records no human fact: only a person's answer does.
+    db().prepare("UPDATE asks SET answered_at=?, answer='superseded' WHERE line_id=? AND answered_at IS NULL").run(now.toISOString(), lineId);
     db().prepare("UPDATE receipts SET status='owed' WHERE id=?").run(line.rid);
   } else if (g.decision === "ask") {
     askId = maybeAsk(lineId, line, verdict, now);
@@ -109,7 +111,7 @@ function maybeAsk(lineId: string, line: any, verdict: Verdict, now: Date): strin
   return id;
 }
 
-async function createClaim(lineId: string, obsId: string, verdict: Verdict, report: Report, line: any, draft: ((f: any) => Promise<string>) | null): Promise<string> {
+async function createClaim(lineId: string, obsId: string, verdict: Verdict, report: Report, line: any): Promise<string> {
   const existing = db().prepare("SELECT id FROM claims WHERE line_id=? AND approved_at IS NULL ORDER BY created_at DESC LIMIT 1").get(lineId) as { id: string } | undefined;
   const clause = clauseById(verdict.clause_id!);
   const claimId = existing?.id ?? newClaimId();
@@ -121,7 +123,7 @@ async function createClaim(lineId: string, obsId: string, verdict: Verdict, repo
     deadline: verdict.deadline!,
     evidence: { sprite: line.sprite, checkpoint: report.checkpoint ?? null, sha256: report.sha256 ?? "", day: report.evidence_day ?? "", apify_run_id: report.run_id, observed_at: report.observed_at },
   };
-  const w = await writeWords(base, draft);
+  const w = writeWords(base);
   const packet: Packet = { ...base, words: w.words, words_source: w.source };
   const digest = digestOf(packet);
   const now = new Date().toISOString();

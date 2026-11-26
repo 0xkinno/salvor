@@ -13,28 +13,25 @@ function Diagram() {
   );
   const arrow = (d: string) => <path d={d} fill="none" stroke="#6A4BE0" strokeWidth="1.6" markerEnd="url(#ah)" />;
   return (
-    <svg viewBox="0 0 980 470" role="img" aria-label="Apify's schedule knocks slv-home. Home wakes each receipt Sprite. Each receipt Sprite reaches Apify, Jev and Pinecone through the gateway only. Home reaches Box, Ollama and AgentMail through the gateway and shows Teresa the claim." className="h-auto w-full">
+    <svg viewBox="0 0 980 470" role="img" aria-label="Apify's schedule knocks slv-home. Home wakes each receipt Sprite. Each receipt Sprite reaches Apify and Pinecone through the gateway only. Home reaches AgentMail through the gateway and shows Teresa the claim." className="h-auto w-full">
       <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#6A4BE0" /></marker></defs>
       {box(20, 30, 190, 62, "Apify schedule", "every 6 hours", true)}
-      {box(20, 200, 190, 62, "Teresa", "phone, email, Box")}
+      {box(20, 200, 190, 62, "Teresa", "phone and email")}
       {box(300, 110, 230, 120, "slv-home", "label salvor-hands", true)}
       <text x="415" y="214" textAnchor="middle" fontSize="11" fill="#5C566F" fontFamily="JetBrains Mono">app, API, ledger, policy</text>
       {box(300, 300, 230, 60, "slv-r-7q2a", "label salvor-eyes")}
       {box(300, 372, 230, 60, "slv-r-k9da", "asleep")}
       {box(640, 20, 150, 52, "Apify datasets")}
-      {box(640, 86, 150, 52, "TypeSafe Jev")}
-      {box(640, 152, 150, 52, "Pinecone")}
-      {box(640, 250, 150, 52, "Ollama Cloud")}
-      {box(640, 316, 150, 52, "Box")}
-      {box(640, 382, 150, 52, "AgentMail")}
+      {box(640, 86, 150, 52, "Pinecone")}
+      {box(640, 250, 150, 52, "AgentMail")}
       <rect x="560" y="14" width="46" height="430" rx="23" fill="#17132B" />
       <text x="583" y="236" textAnchor="middle" fontSize="12" fill="#F6F4F0" fontFamily="JetBrains Mono" transform="rotate(-90 583 236)">Sprites gateway, deny by default</text>
       {arrow("M210 61H255V150H300")}
       {arrow("M415 230V300")}
       {arrow("M530 330H560")}
-      {arrow("M606 46H640")}{arrow("M606 112H640")}{arrow("M606 178H640")}
+      {arrow("M606 46H640")}{arrow("M606 112H640")}
       {arrow("M530 150H560")}
-      {arrow("M606 276H640")}{arrow("M606 342H640")}{arrow("M606 408H640")}
+      {arrow("M606 276H640")}
       {arrow("M300 170 210 230")}
       <text x="805" y="46" fontSize="11" fill="#5C566F" fontFamily="JetBrains Mono">eyes read</text>
       <text x="805" y="276" fontSize="11" fill="#5C566F" fontFamily="JetBrains Mono">hands write</text>
@@ -44,7 +41,7 @@ function Diagram() {
 
 const DELETE = [
   ["Sleeping computers", "Without cheap sleeping computers, one Sprite per receipt is unaffordable and collapses into one shared process where a poisoned page sits beside your email credential."],
-  ["Access policy and labels", "Without it, a receipt Sprite could send email or write to Box."],
+  ["Access policy and labels", "Without it, a receipt Sprite could send email."],
   ["Network policy", "Without it, an instruction hidden in a page could make a receipt Sprite fetch anything."],
   ["Checkpoints", "Without them, the evidence lives only in our own database, which we could edit."],
   ["Usage API", "Without it, cost is our estimate, not the platform's."],
@@ -62,8 +59,8 @@ export default function How() {
       <GlowCard className="mt-8 p-4 sm:p-6"><Diagram /></GlowCard>
 
       <section className="mt-10 grid gap-5 md:grid-cols-3">
-        {[["The loop", "An Apify schedule runs every six hours and knocks slv-home. Home wakes each receipt Sprite, three at a time. Each reads its own page data, asks Jev, writes evidence, takes a checkpoint, reports, and sleeps."],
-          ["Where the intelligence is, and is not", "Models read and decide with calibrated confidence. Code computes every amount and date. Teresa confirms and asks. Ollama never produces a number you act on. Jev never sees an amount. Untrusted page text is read only inside receipt Sprites."],
+        {[["The loop", "An Apify schedule runs every six hours and knocks slv-home. Home wakes each receipt Sprite, three at a time. Each reads its own page data, matches the listing, writes evidence, takes a checkpoint, reports, and sleeps."],
+          ["Where the intelligence is, and is not", "Pinecone ranks and typed rules decide, with a rule score and a threshold. Code computes every amount and date. Teresa confirms and asks. The match step never sees an amount, and no model writes a number you act on. Untrusted page text is read only inside receipt Sprites."],
           ["The two wake sources", "The Apify schedule webhook, and a backup tick from a GitHub Actions cron. Both are idempotent by run id, so a duplicate knock changes nothing."]].map(([a, b]) => (
           <GlowCard key={a} className="p-6"><h2 className="h-display text-[26px]">{a}</h2><p className="mt-3 text-muted">{b}</p></GlowCard>))}
       </section>

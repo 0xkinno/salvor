@@ -136,3 +136,6 @@ export async function probe(conn: string, method: string, path: string): Promise
     return { conn, ok: false, status: 0, ms: Date.now() - t0, at, note: String((e as Error).message).slice(0, 160) };
   }
 }
+
+// True when setup recorded a connection id for this name (config/connections.json). Used only to label substitutes.
+export function hasConfigured(name: string): boolean { return idFor(name) !== null; }

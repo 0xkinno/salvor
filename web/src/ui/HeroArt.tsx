@@ -6,7 +6,7 @@ type Props = { item: string; paid: number; now: number; owed: number; date: stri
 
 // The hero stage: a midnight glass panel. A glowing cube (the receipt's Sprite) holds a thermal
 // receipt on a thread. The receipt swings once and then idles. Around it, glass chips drift with the
-// pointer on desktop: a Box folder, a checkpoint, Jev's decision dial and a sleeping fleet.
+// pointer on desktop: a claim email, a checkpoint, the match decision and a sleeping fleet.
 export function HeroArt({ item, paid, now, owed, date, checkpoint = "v7", sha = "3fa1c9d2", label }: Props) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -82,14 +82,14 @@ export function HeroArt({ item, paid, now, owed, date, checkpoint = "v7", sha = 
 
         {/* glass chips */}
         <motion.div style={{ x: ax, y: ay }} className="glass-dark absolute bottom-[4.5%] left-[5%] hidden w-[40%] rounded-2xl p-3.5 sm:block" aria-hidden="true">
-          <p className="eyebrow !text-[10px] !text-lilac-200">Jev decided</p>
+          <p className="eyebrow !text-[10px] !text-lilac-200">Salvor matched</p>
           <p className="mt-1 text-[13px] font-semibold">same item</p>
           <div className="mt-2 h-1.5 rounded bg-white/15"><div className="h-1.5 w-[97%] rounded bg-gradient-to-r from-violet to-lilac-300" /></div>
           <p className="num mt-1 text-[11px] text-lilac-200">97% sure</p>
         </motion.div>
         <motion.div style={{ x: bx, y: by }} className="glass-dark absolute bottom-[14.5%] right-[5%] hidden rounded-2xl px-3 py-2 sm:block" aria-hidden="true">
-          <p className="eyebrow !text-[10px] !text-lilac-200">Box folder</p>
-          <p className="mono mt-0.5 text-[12px]">Claims / {date}</p>
+          <p className="eyebrow !text-[10px] !text-lilac-200">Claim emailed</p>
+          <p className="mono mt-0.5 text-[12px]">To your inbox, {date}</p>
         </motion.div>
         <motion.div style={{ x: ax, y: by }} className="glass-dark absolute bottom-[4.5%] right-[5%] hidden rounded-full px-3 py-2 sm:block" aria-hidden="true">
           <span className="mono text-[11px] text-lilac-200">{checkpoint} · sha256 {sha}…</span>

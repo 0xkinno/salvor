@@ -6,8 +6,8 @@ import * as sprites from "../connectors/sprites.ts";
 import { db, event } from "./db.ts";
 import { bookCost } from "./cost.ts";
 import { ingestReport, watching, setSprite, lineRow } from "./ledger.ts";
-import { claimWords } from "../connectors/ollama.ts";
 import { applicableClauses } from "../policy/engine.ts";
+import { notifyAsk, notifyClaimReady } from "./deliver.ts";
 import type { Job, Report } from "../receipt/observe.ts";
 
 export const WORKER_PATH = "/home/sprite/salvor/receipt-worker.mjs";
@@ -90,12 +90,14 @@ export async function mapPool<T, R>(items: T[], size: number, fn: (x: T) => Prom
 }
 
 // One Apify run knocks every watching receipt Sprite, three at a time.
-export async function wakeAll(runId: string, datasetId: string, observedAt: string, opts: { now?: Date; draft?: ((f: any) => Promise<string>) | null } = {}) {
+export async function wakeAll(runId: string, datasetId: string, observedAt: string, opts: { now?: Date } = {}) {
   const targets = watching();
   const results = await mapPool(targets, POOL, async (t) => {
     const w = await wake(t.sprite, runId, datasetId, observedAt);
     if (w.ok && w.report) {
-      const ing = await ingestReport(t.line_id, w.report, { now: opts.now, draft: opts.draft === undefined ? claimWords : opts.draft });
+      const ing = await ingestReport(t.line_id, w.report, { now: opts.now });
+      if (ing.claim_id) void notifyClaimReady(ing.claim_id);
+      if (ing.ask_id) void notifyAsk(ing.ask_id);
       return { sprite: t.sprite, ok: true, decision: ing.decision, claim: ing.claim_id };
     }
     return { sprite: t.sprite, ok: false, error: w.error };
@@ -135,7 +137,9 @@ export async function wakeLatestAll(taskId: string, opts: { now?: Date } = {}) {
       if (seen) return { sprite: t.sprite, ok: true, duplicate: true };
       db().prepare("INSERT INTO wakes (run_id,sprite,source,started_at,finished_at,ok,cold_ms) VALUES (?,?,?,?,?,1,?)").run(report.run_id, t.sprite, "backup-tick", new Date(t0).toISOString(), new Date().toISOString(), Date.now() - t0);
       for (const c of report.calls ?? []) db().prepare("INSERT INTO sponsor_calls VALUES (?,?,?,?,?,?)").run(c.provider, c.route, c.status, c.ms, t.sprite, new Date().toISOString());
-      const ing = await ingestReport(t.line_id, report, { now: opts.now, draft: claimWords });
+      const ing = await ingestReport(t.line_id, report, { now: opts.now });
+      if (ing.claim_id) void notifyClaimReady(ing.claim_id);
+      if (ing.ask_id) void notifyAsk(ing.ask_id);
       return { sprite: t.sprite, ok: true, decision: ing.decision, claim: ing.claim_id };
     } catch (e) {
       event("tick_failed", { sprite: t.sprite, error: String((e as Error).message).slice(0, 200) });

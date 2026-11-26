@@ -14,7 +14,7 @@ export type Emu = {
   datasets: Record<string, any[]>;
   sprites: Map<string, { dir: string; labels: string[]; policy: any[]; created: string; checkpoints: number }>;
   calls: { route: string; method: string }[];
-  failJev: boolean; sabotageVariant: boolean;
+  rerankOverride: number | null; sabotageVariant: boolean;
 };
 
 const FAKE_SPRITE_ENV = `#!/usr/bin/env bash
@@ -38,7 +38,7 @@ export async function startEmulator(): Promise<Emu> {
   mkdirSync(join(root, "bin"), { recursive: true });
   writeFileSync(join(root, "bin", "sprite-env"), FAKE_SPRITE_ENV);
   chmodSync(join(root, "bin", "sprite-env"), 0o755);
-  const emu: Emu = { url: "", listUrl: "", root, close: async () => {}, datasets: {}, sprites: new Map(), calls: [], failJev: false, sabotageVariant: false };
+  const emu: Emu = { url: "", listUrl: "", root, close: async () => {}, datasets: {}, sprites: new Map(), calls: [], rerankOverride: null, sabotageVariant: false };
 
   const server = http.createServer(async (req, res) => {
     const u = new URL(req.url!, "http://x");
@@ -53,8 +53,8 @@ export async function startEmulator(): Promise<Emu> {
       // The custom connector for the Sprites API forwards paths onto the API root, so its base is the root.
       const c = (name: string, provider: string) => ({ provider, display_name: name, gateway_base_url: name === "sprites-api-hands" ? base : `${base}/gw/${name}` });
       return json(200, { connections: [
-        c("apify-eyes", "apify"), c("jev-eyes", "typesafe"), c("pinecone-read", "pinecone"), c("pinecone-write", "pinecone"),
-        c("ollama-hands", "ollama"), c("box-hands", "box"), c("mail-hands", "agentmail"), c("sprites-api-hands", "custom_api"),
+        c("apify-eyes", "apify"), c("pinecone-read", "pinecone"), c("pinecone-write", "pinecone"),
+        c("mail-hands", "agentmail"), c("sprites-api-hands", "custom_api"),
       ], available: [] });
     }
     // ---- partner APIs behind the gateway
@@ -63,24 +63,12 @@ export async function startEmulator(): Promise<Emu> {
       const [, name, path] = gw;
       const data = body.length ? JSON.parse(body.toString()) : null;
       if (name === "apify-eyes" && /\/v2\/datasets\/([^/]+)\/items/.test(path)) return json(200, emu.datasets[/datasets\/([^/]+)\//.exec(path)![1]] ?? []);
-      if (name === "jev-eyes" && path === "/v1/decisions") {
-        if (emu.failJev) return json(503, { error: "emulated outage" });
-        const l = data.state.listing, line = data.state.receipt_line;
-        const title = `${l.title ?? ""} ${l.variant ?? ""}`.toLowerCase();
-        const want = String(line.raw_text).toLowerCase();
-        const qtWant = /(\d+)\s?qt|(\d+)\s?quart/.exec(want), qtGot = /(\d+)\s?qt|(\d+)\s?quart/.exec(title);
-        const same = qtWant && qtGot && (qtWant[1] ?? qtWant[2]) !== (qtGot[1] ?? qtGot[2]) ? "other_variant" : tokens(want).some((t) => tokens(title).includes(t)) ? "exact" : "other_product";
-        return json(200, { model: "jev-emulated", answers: {
-          same_item: { type: "choice", choice: same, confidence: 0.96, probabilities: { [same]: 0.96 } }, owed: { type: "noul", noul: 0.91 } }, usage: { input_tokens: 100, output_tokens: 10 } });
-      }
       if (name.startsWith("pinecone") && path === "/embed") return json(200, { data: data.inputs.map((i: any) => ({ values: vec(i.text) })) });
       if (name.startsWith("pinecone") && path === "/rerank") {
-        return json(200, { data: data.documents.map((d: any, index: number) => ({ index, score: tokens(d.text).filter((t) => tokens(data.query).includes(t)).length / Math.max(1, tokens(data.query).length) })) });
-      }
-      if (name === "ollama-hands" && path === "/api/chat") {
-        const prompt: string = data.messages[0].content;
-        const facts = JSON.parse(prompt.slice(prompt.indexOf("{"), prompt.lastIndexOf("}") + 1));
-        return json(200, { message: { content: `Hello. I bought ${facts.item} on ${facts.purchased} for ${facts.paid}. It is now ${facts.now}. Under ${facts.clause} please match the price, a difference of ${facts.owed}. Thank you.` } });
+        return json(200, { data: data.documents.map((d: any, index: number) => {
+          const q = tokens(data.query), ov = tokens(d.text).filter((t) => q.includes(t)).length / Math.max(1, q.length);
+          return { index, score: emu.rerankOverride ?? (ov >= 0.7 ? 0.99 : ov) };
+        }) });
       }
       return json(404, { error: `emulator has no route ${name} ${path}` });
     }

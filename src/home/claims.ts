@@ -41,23 +41,14 @@ export function templateWords(p: Pick<Packet, "item" | "purchased_date" | "paid_
   );
 }
 
-export async function writeWords(p: Omit<Packet, "words" | "words_source">, draft: ((facts: any) => Promise<string>) | null): Promise<{ words: string; source: string }> {
+// The claim words are written by code from the ledger. No model drafts them, so no amount can appear that the
+// ledger does not hold; the house screen still runs over the result as a check.
+export function writeWords(p: Omit<Packet, "words" | "words_source">): { words: string; source: string } {
   const clause = clauseById(p.clause.id);
-  const allowed = [p.paid_cents, p.now_cents, p.owed_cents];
-  if (draft) {
-    try {
-      const text = await draft({
-        item: p.item, retailer: p.retailer, paid: fmt(p.paid_cents), now: fmt(p.now_cents), owed: fmt(p.owed_cents), clause: clause.title, purchased: p.purchased_date,
-      });
-      const s = screenModelText(text, allowed);
-      if (s.ok) return { words: s.text, source: "ollama (screened: only ledger amounts, house style)" };
-      event("claim_words_rejected", { claim: p.claim_id, reasons: s.reasons });
-      return { words: templateWords({ ...p, clauseTitle: clause.title }), source: `template (the model draft was rejected: ${s.reasons[0]})` };
-    } catch (e) {
-      return { words: templateWords({ ...p, clauseTitle: clause.title }), source: `template (substitute: model unavailable, ${String((e as Error).message).slice(0, 80)})` };
-    }
-  }
-  return { words: templateWords({ ...p, clauseTitle: clause.title }), source: "template (substitute: no model call was made)" };
+  const words = templateWords({ ...p, clauseTitle: clause.title });
+  const s = screenModelText(words, [p.paid_cents, p.now_cents, p.owed_cents]);
+  if (!s.ok) throw new Error(`claim words failed the house screen: ${s.reasons.join("; ")}`);
+  return { words: s.text, source: "written by code from the ledger; amounts checked against it" };
 }
 
 export function renderHtml(p: Packet, boxLink: string | null, digest: string): string {

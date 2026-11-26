@@ -1,8 +1,8 @@
 // Create the connections in Part 4.4 of the plan through the Connectors API. Run once by the owner
 // or the build agent with real keys in the environment:
-//   SPRITES_TOKEN  APIFY_TOKEN  TYPESAFE_API_KEY  PINECONE_API_KEY  OLLAMA_API_KEY  AGENTMAIL_API_KEY
+//   SPRITES_TOKEN  APIFY_TOKEN  PINECONE_API_KEY  AGENTMAIL_API_KEY
 // Optional: SALVOR_POLICY=labels|prefix   (default: labels, falls back to prefix and says so)
-//           JEV_ROUTE  PINECONE_INDEX  BOX_OAUTH=1 (print the one OAuth link for Box)
+//           PINECONE_INDEX
 // Keys go to the gateway and nowhere else. Nothing here is written to disk but redacted logs.
 import { writeFileSync, mkdirSync } from "node:fs";
 import { need, sp, logPath, appendLog, writeJson } from "./lib/api.mjs";
@@ -10,7 +10,6 @@ import { need, sp, logPath, appendLog, writeJson } from "./lib/api.mjs";
 need("SPRITES_TOKEN");
 const log = logPath(`setup-connectors-${new Date().toISOString().slice(0, 10)}.jsonl`);
 const policyMode = process.env.SALVOR_POLICY ?? "labels";
-const JEV_ROUTE = process.env.JEV_ROUTE ?? "/v1/decisions";
 
 // who may use a connection
 const EYES = policyMode === "prefix" ? { name_prefix: "slv-r-" } : { sprite_labels: ["salvor-eyes"] };
@@ -19,11 +18,9 @@ const HANDS = policyMode === "prefix" ? { name_prefix: "slv-home" } : { sprite_l
 // Path patterns are exact or a trailing * only (docs: connectors, "Endpoint allow- and block-lists").
 const WANT = [
   { name: "apify-eyes", provider: "apify", key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: ["/v2/acts/*", "/v2/datasets/*", "/v2/actor-runs/*", "/v2/actor-tasks/*"] } },
-  { name: "jev-eyes", provider: "typesafe", key: "TYPESAFE_API_KEY", policy: { ...EYES, allowed_endpoints: [JEV_ROUTE] } },
   // Fly allows one dedicated connector per provider, so eyes and hands each get a named custom connector.
   { name: "pinecone-read", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...EYES, allowed_endpoints: ["/embed", "/rerank"] } },
   { name: "pinecone-write", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/embed", "/rerank"] } },
-  { name: "ollama-hands", provider: "ollama", key: "OLLAMA_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/api/chat", "/api/tags"] } },
   { name: "mail-hands", provider: "agentmail", key: "AGENTMAIL_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/v0/auth/me", "/v0/inboxes/*"] } },
 ];
 
@@ -38,7 +35,7 @@ for (const w of WANT) {
   if (!key) { console.log(`skip ${w.name}: ${w.key} not set`); result[w.name] = { skipped: `${w.key} not set` }; continue; }
   // 1. the dedicated provider connector (BYOK). 2. If the platform refuses, a custom API connector.
   let r = w.custom
-    ? await sp("POST", "/v1/oauth/connections/custom_api", { name: w.name, base_api_url: w.custom.base, access_token: key, auth_method: "custom_header", auth_custom_header_name: w.custom.header, test_url: w.custom.test, access_policy: w.policy })
+    ? await sp("POST", "/v1/oauth/connections/custom_api", { name: w.name, base_api_url: w.custom.base, access_token: key, ...(w.custom.header ? { auth_method: "custom_header", auth_custom_header_name: w.custom.header } : { auth_method: "header", auth_header_prefix: w.custom.prefix ?? "Bearer" }), test_url: w.custom.test, access_policy: w.policy })
     : await sp("POST", "/v1/oauth/connections/api_key", { provider: w.provider, api_key: key, access_policy: w.policy });
   appendLog(log, { step: `create ${w.name}`, route: "api_key", status: r.status, body: r.json ?? r.text.slice(0, 300) });
   const id = r.json?.connection?.id ?? r.json?.id;
@@ -78,13 +75,6 @@ if (process.env.PINECONE_API_KEY && process.env.PINECONE_INDEX) {
       console.log(`${r.ok ? "ok  " : "FAIL"} ${name} HTTP ${r.status}`);
     }
   } else console.log("could not read the Pinecone index host; household memory stays 'not connected'");
-}
-
-// Box is OAuth. One click is unavoidable: print the link.
-if (process.env.BOX_OAUTH === "1") {
-  const r = await sp("GET", "/v1/oauth/box/authorize");
-  appendLog(log, { step: "box authorize", status: r.status });
-  console.log(r.json?.authorize_url ? `\nBox: open this link once and approve:\n${r.json.authorize_url}\n` : `Box authorize failed: HTTP ${r.status} ${r.text.slice(0, 200)}`);
 }
 
 mkdirSync("config", { recursive: true });

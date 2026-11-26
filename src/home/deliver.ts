@@ -1,60 +1,67 @@
-// Delivery. Filing in Box happens when the claim is prepared, so the packet and its evidence are
-// already in Teresa's Box when she opens the card. Sending happens only after her digest-bound
-// approval, and only to the owner's test inbox during the hackathon.
+// Delivery, all over AgentMail. Salvor writes to the owner when a claim is ready or when it needs one
+// answer, and it sends the approved claim to the owner's own address. During the hackathon nothing is ever
+// sent to a store. The claim itself is served at /claims/<id> (HTML and PDF), the page a store would open.
 import { db, event } from "./db.ts";
 import { packetOf } from "./ledger.ts";
-import { chatScript, renderHtml, renderPdf } from "./claims.ts";
-import * as box from "../connectors/box.ts";
+import { chatScript, renderHtml } from "./claims.ts";
 import * as mail from "../connectors/mail.ts";
-import * as sprites from "../connectors/sprites.ts";
+import { fmt } from "../policy/money.ts";
 
-const enc = new TextEncoder();
-
-export type Filing = { ok: boolean; folder_id?: string; link?: string; files?: string[]; note: string };
-
-export async function fileClaimInBox(claimId: string): Promise<Filing> {
-  const claim = db().prepare("SELECT * FROM claims WHERE id=?").get(claimId) as any;
-  const p = packetOf(claimId);
-  if (!claim || !p) return { ok: false, note: "unknown claim" };
-  try {
-    const folder = await box.ensurePath(["Salvor", "Claims", claimId]);
-    const html = enc.encode(renderHtml(p, null, claim.digest));
-    const files = [await box.upload(folder, "claim.html", html, "text/html"), await box.upload(folder, "claim.pdf", renderPdf(p, null, claim.digest), "application/pdf")];
-    // The evidence file is copied from the receipt Sprite's own disk so the Box folder is complete.
-    try {
-      const ev = await sprites.readFile(p.evidence.sprite, `/home/sprite/salvor/evidence/${p.evidence.day}.json`);
-      files.push(await box.upload(folder, `evidence-${p.evidence.day}.json`, ev, "application/json"));
-    } catch { /* the packet still cites the checkpoint copy */ }
-    const link = await box.sharedLink("folders", folder);
-    db().prepare("UPDATE claims SET box_folder_id=?, shared_link=? WHERE id=?").run(folder, link, claimId);
-    event("claim_filed_in_box", { claim: claimId, folder, files: files.length });
-    return { ok: true, folder_id: folder, link, files: files.map((f) => f.name), note: "filed in Box" };
-  } catch (e) {
-    const note = `Box filing failed: ${String((e as Error).message).slice(0, 160)}`;
-    event("claim_box_failed", { claim: claimId, note });
-    return { ok: false, note };
-  }
-}
+const appUrl = () => (process.env.SALVOR_URL ?? "").replace(/\/$/, "");
 
 export type Sent = { channel: "email" | "script"; to?: string; script: string[]; note: string };
 
+async function sendToOwner(subject: string, text: string, html?: string): Promise<{ ok: boolean; to?: string; error?: string }> {
+  const to = mail.allowedRecipients()[0], inbox = process.env.SALVOR_INBOX;
+  if (!to || !inbox) return { ok: false, error: "no inbox or owner address is configured" };
+  try { await mail.send(inbox, to, subject, text, html); return { ok: true, to }; }
+  catch (e) { return { ok: false, to, error: String((e as Error).message).slice(0, 120) }; }
+}
+
+// "Target owes you $12.00": sent the moment a claim is prepared.
+export async function notifyClaimReady(claimId: string) {
+  const claim = db().prepare("SELECT * FROM claims WHERE id=?").get(claimId) as any;
+  const p = packetOf(claimId);
+  if (!claim || !p) return;
+  if (db().prepare("SELECT 1 x FROM kv WHERE k=?").get(`notified:${claimId}`)) return;
+  const line = db().prepare("SELECT receipt_id FROM lines WHERE id=?").get(claim.line_id) as { receipt_id: string };
+  const text =
+    `${p.retailer === "target" ? "Target" : "Best Buy"} owes you ${fmt(claim.amount_cents)} on ${p.item}.\n` +
+    `You paid ${fmt(p.paid_cents)} and it is now ${fmt(p.now_cents)}. The window closes ${claim.deadline}.\n\n` +
+    `Review and approve: ${appUrl()}/app/r/${line.receipt_id}\nThe claim as the store sees it: ${appUrl()}/claims/${claimId}\n`;
+  const r = await sendToOwner(`Money owed: ${fmt(claim.amount_cents)} on ${p.item}`, text);
+  db().prepare("INSERT OR IGNORE INTO kv (k,v) VALUES (?,?)").run(`notified:${claimId}`, JSON.stringify(r));
+  event("notify_claim", { claim: claimId, ok: r.ok, error: r.error });
+}
+
+// One question, only when it matters. Reply YES, NO or STORE; the reply is read by pollMail.
+export async function notifyAsk(askId: string) {
+  const a = db().prepare("SELECT a.*, l.raw_text, l.paid_cents, r.title FROM asks a JOIN lines l ON l.id=a.line_id JOIN receipts r ON r.id=l.receipt_id WHERE a.id=?").get(askId) as any;
+  if (!a || a.answered_at) return;
+  if (db().prepare("SELECT 1 x FROM kv WHERE k=?").get(`notified:${askId}`)) return;
+  const cand = JSON.parse((db().prepare("SELECT v FROM kv WHERE k=?").get(`cand:${a.line_id}`) as { v: string } | undefined)?.v ?? "[]")[0];
+  const text =
+    `${a.question}\n\nYou bought: ${a.raw_text} for ${fmt(a.paid_cents)}.\n` +
+    (cand ? `Salvor found: ${cand.title}\n` : "") +
+    `\nReply YES if it is the same item, NO if it is a different one, or STORE if you bought it in a store.\n` +
+    `Or answer in the app: ${appUrl()}/app\n`;
+  const r = await sendToOwner(`One question about ${a.title} [ask ${askId}]`, text);
+  db().prepare("INSERT OR IGNORE INTO kv (k,v) VALUES (?,?)").run(`notified:${askId}`, JSON.stringify(r));
+  event("notify_ask", { ask: askId, ok: r.ok, error: r.error });
+}
+
+// After approval: the full claim goes to the owner's own address, with the three line script.
 export async function sendClaim(claimId: string): Promise<Sent> {
   const claim = db().prepare("SELECT * FROM claims WHERE id=?").get(claimId) as any;
   const p = packetOf(claimId)!;
-  const script = chatScript(p, claim.shared_link ?? null);
-  const to = mail.allowedRecipients()[0];
-  const inbox = process.env.SALVOR_INBOX;
-  if (to && inbox) {
-    try {
-      await mail.send(inbox, to, `Price match request ${claimId}: ${p.item}`, p.words + "\n\n" + script.join("\n") + `\n\nEvidence: ${claim.shared_link ?? "see the claim page"}`, renderHtml(p, claim.shared_link ?? null, claim.digest));
-      db().prepare("UPDATE claims SET sent_at=?, channel='email' WHERE id=?").run(new Date().toISOString(), claimId);
-      event("claim_sent", { claim: claimId, channel: "email" });
-      return { channel: "email", to, script, note: "emailed to the owner's test inbox. Nothing is ever sent to a store during the hackathon." };
-    } catch (e) {
-      db().prepare("UPDATE claims SET channel='script' WHERE id=?").run(claimId);
-      return { channel: "script", script, note: `email failed (${String((e as Error).message).slice(0, 100)}); here is the script to say or paste instead` };
-    }
+  const link = `${appUrl()}/claims/${claimId}`;
+  const script = chatScript(p, link);
+  const r = await sendToOwner(`Price match request ${claimId}: ${p.item}`, p.words + "\n\n" + script.join("\n") + `\n\nClaim page: ${link}`, renderHtml(p, link, claim.digest));
+  if (r.ok) {
+    db().prepare("UPDATE claims SET sent_at=?, channel='email' WHERE id=?").run(new Date().toISOString(), claimId);
+    event("claim_sent", { claim: claimId, channel: "email" });
+    return { channel: "email", to: r.to, script, note: "emailed to the owner's test inbox. Nothing is ever sent to a store during the hackathon." };
   }
   db().prepare("UPDATE claims SET channel='script' WHERE id=?").run(claimId);
-  return { channel: "script", script, note: "no test inbox is configured, so here is the script to say or paste at the store" };
+  return { channel: "script", script, note: `email was not sent (${r.error}); here is the script to say or paste at the store` };
 }

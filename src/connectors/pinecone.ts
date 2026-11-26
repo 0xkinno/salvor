@@ -11,10 +11,17 @@ const hdr = { "x-pinecone-api-version": API_VERSION };
 export const EMBED_MODEL = process.env.PINECONE_EMBED_MODEL ?? "multilingual-e5-large";
 export const RERANK_MODEL = process.env.PINECONE_RERANK_MODEL ?? "bge-reranker-v2-m3";
 
+// Pinecone answers 429 or 5xx now and then under load; two short retries keep a reading from failing for that.
+async function withRetry(f: () => Promise<Response>): Promise<Response> {
+  let r = await f();
+  for (let i = 0; i < 2 && (r.status === 429 || r.status >= 500); i++) { await new Promise((x) => setTimeout(x, 400 * (i + 1))); r = await f(); }
+  return r;
+}
+
 export async function embed(conn: string, texts: string[], inputType: "passage" | "query" = "passage"): Promise<number[][]> {
-  const r = await call(conn, "POST", "/embed", {
+  const r = await withRetry(() => call(conn, "POST", "/embed", {
     model: EMBED_MODEL, parameters: { input_type: inputType, truncate: "END" }, inputs: texts.map((text) => ({ text })),
-  }, { headers: hdr });
+  }, { headers: hdr }));
   const t = await r.text();
   if (!r.ok) throw new Error(`pinecone embed HTTP ${r.status}: ${t.slice(0, 200)}`);
   const j = JSON.parse(t);
@@ -22,9 +29,9 @@ export async function embed(conn: string, texts: string[], inputType: "passage" 
 }
 
 export async function rerank(query: string, docs: { id: string; text: string }[], topN = docs.length): Promise<{ id: string; score: number }[]> {
-  const r = await call(READ, "POST", "/rerank", {
+  const r = await withRetry(() => call(READ, "POST", "/rerank", {
     model: RERANK_MODEL, query, documents: docs, top_n: topN, return_documents: false, rank_fields: ["text"],
-  }, { headers: hdr });
+  }, { headers: hdr }));
   const t = await r.text();
   if (!r.ok) throw new Error(`pinecone rerank HTTP ${r.status}: ${t.slice(0, 200)}`);
   const j = JSON.parse(t);

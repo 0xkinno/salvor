@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS lines (id TEXT PRIMARY KEY, receipt_id TEXT NOT NULL,
   confirmed_by_human INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS observations (id TEXT PRIMARY KEY, line_id TEXT NOT NULL, observed_at TEXT NOT NULL,
   price_cents INTEGER, regular_cents INTEGER, seller TEXT, in_stock INTEGER, apify_run_id TEXT,
-  checkpoint_id TEXT, evidence_sha256 TEXT, evidence_day TEXT, jev_same_item TEXT, jev_same_conf REAL,
-  jev_owed_p REAL, decision TEXT NOT NULL, why TEXT, owed_cents INTEGER, clause_id TEXT, deadline TEXT);
+  checkpoint_id TEXT, evidence_sha256 TEXT, evidence_day TEXT, m_same TEXT, m_conf REAL,
+  m_clause_p REAL, decision TEXT NOT NULL, why TEXT, owed_cents INTEGER, clause_id TEXT, deadline TEXT);
 CREATE TABLE IF NOT EXISTS claims (id TEXT PRIMARY KEY, line_id TEXT NOT NULL, amount_cents INTEGER NOT NULL,
   clause_id TEXT NOT NULL, deadline TEXT NOT NULL, box_folder_id TEXT, shared_link TEXT,
   digest TEXT NOT NULL, approved_at TEXT, sent_at TEXT, channel TEXT, outcome TEXT, observation_id TEXT, created_at TEXT NOT NULL);
@@ -47,6 +47,10 @@ export function db(): DatabaseSync {
   handle = new DatabaseSync(p);
   handle.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = OFF;");
   handle.exec(SCHEMA);
+  for (const [a, b] of [["jev_same_item", "m_same"], ["jev_same_conf", "m_conf"], ["jev_owed_p", "m_clause_p"], ["jev_model", "m_model"]]) {
+    try { handle.exec(`ALTER TABLE observations RENAME COLUMN ${a} TO ${b}`); } catch { /* new database, or already renamed */ }
+  }
+  try { handle.exec("ALTER TABLE observations ADD COLUMN m_model TEXT"); } catch { /* already there */ }
   return handle;
 }
 

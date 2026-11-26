@@ -9,7 +9,7 @@ import { mode as sabotageMode } from "../sabotage.ts";
 import * as sprites from "../connectors/sprites.ts";
 import { answerAsk, headline, packetOf, lineRow, ingestReport } from "./ledger.ts";
 import { consumeApproval, renderHtml, renderPdf, chatScript } from "./claims.ts";
-import { sendClaim, fileClaimInBox } from "./deliver.ts";
+import { sendClaim } from "./deliver.ts";
 import { verifyEvidence } from "./notary.ts";
 import { costSummary, RATES } from "./cost.ts";
 import { wakeAll, wakeLatestAll } from "./fleet.ts";
@@ -17,10 +17,9 @@ import { runTry, capsState, visitorKey, CAPS } from "./try.ts";
 import { parseCents } from "../policy/money.ts";
 import { CLAUSES } from "../policy/clauses.ts";
 import { scrubUiCopy } from "../house/style.ts";
-import { claimWords } from "../connectors/ollama.ts";
 import { addReceipt, shortId } from "./ledger.ts";
 import { birth, retire, spriteNameFor } from "./fleet.ts";
-import { pollMail, pollBox } from "./intake.ts";
+import { pollMail } from "./intake.ts";
 
 const started = Date.now();
 const WEB = process.env.SALVOR_WEB ?? "web/dist";
@@ -78,7 +77,7 @@ function receiptsView() {
     `SELECT r.*, l.id AS line_id, l.raw_text, l.paid_cents, l.qty, l.listing_url, l.confirmed_by_human FROM receipts r JOIN lines l ON l.receipt_id=r.id ORDER BY r.created_at DESC`,
   ).all() as any[];
   return rows.map((r) => {
-    const o = db().prepare("SELECT * FROM observations WHERE line_id=? ORDER BY observed_at DESC LIMIT 1").get(r.line_id) as any;
+    const o = db().prepare("SELECT * FROM observations WHERE line_id=? ORDER BY observed_at DESC, rowid DESC LIMIT 1").get(r.line_id) as any;
     const c = db().prepare("SELECT id, amount_cents, approved_at, deadline FROM claims WHERE line_id=? ORDER BY created_at DESC LIMIT 1").get(r.line_id) as any;
     const a = db().prepare("SELECT id, question FROM asks WHERE line_id=? AND answered_at IS NULL").get(r.line_id) as any;
     const wake = db().prepare("SELECT started_at FROM wakes WHERE sprite=? ORDER BY started_at DESC LIMIT 1").get(r.sprite ?? "") as any;
@@ -96,7 +95,7 @@ function receiptsView() {
 function receiptDetail(id: string) {
   const base = receiptsView().find((r) => r.id === id);
   if (!base) return null;
-  const obs = db().prepare("SELECT * FROM observations WHERE line_id=? ORDER BY observed_at DESC LIMIT 30").all(base.line_id);
+  const obs = db().prepare("SELECT * FROM observations WHERE line_id=? ORDER BY observed_at DESC, rowid DESC LIMIT 30").all(base.line_id);
   const claim = db().prepare("SELECT * FROM claims WHERE line_id=? ORDER BY created_at DESC LIMIT 1").get(base.line_id) as any;
   const ask = db().prepare("SELECT * FROM asks WHERE line_id=? ORDER BY asked_at DESC LIMIT 1").get(base.line_id) as any;
   const facts = db().prepare("SELECT statement, at FROM facts_human WHERE line_id=? ORDER BY at").all(base.line_id);
@@ -134,9 +133,7 @@ async function fleetView() {
 }
 
 let statusCache: { at: number; v: unknown } | null = null;
-const HANDS_PROBES: [string, string, string][] = [
-  ["box-hands", "GET", "/2.0/users/me"], ["mail-hands", "GET", "/v0/auth/me"], ["ollama-hands", "GET", "/api/tags"], ["sprites-api-hands", "GET", "/v1/sprites"],
-];
+const HANDS_PROBES: [string, string, string][] = [["mail-hands", "GET", "/v0/auth/me"]];
 async function statusView() {
   if (statusCache && Date.now() - statusCache.at < 20_000) return statusCache.v;
   const at = new Date().toISOString();
@@ -146,12 +143,12 @@ async function statusView() {
     gw = { ok: true, mode: gatewayMode(), url: d.url === REAL_LIST ? "https://api.sprites.dev/v1/gateway/list" : "local emulator", connections: d.conns.map((c) => ({ name: c.name, provider: c.provider })) };
   } catch (e) { gw = { ok: false, mode: gatewayMode(), error: String((e as Error).message).slice(0, 160), connections: [] }; }
   const handsConns = await Promise.all(HANDS_PROBES.map(([c, m, p]) => (gw.ok ? probe(c, m, p) : Promise.resolve({ conn: c, ok: false, status: 0, ms: 0, at, note: "gateway not reachable" }))));
-  const eyes = ["apify-eyes", "jev-eyes", "pinecone-read"].map((c) => {
-    const p = c === "apify-eyes" ? "apify" : c === "jev-eyes" ? "jev-eyes" : "pinecone-read";
+  const eyes = ["apify-eyes", "pinecone-read"].map((c) => {
+    const p = c;
     const r = db().prepare("SELECT status, route, at, ms FROM sponsor_calls WHERE provider=? ORDER BY at DESC LIMIT 1").get(p) as any;
     return { conn: c, via: "last call from a receipt Sprite", ok: r ? r.status >= 200 && r.status < 300 : false, status: r?.status ?? 0, ms: r?.ms ?? 0, at: r?.at ?? null, note: r ? `${r.route}` : "no call yet" };
   });
-  const totals = db().prepare("SELECT provider, COUNT(*) calls, SUM(CASE WHEN status BETWEEN 200 AND 299 THEN 1 ELSE 0 END) ok FROM sponsor_calls GROUP BY provider ORDER BY provider").all();
+  const totals = db().prepare("SELECT provider, COUNT(*) calls, SUM(CASE WHEN status BETWEEN 200 AND 299 THEN 1 ELSE 0 END) ok FROM sponsor_calls WHERE provider IN ('apify-eyes','pinecone-read','pinecone-write','mail-hands') GROUP BY provider ORDER BY provider").all();
   const v = {
     at, uptime_s: Math.round((Date.now() - started) / 1000), gateway: gw, hands: handsConns, eyes,
     sprites: { rung: sprites.rung(), credential_on_box: sprites.credentialOnBox(), note: sprites.credentialOnBox() ? "rung b: one scoped Sprites token is kept in a 0600 file on slv-home only" : "rung a: no key on any Sprite; the Sprites API is reached through a connector" },
@@ -170,7 +167,7 @@ async function statusView() {
 
 function proofView() {
   const facts = existsSync("docs/FACTS.json") ? JSON.parse(readFileSync("docs/FACTS.json", "utf8")) : null;
-  const calls = db().prepare("SELECT provider, COUNT(*) calls, SUM(CASE WHEN status BETWEEN 200 AND 299 THEN 1 ELSE 0 END) ok, MIN(at) since FROM sponsor_calls GROUP BY provider ORDER BY provider").all();
+  const calls = db().prepare("SELECT provider, COUNT(*) calls, SUM(CASE WHEN status BETWEEN 200 AND 299 THEN 1 ELSE 0 END) ok, MIN(at) since FROM sponsor_calls WHERE provider IN ('apify-eyes','pinecone-read','pinecone-write','mail-hands') GROUP BY provider ORDER BY provider").all();
   const keys = Object.keys(process.env).filter((k) => /api[_-]?key|token|secret|password/i.test(k) && !/^SALVOR_(HOUSEHOLD|HOOK|TICK)/.test(k));
   let policy: unknown = null;
   try { policy = JSON.parse(readFileSync("/.sprite/policy/network.json", "utf8")); } catch { policy = null; }
@@ -269,6 +266,12 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     if (b.url) { try { born = await birth(r.receiptId, r.lineIds[0]); } catch (e) { born = { error: String((e as Error).message).slice(0, 200) }; } }
     return send(res, 201, { receipt: r.receiptId, line: r.lineIds[0], sprite: b.url ? spriteNameFor(r.receiptId) : null, born });
   }
+  if (p === "/api/poll" && m === "POST") {
+    if (!hasToken(req)) return send(res, 403, { error: "Polling the inbox needs the household token." });
+    const inbox = process.env.SALVOR_INBOX;
+    if (!inbox) return send(res, 503, { error: "SALVOR_INBOX is not set" });
+    try { return send(res, 200, await pollMail(inbox)); } catch (e) { return send(res, 502, { error: String((e as Error).message).slice(0, 200) }); }
+  }
   // ---- the two wake sources: Apify's schedule webhook and the backup tick
   const hook = /^\/hooks\/apify\/([A-Za-z0-9_-]+)$/.exec(p);
   if (hook && m === "POST") {
@@ -327,8 +330,7 @@ export function createServer() {
 export function startBackground() {
   const guard = (name: string, fn: () => Promise<unknown>) => () => { if (killSwitch()) return; fn().catch((e) => event("background_failed", { name, error: String(e?.message ?? e).slice(0, 200) })); };
   const inbox = process.env.SALVOR_INBOX;
-  if (inbox) setInterval(guard("mail", () => pollMail(inbox)), 5 * 60_000);
-  if (process.env.SALVOR_BOX_POLL === "1") setInterval(guard("box", () => pollBox()), 5 * 60_000);
+  if (inbox) setInterval(guard("mail", () => pollMail(inbox)), 2 * 60_000);
   // Retire Sprites whose window has closed: read the meter, book the cost, delete.
   setInterval(guard("retire", async () => {
     const due = db().prepare("SELECT id, sprite, created_at FROM receipts WHERE sprite IS NOT NULL AND status NOT IN ('retired') AND window_ends_at < ? AND NOT EXISTS (SELECT 1 FROM claims c JOIN lines l ON l.id=c.line_id WHERE l.receipt_id=receipts.id AND c.approved_at IS NULL)").all(new Date().toISOString()) as any[];
@@ -342,4 +344,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   createServer().listen(port, "0.0.0.0", () => console.log(`salvor home listening on ${port} (gateway: ${gatewayMode()})`));
 }
 
-export { ingestReport, lineRow, claimWords, fileClaimInBox, createHash, shortId };
+export { ingestReport, lineRow, createHash, shortId };

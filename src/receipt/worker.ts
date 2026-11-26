@@ -10,7 +10,8 @@ import { observe, type Report } from "./observe.ts";
 import { DIR } from "./evidence.ts";
 import { resolve, trynew } from "./resolve.ts";
 import { lastRun } from "../connectors/apify.ts";
-import { decide } from "../connectors/jev.ts";
+import { matchListing, pickBest } from "../connectors/pinecone.ts";
+import { decide } from "../match.ts";
 
 const calls: Report["calls"] = [];
 setRecorder((provider, route, status, ms) => calls.push({ provider, route, status, ms }));
@@ -21,9 +22,7 @@ async function selftest() {
   const results: Record<string, unknown> = {};
   // (c) the gateway must refuse hands-only connections for an eyes Sprite.
   for (const [name, method, path] of [
-    ["box-hands", "GET", "/2.0/users/me"],
     ["mail-hands", "GET", "/v0/auth/me"],
-    ["ollama-hands", "GET", "/api/tags"],
     ["sprites-api-hands", "GET", "/v1/sprites"],
   ] as const) {
     try { const r = await call(name, method, path); results[name] = { status: r.status, body: (await r.text()).slice(0, 120) }; }
@@ -75,13 +74,26 @@ try {
     if (!task) throw new Error("usage: observe-latest <apifyTaskId>");
     const run = await lastRun(task);
     out(await observe(run.id, run.defaultDatasetId, run.finishedAt ?? new Date().toISOString(), calls));
-  } else if (cmd === "jev-batch") {
-    // P3: read labelled pairs from stdin ([{id, line, listing}]) and return Jev's answers. Typed fields only.
+  } else if (cmd === "match-batch") {
+    // P3: read labelled pairs from stdin ([{id, line, listing}]). Returns the match with Pinecone's rerank score
+    // and the same rules without it, so the value of Pinecone can be measured.
     const pairs = JSON.parse(readFileSync(0, "utf8"));
     const res = [];
     for (const p of pairs) {
-      try { const a = await decide({ raw_text: p.line, retailer: "target" }, p.listing, { id: "p3", text: p.clause ?? "" }); res.push({ id: p.id, same: a.same, conf: a.sameConf, owed_p: a.owedP }); }
-      catch (e) { res.push({ id: p.id, error: String((e as Error).message).slice(0, 120) }); }
+      try {
+        const m = await matchListing({ raw_text: p.line }, p.listing);
+        const withP = decide({ raw_text: p.line }, p.listing, m.rerank_score), without = decide({ raw_text: p.line }, p.listing, null);
+        res.push({ id: p.id, full: { same: withP.same, conf: withP.sameConf }, rules: { same: without.same, conf: without.sameConf }, rerank: m.rerank_score, embed: m.embed_cos });
+      } catch (e) { res.push({ id: p.id, error: String((e as Error).message).slice(0, 120) }); }
+    }
+    out(res);
+  } else if (cmd === "rank-batch") {
+    // P3b: for each receipt line, rank all candidate listings with Pinecone's rerank. Returns the top three ids.
+    const { lines, docs } = JSON.parse(readFileSync(0, "utf8"));
+    const res = [];
+    for (const l of lines) {
+      try { const r = await pickBest({ raw_text: l.line }, docs.map((d: any) => ({ id: d.id, title: d.text }))); res.push({ id: l.id, top: r.slice(0, 3).map((x) => x.id), score: r[0]?.score ?? null }); }
+      catch (e) { res.push({ id: l.id, error: String((e as Error).message).slice(0, 120) }); }
     }
     out(res);
   } else if (cmd === "resolve") out(await resolve());

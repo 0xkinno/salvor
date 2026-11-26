@@ -3,7 +3,7 @@ import { post, money, when, useGet } from "../api";
 import { Banner } from "../ui/Art";
 import { GlowCard, Loading, ErrorBox, Eyebrow } from "../ui/bits";
 
-const STEPS = ["Waking a pooled Sprite from sleep", "Locking its network to the gateway only", "Apify is reading the page in Apify's cloud", "Jev is deciding whether it is the same item", "Salvor's code is computing the amount from the store's clause"];
+const STEPS = ["Waking a pooled Sprite from sleep", "Locking its network to the gateway only", "Apify is reading the page in Apify's cloud", "Pinecone and the typed rules are matching the item", "Salvor's code is computing the amount from the store's clause"];
 
 export default function Try() {
   const caps = useGet<{ total: number; mine: boolean; per_hour_total: number; per_visitor_per_hour: number; resets_at: string }>("/api/try/caps");

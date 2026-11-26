@@ -4,10 +4,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const FILES = [
   ["Apify", "src/connectors/apify.ts", "apify-eyes"],
-  ["TypeSafe Jev", "src/connectors/jev.ts", "jev-eyes"],
   ["Pinecone", "src/connectors/pinecone.ts", "pinecone-read / pinecone-write / pinecone-index-*"],
-  ["Ollama Cloud", "src/connectors/ollama.ts", "ollama-hands"],
-  ["Box", "src/connectors/box.ts", "box-hands"],
   ["AgentMail", "src/connectors/mail.ts", "mail-hands"],
   ["Fly Sprites API", "src/connectors/sprites.ts", "sprites-api-hands"],
 ];

@@ -4,7 +4,7 @@
 import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { datasetItemsFor, normalizeListing, type ListingFields } from "../connectors/apify.ts";
 import { matchListing, type Match } from "../connectors/pinecone.ts";
-import { decide, type JevAnswer } from "../connectors/jev.ts";
+import { decide, type MatchAnswer } from "../match.ts";
 import { sabotage, mode } from "../sabotage.ts";
 import { DIR, writeEvidence, checkpoint } from "./evidence.ts";
 
@@ -25,7 +25,7 @@ export type Report = {
   observed_at: string;
   listing?: ListingFields;
   match?: Match | { error: string };
-  jev?: JevAnswer | { error: string };
+  read?: MatchAnswer | { error: string };
   evidence_path?: string;
   evidence_day?: string;
   sha256?: string;
@@ -84,19 +84,19 @@ export async function decideFromItems(
   try { match = await matchListing(job.line, forModels); }
   catch (e) { match = { error: `pinecone: ${(e as Error).message}` }; }
 
-  let jev: JevAnswer | { error: string };
-  try { jev = await decide({ raw_text: job.line.raw_text, retailer: job.retailer }, forModels, job.clause); }
-  catch (e) { jev = { error: `jev: ${(e as Error).message}` }; }
+  let read: MatchAnswer | { error: string };
+  try { read = decide({ raw_text: job.line.raw_text }, forModels, "rerank_score" in match ? match.rerank_score : null); }
+  catch (e) { read = { error: `match: ${(e as Error).message}` }; }
 
   const day = observedAt.slice(0, 10);
-  const evidence = { job_id: job.id, run_id: runId, observed_at: observedAt, apify_dataset: datasetId, listing, listing_as_sent_to_models: forModels, match, jev };
+  const evidence = { job_id: job.id, run_id: runId, observed_at: observedAt, apify_dataset: datasetId, listing, listing_as_sent_to_models: forModels, match, read };
   const ev = writeEvidence(day, evidence);
   let cp: { id: string | null; ms: number; raw: string };
   try { cp = checkpoint(`obs ${job.id} ${day} sha256:${ev.sha256}`); }
   catch (e) { cp = { id: null, ms: 0, raw: String((e as Error).message) }; }
 
   return finish({
-    decision: "observed", listing, match, jev, evidence_path: ev.path, evidence_day: day, sha256: ev.sha256,
+    decision: "observed", listing, match, read, evidence_path: ev.path, evidence_day: day, sha256: ev.sha256,
     checkpoint: cp.id, checkpoint_ms: cp.ms,
   });
 }

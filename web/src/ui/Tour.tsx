@@ -8,7 +8,7 @@ const STEPS: Step[] = [
   { path: () => "/", sel: "[data-tour=hero]", title: "The store owes you", body: "Target's own holiday guarantee owes a buyer the difference when its price falls. The store never tells you. Salvor watches for it." },
   { path: () => "/", sel: "[data-tour=sprites]", title: "One computer per receipt", body: "Each receipt gets its own Fly.io Sprite. Most are asleep, which costs nothing. One wakes when the price is read." },
   { path: () => "/app", sel: "[data-tour=cards]", title: "Your receipts", body: "Every card shows its own Sprite, days left, last wake and next wake. The sample household is labelled." },
-  { path: (r) => `/app/r/${r}`, sel: "[data-tour=ladder]", title: "Then and now, decided", body: "Jev answers whether it is the same item, with calibrated probabilities. Code computes the amount from the store's own clause." },
+  { path: (r) => `/app/r/${r}`, sel: "[data-tour=ladder]", title: "Then and now, decided", body: "Pinecone ranks the listing and typed rules check size and model number. Code computes the amount from the store's own clause." },
   { path: (r) => `/app/r/${r}`, sel: "[data-tour=evidence]", title: "Evidence the platform holds", body: "The claim cites a checkpoint and a hash. Verify reads Fly's read-only copy and compares." },
   { path: () => "/fleet", sel: "[data-tour=fleet]", title: "The fleet, live", body: "Every Sprite with its label, its egress lock, its checkpoints and its usage, read from the platform now." },
   { path: () => "/proof", sel: "[data-tour=proof]", title: "Proof, with misses", body: "Numbers come from run files, never typed. Break tests are listed with their failures kept." },

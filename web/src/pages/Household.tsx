@@ -26,7 +26,7 @@ export default function Household() {
             ))}
           </dl>
           {data.receipts.length === 0 ? (
-            <div className="mt-8"><Empty title="No receipts yet.">Forward an order email to the Salvor inbox, or drop a photo in the Salvor/Receipts folder in Box. A Sprite is born for each one.</Empty></div>
+            <div className="mt-8"><Empty title="No receipts yet.">Forward an order confirmation to the Salvor inbox. A Sprite is born for each receipt.</Empty></div>
           ) : (
             <ul data-tour="cards" className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {data.receipts.map((r) => (

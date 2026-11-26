@@ -15,7 +15,8 @@ import type { Report } from "../receipt/observe.ts";
 const newbornCache = new Map<string, string>();
 export function newbornId(name: string): string { return newbornCache.get(name) ?? kvGet(`newborn:${name}`) ?? "v1"; }
 
-export const POOL_NAMES = ["slv-r-try-1", "slv-r-try-2", "slv-r-try-3"];
+// The no-card Fly trial allows 3 Sprites in total, so the pool size is a setting (SALVOR_POOL, default 3).
+export const POOL_NAMES = ["slv-r-try-1", "slv-r-try-2", "slv-r-try-3"].slice(0, Math.max(1, Number(process.env.SALVOR_POOL ?? 3)));
 export const CAPS = { per_hour_total: 3, per_visitor_per_hour: 1 };
 const busy = new Set<string>();
 
@@ -37,7 +38,7 @@ export const ALLOWED_HOST = /^https:\/\/(www\.)?(target|bestbuy)\.com\//i;
 export type TryInput = { url: string; paid: string; date: string };
 export type TryResult =
   | { ok: false; error: string; status: number }
-  | { ok: true; sprite: string; seconds: number; steps: string[]; decision: string; why: string; owed_cents: number; paid_cents: number; now_cents: number | null; title: string | null; deadline: string | null; checkpoint: string | null; sha256: string | null; jev: unknown };
+  | { ok: true; sprite: string; seconds: number; steps: string[]; decision: string; why: string; owed_cents: number; paid_cents: number; now_cents: number | null; title: string | null; deadline: string | null; checkpoint: string | null; sha256: string | null; read: unknown };
 
 export async function runTry(input: TryInput, visitor: string, paidCents: number): Promise<TryResult> {
   if (!ALLOWED_HOST.test(input.url)) return { ok: false, status: 400, error: "Paste a product link from target.com or bestbuy.com." };
@@ -65,16 +66,16 @@ export async function runTry(input: TryInput, visitor: string, paidCents: number
     const at = new Date();
     for (const c of report.calls ?? []) db().prepare("INSERT INTO sponsor_calls VALUES (?,?,?,?,?,?)").run(c.provider, c.route, c.status, c.ms, name, at.toISOString());
     if (report.decision !== "observed" || !report.listing) {
-      return { ok: true, sprite: name, seconds: (Date.now() - t0) / 1000, steps, decision: report.decision === "stale" ? "stale" : "ask", why: report.reason ?? "The page could not be read.", owed_cents: 0, paid_cents: paidCents, now_cents: null, title: null, deadline: null, checkpoint: null, sha256: null, jev: null };
+      return { ok: true, sprite: name, seconds: (Date.now() - t0) / 1000, steps, decision: report.decision === "stale" ? "stale" : "ask", why: report.reason ?? "The page could not be read.", owed_cents: 0, paid_cents: paidCents, now_cents: null, title: null, deadline: null, checkpoint: null, sha256: null, read: null };
     }
-    steps.push("Jev decided whether it is the same item");
+    steps.push("The match step decided whether it is the same item");
     const l = report.listing;
     const verdict = evaluate({ paid_cents: paidCents, qty: 1, purchased_date: input.date, retailer }, { price_cents: l.price_cents, regular_cents: l.regular_cents, seller: l.seller, in_stock: l.in_stock, flags: l.flags, observed_at: report.observed_at }, at);
-    const jev = report.jev && !("error" in report.jev) ? { same: report.jev.same, sameConf: report.jev.sameConf, owedP: report.jev.owedP } : null;
-    const g = gate(verdict, jev, false);
+    const read = report.read && !("error" in report.read) ? { same: report.read.same, sameConf: report.read.sameConf, owedP: report.read.owedP } : null;
+    const g = gate(verdict, read, false);
     steps.push(`Salvor's code computed ${fmt(verdict.owed_cents)} from the store's own clause`);
     event("try", { sprite: name, decision: g.decision, ms: Date.now() - t0 });
-    return { ok: true, sprite: name, seconds: (Date.now() - t0) / 1000, steps, decision: g.decision, why: g.why, owed_cents: verdict.owed_cents, paid_cents: paidCents, now_cents: l.price_cents, title: l.title, deadline: verdict.deadline, checkpoint: report.checkpoint ?? null, sha256: report.sha256 ?? null, jev: report.jev ?? null };
+    return { ok: true, sprite: name, seconds: (Date.now() - t0) / 1000, steps, decision: g.decision, why: g.why, owed_cents: verdict.owed_cents, paid_cents: paidCents, now_cents: l.price_cents, title: l.title, deadline: verdict.deadline, checkpoint: report.checkpoint ?? null, sha256: report.sha256 ?? null, read: report.read ?? null };
   } catch (e) {
     return { ok: false, status: 502, error: `The live reading failed: ${String((e as Error).message).slice(0, 200)}` };
   } finally {

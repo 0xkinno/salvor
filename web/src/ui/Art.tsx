@@ -47,7 +47,7 @@ export function FleetArt({ names, awakeIndex = 1 }: { names: string[]; awakeInde
   );
 }
 
-// Jev / code / Teresa: three connected roles.
+// Salvor matches / code computes / Teresa confirms: three connected roles.
 export function RolesArt() {
   return (
     <svg viewBox="0 0 960 150" aria-hidden="true" className="hidden h-auto w-full md:block">

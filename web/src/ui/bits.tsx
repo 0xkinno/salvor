@@ -74,7 +74,7 @@ export function Source({ kind }: { kind: "real public data" | "unattended run" |
 }
 
 const STATUS: Record<string, [string, string]> = {
-  new: ["New", "chip chip-mute"], watching: ["Asleep", "chip"], awake: ["Awake", "chip chip-violet"], owed: ["Owed", "chip chip-owed"],
+  new: ["Queued", "chip chip-mute"], watching: ["Asleep", "chip"], awake: ["Awake", "chip chip-violet"], owed: ["Owed", "chip chip-owed"],
   asking: ["Asking you", "chip chip-ember"], claimed: ["Claimed", "chip chip-owed"], retired: ["Retired", "chip chip-mute"], no_window: ["No window", "chip chip-mute"],
 };
 export function StatusChip({ status }: { status: string }) {

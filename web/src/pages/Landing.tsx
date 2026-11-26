@@ -6,7 +6,7 @@ import { FleetArt, RolesArt, TimelineArt } from "../ui/Art";
 import { GlowCard, CountUp, Eyebrow, Source } from "../ui/bits";
 
 const EXAMPLE = { item: "Air fryer, 6 quart", paid: 12999, now: 7999, owed: 5000, date: "Nov 9" };
-const PARTNERS = ["Fly.io Sprites", "Apify", "TypeSafe Jev", "Pinecone", "Ollama Cloud", "Box", "AgentMail"];
+const PARTNERS = ["Fly.io Sprites", "Apify", "Pinecone", "AgentMail"];
 
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const reduce = useReducedMotion();
@@ -50,7 +50,7 @@ export default function Landing() {
             <Link to="/try" className="btn btn-ghost no-underline">Try your own receipt</Link>
           </div>
           <ul className="mt-10 grid max-w-[600px] gap-3 text-[15px] sm:grid-cols-3">
-            {[["Its own computer", "Every receipt gets a Sprite that sleeps for free."], ["A decision, not a guess", "Jev decides if the store owes you, and asks when unsure."], ["One tap", "The claim and its evidence are already in your Box."]].map(([h, t], i) => (
+            {[["Its own computer", "Every receipt gets a Sprite that sleeps for free."], ["A decision, not a guess", "Pinecone and typed rules decide if it is your item, and Salvor asks by email when unsure."], ["One reply", "The claim and its evidence arrive in your inbox. Approve with one tap."]].map(([h, t], i) => (
               <GlowCard as="li" key={h} className="h-full"><div className="p-4"><span className="mono text-gold-ink">0{i + 1}</span><p className="mt-1 font-semibold leading-snug">{h}</p><p className="mt-1 text-[14px] text-muted">{t}</p></div></GlowCard>
             ))}
           </ul>
@@ -105,7 +105,7 @@ export default function Landing() {
         <div className="mt-8"><RolesArt /></div>
         <div className="mt-4 grid gap-5 md:grid-cols-3">
           {[
-            ["Jev decides", "Is the listing the same item, down to size and capacity? Is the clause satisfied? Jev answers with calibrated probabilities. Below the threshold, it asks a person.", "#6A4BE0"],
+            ["Salvor matches", "Is the listing the same item, down to size and capacity? Pinecone ranks the right listing for a cryptic receipt line, and typed rules check size, pack count and model number. Below the threshold, it asks a person by email.", "#6A4BE0"],
             ["Code computes", "The window, the deadline and the amount come from the store's own published clause, in integer cents. A model never produces a number you act on.", "#C9A45C"],
             ["Teresa confirms", "She says whether it is the same item, approves the claim, and makes the ask, because the store only pays the customer. Only her answers become lasting facts.", "#0E7A57"],
           ].map(([t, b, c], i) => (
@@ -145,11 +145,8 @@ export default function Landing() {
               {[
                 ["Fly.io Sprites", "One sleeping computer per receipt, permissions as labels, checkpoints as evidence, the usage meter as the bill.", "No product."],
                 ["Apify", "Reads store pages in its own cloud, and its schedule is the clock that wakes everything.", "No readings and nothing ever wakes."],
-                ["TypeSafe Jev", "Decides same item and clause eligibility with calibrated probabilities.", "No claim is ever prepared."],
-                ["Pinecone", "Maps a cryptic receipt line to the right listing with embed and rerank.", "Receipt lines never find their page."],
-                ["Ollama Cloud", "Reads receipt photos and order emails into lines, and writes the claim in plain words.", "No receipt intake."],
-                ["Box", "Holds Teresa's receipts and the filed claim packet with a shared link.", "No evidence the store can open."],
-                ["AgentMail", "A receipts inbox for forwarded orders, and the claim email channel.", "Online orders cannot be forwarded in."],
+                ["Pinecone", "Ranks the right listing for a cryptic receipt line (embed and rerank). Its score is the evidence behind every match.", "Receipt lines never find their page."],
+                ["AgentMail", "The human loop: forwarded orders in, questions and claims out, replies read as answers.", "No way in for an order and no way to ask or deliver."],
               ].map(([a, b, c]) => (<tr key={a}><td className="whitespace-nowrap font-display text-[19px]">{a}</td><td>{b}</td><td className="text-muted">{c}</td></tr>))}
             </tbody>
           </table></div></GlowCard></Reveal>

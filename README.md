@@ -31,9 +31,9 @@ Salvor does it with one idea: **give every receipt its own computer, and let it 
 <!-- FACTS:START -->
 - **Study (real public data):** 0 usable items of 24 listed; n/a cheaper now; $0.00 owed in total, median n/a; 24 misses listed by id.
 - **Unattended watch:** 0 runs, 0 price drops seen.
-- **Decision quality at tau n/a:** wrong-claim rate n/a on the curated test split and n/a on wild data; missed-claim rate n/a and n/a.
+- **Decision quality at tau 0.9:** wrong-claim rate 0.0% on the curated test split and n/a on wild data; missed-claim rate 46.2% and n/a.
 - **Cost per receipt (Fly usage meter):** n/a per receipt, n/a per receipt per day, 0 metered.
-- **Break campaign:** 0 of 0 cases passed; failures are listed on /proof.
+- **Break campaign:** 9 of 9 cases passed; failures are listed on /proof.
 <!-- FACTS:END -->
 
 <p align="center">

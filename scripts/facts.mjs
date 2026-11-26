@@ -4,7 +4,7 @@
 // Record kinds (one JSON object per line, field "kind"):
 //   p1_item   {id, url, archive_cents|null, archive_date, now_cents|null, now_at, reason|null}
 //   watch_run {run_id, at, items, drops}
-//   p3_pair   {id, split:"tune"|"test", origin:"curated"|"wild", label, jev_same, jev_conf, llm_same, llm_conf}
+//   p3_pair   {id, split:"tune"|"test", origin:"curated"|"wild", label, m_same, m_conf, r_same, r_conf}
 //   p3_pick   {tau, tau_owed, chosen_on:"tune", tune_n}
 //   p4_cost   {sprite, total_usd, days, partial}
 //   p5_case   {id, name, expected, observed, pass}
@@ -37,7 +37,7 @@ function rates(origin, who) {
   if (!pick) return null;
   const set = of("p3_pair").filter((r) => r.split === "test" && r.origin === origin);
   if (!set.length) return null;
-  const same = (r) => (who === "jev" ? r.jev_same : r.llm_same), conf = (r) => (who === "jev" ? r.jev_conf : r.llm_conf);
+  const same = (r) => (who === "full" ? r.m_same : r.r_same), conf = (r) => (who === "full" ? r.m_conf : r.r_conf);
   const claims = set.filter((r) => same(r) === "exact" && conf(r) >= pick.tau);
   const wrong = claims.filter((r) => r.label !== "exact").length;
   const truth = set.filter((r) => r.label === "exact");
@@ -45,6 +45,8 @@ function rates(origin, who) {
   const asked = set.filter((r) => !(conf(r) >= pick.tau)).length;
   return { n: set.length, claims: claims.length, wrong_claims: wrong, wrong_claim_rate: claims.length ? wrong / claims.length : null, truth: truth.length, missed, missed_claim_rate: truth.length ? missed / truth.length : null, ask_rate: asked / set.length };
 }
+const ranks = of("p3_rank").filter((r) => !r.failed);
+const rankRate = (k) => (ranks.length ? ranks.filter((r) => r[k]).length / ranks.length : null);
 const costs = of("p4_cost");
 const costTotal = costs.reduce((s, r) => s + r.total_usd, 0);
 const costDays = costs.reduce((s, r) => s + (r.days ?? 0), 0);
@@ -55,7 +57,7 @@ const facts = {
   empty: rows.length === 0,
   p1: { n_listed: p1.length, n_items: usable.length, share_cheaper: usable.length ? cheaper.length / usable.length : null, owed_total_cents: owed.reduce((a, b) => a + b, 0), median_owed_cents: median(owed), misses },
   p2: { runs_completed: runs.length, drops_seen: runs.reduce((s, r) => s + (r.drops ?? 0), 0), first_run_at: runs[0]?.at ?? null, last_run_at: runs.at(-1)?.at ?? null },
-  p3: pick ? { tau: pick.tau, tau_owed: pick.tau_owed, chosen_on: pick.chosen_on, tune_n: pick.tune_n, curated: { jev: rates("curated", "jev"), llm: rates("curated", "llm") }, wild: { jev: rates("wild", "jev"), llm: rates("wild", "llm") } } : null,
+  p3: pick ? { rank: ranks.length ? { n: ranks.length, candidates: ranks[0].candidates, failed: of("p3_rank").length - ranks.length, pinecone_top1: rankRate("pinecone_top1"), pinecone_top3: rankRate("pinecone_top3"), lexical_top1: rankRate("lexical_top1"), lexical_top3: rankRate("lexical_top3") } : null, failed_pairs: of("p3_fail").length, tau: pick.tau, tau_owed: pick.tau_owed, chosen_on: pick.chosen_on, tune_n: pick.tune_n, curated: { full: rates("curated", "full"), rules: rates("curated", "rules") }, wild: { full: rates("wild", "full"), rules: rates("wild", "rules") } } : null,
   p4: { receipts_metered: costs.length, per_receipt_usd: costs.length ? costTotal / costs.length : null, per_receipt_per_day_usd: costDays ? costTotal / costDays : null, partial_rows: costs.filter((c) => c.partial).length },
   p5: of("p5_case").map((c) => ({ id: c.id, name: c.name, expected: c.expected, observed: c.observed, pass: c.pass })),
   hero: of("hero").at(-1) ?? null,
@@ -66,7 +68,7 @@ facts.n_items = facts.p1.n_items;
 facts.owed_total_cents = facts.p1.owed_total_cents;
 facts.share_cheaper = facts.p1.share_cheaper;
 facts.cost_per_receipt_usd = facts.p4.per_receipt_usd;
-facts.wrong_claim_rate = facts.p3?.curated?.jev?.wrong_claim_rate ?? null;
+facts.wrong_claim_rate = facts.p3?.curated?.full?.wrong_claim_rate ?? null;
 
 // The README's "Measured" block is generated from FACTS between two markers, so no number is typed there.
 function injectReadme(f) {
@@ -79,7 +81,7 @@ function injectReadme(f) {
     : [
         `- **Study (real public data):** ${f.p1.n_items} usable items of ${f.p1.n_listed} listed; ${p(f.p1.share_cheaper)} cheaper now; ${d(f.p1.owed_total_cents)} owed in total, median ${d(f.p1.median_owed_cents)}; ${f.p1.misses.length} misses listed by id.`,
         `- **Unattended watch:** ${f.p2.runs_completed} runs, ${f.p2.drops_seen} price drops seen.`,
-        `- **Decision quality at tau ${f.p3?.tau ?? "n/a"}:** wrong-claim rate ${p(f.p3?.curated?.jev?.wrong_claim_rate)} on the curated test split and ${p(f.p3?.wild?.jev?.wrong_claim_rate)} on wild data; missed-claim rate ${p(f.p3?.curated?.jev?.missed_claim_rate)} and ${p(f.p3?.wild?.jev?.missed_claim_rate)}.`,
+        `- **Decision quality at tau ${f.p3?.tau ?? "n/a"}:** wrong-claim rate ${p(f.p3?.curated?.full?.wrong_claim_rate)} on the curated test split and ${p(f.p3?.wild?.full?.wrong_claim_rate)} on wild data; missed-claim rate ${p(f.p3?.curated?.full?.missed_claim_rate)} and ${p(f.p3?.wild?.full?.missed_claim_rate)}.`,
         `- **Cost per receipt (Fly usage meter):** ${u(f.p4.per_receipt_usd)} per receipt, ${u(f.p4.per_receipt_per_day_usd)} per receipt per day, ${f.p4.receipts_metered} metered.`,
         `- **Break campaign:** ${f.p5.filter((c) => c.pass).length} of ${f.p5.length} cases passed; failures are listed on /proof.`,
       ].join("\n");

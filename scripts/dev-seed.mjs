@@ -17,7 +17,7 @@ const mk = (id, line, paid, url, date = "2026-11-09") => {
 const rep = (lid, run, price, same, conf, owedP = 0.9) => ({
   job_id: lid, run_id: run, decision: "observed", observed_at: iso, sabotage: "none", calls: [], checkpoint: "v3", sha256: "3fa1c9d2" + "ab".repeat(28), evidence_day: iso.slice(0, 10),
   listing: { price_cents: price, regular_cents: 12999, seller: "Target", in_stock: true, flags: [], observed_at: iso, title: "Ninja 6 Quart Air Fryer", brand: "Ninja", variant: null, sku: "94285420", url: null },
-  jev: { same, sameConf: conf, sameProbs: {}, owedP, model: "dev", usage: null, route: "/v1/decisions", ms: 90 },
+  read: { same, sameConf: conf, sameProbs: {}, owedP, model: "dev", usage: null, route: "/v1/decisions", ms: 90 },
 });
 const a = mk("7Q2A", "NINJA AF161 6QT AIR FRYER", 12999, "https://www.target.com/p/ninja-6qt/-/A-94285420");
 const b = mk("K9DA", "KITCHENAID 5QT STAND MIXER", 34999, "https://www.target.com/p/mixer/-/A-1000001");
