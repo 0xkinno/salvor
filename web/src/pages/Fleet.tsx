@@ -28,7 +28,7 @@ export default function Fleet() {
         <div data-tour="fleet" className="mt-8">
           <p className="text-[13px] text-muted">Read at {when(data.at)}. Sprites API access rung: <span className="mono">{data.rung}</span>.</p>
           {data.sprites.length === 0 ? <div className="mt-4"><Empty title="No Sprites yet.">Receipt Sprites appear here as they are born.</Empty></div> : (
-            <GlowCard className="mt-4 overflow-hidden"><div className="scroll-x"><table className="t min-w-[900px]">
+            <GlowCard className="mt-4 overflow-hidden"><div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x"><table className="t min-w-[900px]">
               <thead><tr><th>Sprite</th><th>State</th><th>Labels</th><th>Egress rule</th><th>Checkpoints</th><th>CPU time</th><th>Last wake</th><th>Wakes</th></tr></thead>
               <tbody>{data.sprites.map((s) => (
                 <tr key={s.name}><td className="mono whitespace-nowrap text-violet-ink">{s.name}</td><td><StatusChip status={s.status === "running" ? "awake" : s.status === "warm" ? "watching" : "retired"} /> <span className="text-[12px] text-muted">{s.status}</span></td>

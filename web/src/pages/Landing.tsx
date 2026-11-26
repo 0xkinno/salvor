@@ -31,7 +31,7 @@ export default function Landing() {
       <section id="receipt" data-tour="hero" className="relative mx-auto grid max-w-[1180px] items-center gap-10 px-5 pb-16 pt-12 sm:px-6 lg:grid-cols-[1.05fr_.95fr] lg:pt-20">
         <div className="min-w-0">
           <Eyebrow>Fly.io Hacksgiving 2026</Eyebrow>
-          <h1 className="h-display mt-5 text-[clamp(44px,7.4vw,92px)]">The store owes you.<br />Your receipt knows.</h1>
+          <h1 className="h-display mt-5 text-[clamp(40px,5.4vw,70px)] [text-wrap:balance]">The store owes you.<br />Your receipt knows.</h1>
           <p className="mt-6 max-w-[540px] text-[19px] leading-[1.5] text-muted">
             Every receipt gets its own computer on Fly.io Sprites. It sleeps for free, wakes when the price falls, and hands you the claim for the money the store already owes you.
           </p>
@@ -70,7 +70,7 @@ export default function Landing() {
       {/* 4. a computer per receipt */}
       <section data-tour="sprites" className="mx-auto max-w-[1180px] px-5 py-16 sm:px-6">
         <Reveal><Eyebrow n="02">One computer per receipt</Eyebrow><h2 className="h-display mt-3 max-w-3xl text-[clamp(32px,4.6vw,56px)]">Most of them are asleep. That is the point.</h2></Reveal>
-        <div className="mt-10 flex gap-4 overflow-x-auto pb-4 [scrollbar-width:thin]" role="list" aria-label="Receipt Sprites">
+        <div tabIndex={0} className="mt-10 flex gap-4 overflow-x-auto pb-4 [scrollbar-width:thin]" role="list" aria-label="Receipt Sprites, scrollable">
           {(sprites.length ? sprites.map((r) => ({ name: r.sprite ?? `slv-r-${r.id.toLowerCase()}`, awake: r.status === "owed" || r.status === "asking", line: r.title })) : ["slv-r-7q2a", "slv-r-k9da", "slv-r-m3fx", "slv-r-b81c", "slv-r-t5pw"].map((n, i) => ({ name: n, awake: i === 0, line: "example receipt" }))).map((s) => (
             <div role="listitem" key={s.name} className={`perf w-[190px] shrink-0 rounded-b-[14px] border border-hair bg-white/80 p-4 pt-5 ${s.awake ? "awake shadow-[0_0_0_2px_#BFAEF6,0_16px_40px_-14px_rgba(106,75,224,.5)]" : "opacity-70"}`}>
               <p className="mono text-[12px] text-violet-ink">{s.name}</p>
@@ -120,7 +120,7 @@ export default function Landing() {
       {/* 7. partners */}
       <section className="mx-auto max-w-[1180px] px-5 py-16 sm:px-6">
         <Reveal><Eyebrow n="05">Partners doing real jobs</Eyebrow><h2 className="h-display mt-3 max-w-3xl text-[clamp(32px,4.6vw,56px)]">Delete any one and a step disappears.</h2></Reveal>
-        <div className="scroll-x mt-8 rounded-2xl border border-hair bg-white/70">
+        <div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x mt-8 rounded-2xl border border-hair bg-white/70">
           <table className="t min-w-[760px]">
             <thead><tr><th>Product</th><th>Job in Salvor</th><th>Without it</th></tr></thead>
             <tbody>

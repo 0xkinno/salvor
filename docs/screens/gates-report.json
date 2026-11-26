@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-26T06:13:32.261Z",
+  "routes": [
+    "/"
+  ],
+  "views": [
+    "iphone",
+    "android",
+    "tablet",
+    "laptop",
+    "desktop"
+  ],
+  "failures": [],
+  "runs": 5
+}

@@ -68,12 +68,12 @@ export default function How() {
       </section>
 
       <section className="mt-12"><h2 className="h-display text-[34px]">Why a Sprite, specifically</h2>
-        <div className="scroll-x mt-4 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[640px]"><thead><tr><th>Primitive</th><th>Delete test</th></tr></thead><tbody>{DELETE.map(([a, b]) => <tr key={a}><td className="whitespace-nowrap font-medium">{a}</td><td className="text-[15px]">{b}</td></tr>)}</tbody></table></div>
+        <div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x mt-4 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[640px]"><thead><tr><th>Primitive</th><th>Delete test</th></tr></thead><tbody>{DELETE.map(([a, b]) => <tr key={a}><td className="whitespace-nowrap font-medium">{a}</td><td className="text-[15px]">{b}</td></tr>)}</tbody></table></div>
       </section>
 
       <section className="mt-12"><h2 className="h-display text-[34px]">Live, substituted, designed</h2>
         <p className="mt-2 text-muted">Read from <Link to="/proof">the measured status</Link>{st ? ` at ${when(st.at)}` : ""}. A substitute is named here with its reason. Nothing is shown as connected unless a call just succeeded.</p>
-        <div className="scroll-x mt-4 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[640px]"><thead><tr><th>Part</th><th>State</th><th>Measured</th></tr></thead><tbody>
+        <div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x mt-4 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[640px]"><thead><tr><th>Part</th><th>State</th><th>Measured</th></tr></thead><tbody>
           {st ? <>
             <tr><td>Sprites gateway</td><td><span className={`chip ${st.gateway.ok ? "chip-owed" : "chip-ember"}`}>{st.gateway.ok ? "live" : "unreachable"}</span></td><td className="text-[14px]">{st.gateway.ok ? `${st.gateway.connections.length} connections visible to slv-home` : st.gateway.error}</td></tr>
             {st.hands.map((h: any) => <tr key={h.conn}><td className="mono">{h.conn}</td><td><span className={`chip ${h.ok ? "chip-owed" : "chip-ember"}`}>{h.ok ? "live" : "not connected"}</span></td><td className="text-[14px]">{h.ok ? `HTTP ${h.status} in ${h.ms} ms at ${when(h.at)}` : h.note}</td></tr>)}

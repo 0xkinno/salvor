@@ -149,7 +149,7 @@ export default function ReceiptPage() {
 
       <section className="mt-8">
         <p className="eyebrow">Every reading</p>
-        <div className="scroll-x mt-3 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[640px]"><thead><tr><th>When</th><th>Price</th><th>Decision</th><th>Why</th></tr></thead>
+        <div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x mt-3 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[640px]"><thead><tr><th>When</th><th>Price</th><th>Decision</th><th>Why</th></tr></thead>
           <tbody>{obs.length ? obs.map((o) => (<tr key={o.id}><td className="whitespace-nowrap">{when(o.observed_at)}</td><td className="num">{money(o.price_cents)}</td><td><span className={`chip ${o.decision === "owed" ? "chip-owed" : o.decision === "ask" ? "chip-ember" : "chip-mute"}`}>{o.decision.replace("_", " ")}</span></td><td className="text-[14px] text-muted">{o.why}</td></tr>)) : <tr><td colSpan={4} className="text-muted">No readings yet. The next wake is on the schedule above.</td></tr>}</tbody></table></div>
       </section>
     </div>

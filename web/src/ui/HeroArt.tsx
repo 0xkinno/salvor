@@ -16,9 +16,6 @@ export function HeroArt({ item, paid, now, owed, date, checkpoint = "v7", sha = 
     const r = ref.current.getBoundingClientRect();
     mx.set((e.clientX - r.left) / r.width - 0.5); my.set((e.clientY - r.top) / r.height - 0.5);
   };
-  const lines = [
-    ["ITEM", item.slice(0, 22).toUpperCase()], ["QTY", "1"],
-  ];
   return (
     <div ref={ref} onPointerMove={onMove} className="relative mx-auto w-full max-w-[520px] select-none" style={{ aspectRatio: "560 / 560" }}>
       <svg viewBox="0 0 560 560" role="img" aria-label={`Example receipt: paid ${money(paid)}, now ${money(now)}, owed ${money(owed)}, held by a small glowing computer`} className="h-full w-full overflow-visible">
@@ -31,12 +28,12 @@ export function HeroArt({ item, paid, now, owed, date, checkpoint = "v7", sha = 
         <ellipse cx="280" cy="210" rx="270" ry="250" fill="url(#glow)" />
       </svg>
 
-      <motion.div style={{ x: bx, y: by }} className="absolute left-[2%] top-[58%] hidden w-[44%] rounded-2xl border border-hair bg-white/90 p-3 shadow-[0_14px_30px_-14px_rgba(23,19,43,.25)] sm:block" aria-hidden="true">
+      <motion.div style={{ x: bx, y: by }} className="absolute left-[0%] top-[74%] hidden w-[40%] rounded-2xl border border-hair bg-white/90 p-3 shadow-[0_14px_30px_-14px_rgba(23,19,43,.25)] sm:block" aria-hidden="true">
         <p className="eyebrow !text-[10px]">Box folder</p>
         <p className="mono mt-1 text-[12px]">Claims / {date}</p>
         <div className="mt-2 flex gap-1.5"><span className="h-1.5 w-8 rounded bg-lilac-200" /><span className="h-1.5 w-5 rounded bg-lilac-200" /><span className="h-1.5 w-6 rounded bg-hair" /></div>
       </motion.div>
-      <motion.div style={{ x: cx, y: cy }} className="absolute right-[0%] top-[70%] hidden rounded-full border border-lilac-200 bg-white/95 px-3 py-1.5 shadow-[0_10px_24px_-12px_rgba(106,75,224,.5)] sm:block" aria-hidden="true">
+      <motion.div style={{ x: cx, y: cy }} className="absolute right-[0%] top-[88%] hidden rounded-full border border-lilac-200 bg-white/95 px-3 py-1.5 shadow-[0_10px_24px_-12px_rgba(106,75,224,.5)] sm:block" aria-hidden="true">
         <span className="mono text-[11px] text-violet-ink">{checkpoint} · sha256 {sha}…</span>
       </motion.div>
 
@@ -54,21 +51,21 @@ export function HeroArt({ item, paid, now, owed, date, checkpoint = "v7", sha = 
 
       {/* receipt */}
       <motion.div
-        initial={reduce ? false : { clipPath: "inset(0 0 100% 0)" }} animate={{ clipPath: "inset(0 0 0% 0)" }} transition={{ duration: 1.7, ease: [0.22, 1, 0.36, 1] }}
+        initial={reduce ? false : { clipPath: "inset(0 0 100% -60px)" }} animate={{ clipPath: "inset(0 0 -60px 0)" }} transition={{ duration: 1.7, ease: [0.22, 1, 0.36, 1] }}
         className="absolute left-1/2 top-[27%] w-[62%] -translate-x-1/2"
         style={{ transform: "translateX(-50%) perspective(900px) rotateZ(-4deg) rotateY(-7deg) rotateX(3deg)", transformOrigin: "50% 0" }}
       >
-        <div className="relative rounded-[6px] border border-hair bg-[linear-gradient(#fff,#FBF9F5)] px-5 pb-8 pt-5 shadow-[0_24px_50px_-18px_rgba(23,19,43,.35)]" style={{ fontFamily: "JetBrains Mono, monospace" }}>
+        <div className="relative rounded-[6px] border border-hair bg-[linear-gradient(#fff,#FBF9F5)] px-5 pb-16 pt-5 shadow-[0_24px_50px_-18px_rgba(23,19,43,.35)]" style={{ fontFamily: "JetBrains Mono, monospace" }}>
           <p className="text-center text-[11px] tracking-[.2em] text-muted">TARGET · ONLINE ORDER</p>
           <div className="my-2 border-t border-dashed border-hair" />
-          {lines.map(([a, b]) => (<p key={a} className="flex justify-between text-[11px] text-ink"><span className="text-muted">{a}</span><span>{b}</span></p>))}
-          <p className="mt-2 flex justify-between text-[13px] text-ink"><span>PAID</span><span className="num">{(paid / 100).toFixed(2)}</span></p>
-          <p className="flex justify-between text-[12px] text-muted"><span>{date}</span><span className="num line-through decoration-[#C2410C]">{(paid / 100).toFixed(2)}</span></p>
+          <p className="text-[11px] leading-snug text-ink">{item.toUpperCase()}</p>
+          <p className="mt-2 flex justify-between text-[13px] text-ink"><span>PAID {date.toUpperCase()}</span><span className="num">{(paid / 100).toFixed(2)}</span></p>
           <div className="my-2 border-t border-dashed border-hair" />
           <p className="flex justify-between text-[14px] font-medium text-owed-ink"><span>TODAY</span><span className="num">{(now / 100).toFixed(2)}</span></p>
+          <p className="mt-1 text-[10px] tracking-[.1em] text-muted">SAME STORE, SAME ITEM</p>
           <motion.div
             initial={reduce ? false : { scale: 2.2, opacity: 0, rotate: -24 }} animate={{ scale: 1, opacity: 1, rotate: -9 }} transition={{ delay: 1.5, type: "spring", stiffness: 320, damping: 16 }}
-            className="absolute -bottom-5 right-3 flex h-[84px] w-[84px] flex-col items-center justify-center rounded-full border-[3px] border-owed bg-white/90 text-owed-ink"
+            className="absolute -bottom-6 right-4 flex h-[88px] w-[88px] flex-col items-center justify-center rounded-full border-[3px] border-owed bg-white/90 text-owed-ink"
           >
             <span className="text-[9px] tracking-[.18em]">OWED</span>
             <span className="num text-[17px] font-semibold leading-none">{money(owed)}</span>

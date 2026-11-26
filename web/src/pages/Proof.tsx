@@ -37,7 +37,7 @@ export default function Proof() {
       </section>
 
       <section className="mt-10"><h2 className="h-display text-[34px]">P5 · break campaign, failures kept</h2>
-        {f?.p5?.length ? <div className="scroll-x mt-4 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[720px]"><thead><tr><th>Case</th><th>Expected</th><th>Observed</th><th>Result</th></tr></thead><tbody>{f.p5.map((c: any) => <tr key={c.id}><td>{c.name}</td><td className="text-[14px]">{c.expected}</td><td className="text-[14px]">{c.observed}</td><td><span className={`chip ${c.pass ? "chip-owed" : "chip-ember"}`}>{c.pass ? "pass" : "fail"}</span></td></tr>)}</tbody></table></div> : <p className="mt-3 text-muted">The break campaign has not run yet.</p>}
+        {f?.p5?.length ? <div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x mt-4 rounded-2xl border border-hair bg-white/70"><table className="t min-w-[720px]"><thead><tr><th>Case</th><th>Expected</th><th>Observed</th><th>Result</th></tr></thead><tbody>{f.p5.map((c: any) => <tr key={c.id}><td>{c.name}</td><td className="text-[14px]">{c.expected}</td><td className="text-[14px]">{c.observed}</td><td><span className={`chip ${c.pass ? "chip-owed" : "chip-ember"}`}>{c.pass ? "pass" : "fail"}</span></td></tr>)}</tbody></table></div> : <p className="mt-3 text-muted">The break campaign has not run yet.</p>}
       </section>
 
       {measured && f.p1.misses.length > 0 && <section className="mt-10"><h2 className="h-display text-[34px]">Misses, by item</h2><ul className="mono mt-3 space-y-1 text-[13px]">{f.p1.misses.map((m: any) => <li key={m.id}>{m.id}: {m.reason}</li>)}</ul></section>}
