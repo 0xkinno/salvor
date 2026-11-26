@@ -18,6 +18,9 @@ import { parseCents } from "../policy/money.ts";
 import { CLAUSES } from "../policy/clauses.ts";
 import { scrubUiCopy } from "../house/style.ts";
 import { claimWords } from "../connectors/ollama.ts";
+import { addReceipt, shortId } from "./ledger.ts";
+import { birth, retire, spriteNameFor } from "./fleet.ts";
+import { pollMail, pollBox } from "./intake.ts";
 
 const started = Date.now();
 const WEB = process.env.SALVOR_WEB ?? "web/dist";
@@ -193,7 +196,7 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
   if (p === "/health") return send(res, 200, { ok: true, uptime_s: Math.round((Date.now() - started) / 1000) });
   if (p === "/api/status") return send(res, 200, await statusView());
   if (p === "/api/stats") return send(res, 200, { ...headline(), cost: { per_receipt_usd: costSummary().per_receipt_usd }, recomputed_at: new Date().toISOString() });
-  if (p === "/api/receipts") return send(res, 200, { receipts: receiptsView(), next_wake: nextWake(), headline: headline() });
+  if (p === "/api/receipts" && m === "GET") return send(res, 200, { receipts: receiptsView(), next_wake: nextWake(), headline: headline() });
   const rm = /^\/api\/receipts\/([A-Za-z0-9-]+)$/.exec(p);
   if (rm) { const d = receiptDetail(rm[1]); return d ? send(res, 200, d) : send(res, 404, { error: "unknown receipt" }); }
   if (p === "/api/fleet") return send(res, 200, await fleetView());
@@ -255,6 +258,17 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     const r = await runTry({ url: String(b.url ?? ""), paid: String(b.paid ?? ""), date: String(b.date ?? "") }, visitorKey(ip(req), String(req.headers["user-agent"] ?? "")), cents);
     return send(res, r.ok ? 200 : r.status, r);
   }
+  if (p === "/api/receipts" && m === "POST") {
+    if (!hasToken(req)) return send(res, 403, { error: "Adding a receipt needs the household token." });
+    const b = await readBody(req);
+    let cents: number;
+    try { cents = parseCents(String(b.paid ?? "")); } catch { return send(res, 400, { error: "paid must be a price like 129.99" }); }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(b.date ?? "")) || !["target", "bestbuy"].includes(b.retailer) || !String(b.line ?? "").trim()) return send(res, 400, { error: "retailer, date (YYYY-MM-DD) and line are required" });
+    const r = addReceipt({ retailer: b.retailer, channel: "online", purchased_date: b.date, source: "api", household: "owner", lines: [{ raw_text: String(b.line).slice(0, 160), paid_cents: cents, qty: Math.max(1, Number(b.qty) || 1), listing_url: b.url || null }] });
+    let born: unknown = null;
+    if (b.url) { try { born = await birth(r.receiptId, r.lineIds[0]); } catch (e) { born = { error: String((e as Error).message).slice(0, 200) }; } }
+    return send(res, 201, { receipt: r.receiptId, line: r.lineIds[0], sprite: b.url ? spriteNameFor(r.receiptId) : null, born });
+  }
   // ---- the two wake sources: Apify's schedule webhook and the backup tick
   const hook = /^\/hooks\/apify\/([A-Za-z0-9_-]+)$/.exec(p);
   if (hook && m === "POST") {
@@ -308,9 +322,24 @@ export function createServer() {
   });
 }
 
+// Background work on slv-home. Intake polling and the retire sweep run on timers; each step is
+// wrapped so one failure never stops the loop, and every failure lands in the event log.
+export function startBackground() {
+  const guard = (name: string, fn: () => Promise<unknown>) => () => { if (killSwitch()) return; fn().catch((e) => event("background_failed", { name, error: String(e?.message ?? e).slice(0, 200) })); };
+  const inbox = process.env.SALVOR_INBOX;
+  if (inbox) setInterval(guard("mail", () => pollMail(inbox)), 5 * 60_000);
+  if (process.env.SALVOR_BOX_POLL === "1") setInterval(guard("box", () => pollBox()), 5 * 60_000);
+  // Retire Sprites whose window has closed: read the meter, book the cost, delete.
+  setInterval(guard("retire", async () => {
+    const due = db().prepare("SELECT id, sprite, created_at FROM receipts WHERE sprite IS NOT NULL AND status NOT IN ('retired') AND window_ends_at < ? AND NOT EXISTS (SELECT 1 FROM claims c JOIN lines l ON l.id=c.line_id WHERE l.receipt_id=receipts.id AND c.approved_at IS NULL)").all(new Date().toISOString()) as any[];
+    for (const r of due) await retire(r.sprite, r.created_at);
+  }), 60 * 60_000);
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
+  if (process.env.SALVOR_BACKGROUND !== "0") startBackground();
   const port = Number(process.env.PORT ?? 8080);
   createServer().listen(port, "0.0.0.0", () => console.log(`salvor home listening on ${port} (gateway: ${gatewayMode()})`));
 }
 
-export { ingestReport, lineRow, claimWords, fileClaimInBox, createHash };
+export { ingestReport, lineRow, claimWords, fileClaimInBox, createHash, shortId };

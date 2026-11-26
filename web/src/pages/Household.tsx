@@ -30,7 +30,7 @@ export default function Household() {
             <ul data-tour="cards" className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {data.receipts.map((r) => (
                 <li key={r.id}>
-                  <Link to={`/app/r/${r.id}`} className="block no-underline text-ink">
+                  <Link to={`/app/r/${r.id}`} className="block h-full no-underline text-ink">
                     <GlowCard className="perf h-full overflow-hidden !rounded-t-none p-5 pt-6">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0"><p className="mono truncate text-violet-ink">{r.sprite ?? "no Sprite yet"}</p><h2 className="mt-1 text-[18px] font-semibold leading-snug">{r.title}</h2></div>

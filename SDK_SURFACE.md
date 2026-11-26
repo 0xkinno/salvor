@@ -95,6 +95,6 @@ Connection: `sprites-api-hands`
 | Where | Line |
 |---|---|
 | `src/receipt/evidence.ts:27` | const raw = execFileSync("sprite-env", ["checkpoints", "create", "--comment", comment.slice(0, 200)], { encodi |
-| `src/receipt/worker.ts:39` | try { policy = JSON.parse(readFileSync("/.sprite/policy/network.json", "utf8")); } catch (e) { policy = { unre |
-| `src/receipt/worker.ts:42` | try { writeFileSync("/.sprite/policy/network.json", "{}"); results.policy_writable = true; } catch { results.p |
-| `src/receipt/worker.ts:51` | try { labels = execFileSync("sprite-env", ["info"], { encoding: "utf8", timeout: 8000 }).slice(0, 400); } catc |
+| `src/receipt/worker.ts:40` | try { policy = JSON.parse(readFileSync("/.sprite/policy/network.json", "utf8")); } catch (e) { policy = { unre |
+| `src/receipt/worker.ts:43` | try { writeFileSync("/.sprite/policy/network.json", "{}"); results.policy_writable = true; } catch { results.p |
+| `src/receipt/worker.ts:52` | try { labels = execFileSync("sprite-env", ["info"], { encoding: "utf8", timeout: 8000 }).slice(0, 400); } catc |

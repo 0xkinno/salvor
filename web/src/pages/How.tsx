@@ -17,7 +17,7 @@ function Diagram() {
       {box(20, 30, 190, 62, "Apify schedule", "every 6 hours", true)}
       {box(20, 200, 190, 62, "Teresa", "phone, email, Box")}
       {box(300, 110, 230, 120, "slv-home", "label salvor-hands", true)}
-      <text x="415" y="196" textAnchor="middle" fontSize="11" fill="#5C566F" fontFamily="JetBrains Mono">app, API, ledger, policy</text>
+      <text x="415" y="214" textAnchor="middle" fontSize="11" fill="#5C566F" fontFamily="JetBrains Mono">app, API, ledger, policy</text>
       {box(300, 300, 230, 60, "slv-r-7q2a", "label salvor-eyes")}
       {box(300, 372, 230, 60, "slv-r-k9da", "asleep")}
       {box(640, 20, 150, 52, "Apify datasets")}
@@ -28,7 +28,7 @@ function Diagram() {
       {box(640, 382, 150, 52, "AgentMail")}
       <rect x="560" y="14" width="46" height="430" rx="23" fill="#17132B" />
       <text x="583" y="236" textAnchor="middle" fontSize="12" fill="#F6F4F0" fontFamily="JetBrains Mono" transform="rotate(-90 583 236)">Sprites gateway, deny by default</text>
-      {arrow("M210 61H300")}
+      {arrow("M210 61H255V150H300")}
       {arrow("M415 230V300")}
       {arrow("M530 330H560")}
       {arrow("M606 46H640")}{arrow("M606 112H640")}{arrow("M606 178H640")}
