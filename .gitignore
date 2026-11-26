@@ -10,3 +10,5 @@ dist/
 web/dist/
 .salvor-local/
 *.log
+config/connections.json
+evidence/probe/

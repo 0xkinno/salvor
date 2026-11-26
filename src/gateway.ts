@@ -1,7 +1,7 @@
 // One door to the outside world. No Authorization header ever leaves this file.
 // On a Sprite the gateway identifies the caller from Fly's request signature; this code holds
 // no key. Every call is counted (R7) and every status is measured, never assumed.
-import { appendFileSync, mkdirSync } from "node:fs";
+import { appendFileSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname } from "node:path";
 
 export const REAL_LIST = "https://api.sprites.dev/v1/gateway/list";
@@ -35,10 +35,27 @@ export async function discover(force = false): Promise<Discovery> {
 
 export function resetDiscovery() { cache = null; }
 
-// Match by exact connection name first, then by provider. Never fall back silently.
+// config/connections.json (written by scripts/setup-connectors.mjs) maps our names to connection ids.
+// Ids are not secrets. A connection is found by id first, then by display name, then by provider.
+let idMap: Record<string, string> | null = null;
+function idFor(name: string): string | null {
+  if (idMap === null) {
+    idMap = {};
+    try {
+      const j = JSON.parse(readFileSync(process.env.SALVOR_CONNECTIONS ?? "config/connections.json", "utf8"));
+      for (const [k, v] of Object.entries<any>(j.connections ?? {})) if (v?.id) idMap[k] = String(v.id);
+    } catch { /* no map: names and providers are used */ }
+  }
+  return idMap[name] ?? null;
+}
+
+// Never fall back silently: a name that matches nothing throws.
 export async function base(name: string): Promise<string> {
   const { conns } = await discover();
-  const hit = conns.find((c) => c.name.toLowerCase() === name.toLowerCase()) ?? conns.find((c) => c.provider.toLowerCase() === name.toLowerCase());
+  const id = idFor(name);
+  const hit = (id ? conns.find((c) => c.base.endsWith("/" + id)) : undefined)
+    ?? conns.find((c) => c.name.toLowerCase() === name.toLowerCase())
+    ?? conns.find((c) => c.provider.toLowerCase() === name.toLowerCase());
   if (!hit) throw new Error(`connector "${name}" is not granted to this Sprite`);
   return hit.base;
 }
