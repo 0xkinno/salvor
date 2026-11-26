@@ -92,7 +92,7 @@ export function Banner({ children, motif = "ledger" }: { children: ReactNode; mo
         {motif === "how" && <g fill="none" stroke="url(#bn-how)" strokeWidth="2.4"><circle cx="360" cy="110" r="30" /><circle cx="450" cy="60" r="18" /><circle cx="450" cy="160" r="18" /><circle cx="270" cy="110" r="14" /><path d="M300 108 L330 110M385 98 L435 66M385 122 L435 154" strokeLinecap="round" /></g>}
         {(motif === "ledger" || motif === "receipt" || motif === "try" || motif === "judge") && <g transform="translate(330 20) rotate(8)"><path d="M0 0h110v150l-14-9-14 9-14-9-14 9-14-9-14 9-14-9-12 9z" fill="#fff" stroke="url(#bn-ledger)" strokeWidth="2.4" /><path d="M18 30h74M18 52h54M18 74h64M18 96h40" stroke="#DACFFB" strokeWidth="5" strokeLinecap="round" /><circle cx="84" cy="112" r="18" fill="none" stroke="#0E7A57" strokeWidth="3" /></g>}
       </svg>
-      <div className="relative max-w-3xl">{children}</div>
+      <div className="relative max-w-3xl md:max-w-[58%]">{children}</div>
     </div>
   );
 }

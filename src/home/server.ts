@@ -121,7 +121,7 @@ async function fleetView() {
     const row: any = { name: s.name, status: s.status, labels: s.labels ?? [], url: s.url ?? null, created_at: s.created_at ?? null };
     try { row.egress = await sprites.getNetworkPolicy(s.name); } catch { row.egress = null; }
     try { row.checkpoints = (await sprites.listCheckpoints(s.name)).slice(-5).map((c: any) => ({ id: c.id ?? c.checkpoint_id, comment: c.comment, created_at: c.created_at })); } catch { row.checkpoints = []; }
-    try { const u = await sprites.usage(s.name, s.created_at ?? new Date(Date.now() - 7 * 86_400_000).toISOString()); row.usage = { cpu_time_sec: u.cpu_time_sec, partial: u.partial }; } catch { row.usage = null; }
+    try { const u = await sprites.usage(s.name, new Date(Date.now() - 24 * 3_600_000).toISOString()); row.usage = { cpu_time_sec: u.cpu_time_sec, partial: u.partial }; } catch { row.usage = null; }
     const w = db().prepare("SELECT started_at, cold_ms FROM wakes WHERE sprite=? ORDER BY started_at DESC LIMIT 1").get(s.name) as any;
     row.last_wake = w?.started_at ?? null; row.last_wake_ms = w?.cold_ms ?? null;
     row.wakes = (db().prepare("SELECT substr(started_at,1,13) h, COUNT(*) c FROM wakes WHERE sprite=? GROUP BY h ORDER BY h DESC LIMIT 24").all(s.name) as any[]).reverse();

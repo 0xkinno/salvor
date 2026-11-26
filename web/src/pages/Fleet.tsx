@@ -32,7 +32,7 @@ export default function Fleet() {
             <GlowCard className="mt-4 overflow-hidden"><div tabIndex={0} role="region" aria-label="Scrollable table" className="scroll-x"><table className="t min-w-[900px]">
               <thead><tr><th>Sprite</th><th>State</th><th>Labels</th><th>Egress rule</th><th>Checkpoints</th><th>CPU time</th><th>Last wake</th><th>Wakes</th></tr></thead>
               <tbody>{data.sprites.map((s) => (
-                <tr key={s.name}><td className="mono whitespace-nowrap text-violet-ink">{s.name}</td><td><StatusChip status={s.status === "running" ? "awake" : s.status === "warm" ? "watching" : "retired"} /> <span className="text-[12px] text-muted">{s.status}</span></td>
+                <tr key={s.name}><td className="mono whitespace-nowrap text-violet-ink">{s.name}</td><td><StatusChip status={s.status === "running" ? "awake" : "watching"} /> <span className="text-[12px] text-muted">{s.status}</span></td>
                   <td>{s.labels.length ? s.labels.map((l: string) => <span key={l} className="chip chip-violet mr-1">{l}</span>) : <span className="text-muted">none</span>}</td>
                   <td className="mono text-[12px]">{rule(s.egress)}</td>
                   <td className="mono text-[12px]">{s.checkpoints.length ? s.checkpoints.map((c: any) => c.id).join(" ") : "none"}</td>
@@ -40,7 +40,7 @@ export default function Fleet() {
                   <td className="whitespace-nowrap text-[13px]">{when(s.last_wake)}{s.last_wake_ms ? ` · ${(s.last_wake_ms / 1000).toFixed(1)} s` : ""}</td>
                   <td><Spark data={s.wakes} /></td></tr>))}</tbody></table></div></GlowCard>
           )}
-          <p className="mt-4 text-[13px] text-muted">CPU cost uses Fly's published rate of {usd(0.0385, 4)} per CPU-hour. The per-receipt bill is on the proof page.</p>
+          <p className="mt-4 text-[13px] text-muted">CPU time is the last 24 hours from Fly's usage meter, which updates with a delay. CPU cost uses Fly's published rate of {usd(0.0385, 4)} per CPU-hour; the per-receipt bill is on the proof page.</p>
         </div>
       )}
     </div>
