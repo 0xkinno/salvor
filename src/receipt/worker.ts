@@ -10,6 +10,7 @@ import { observe, type Report } from "./observe.ts";
 import { DIR } from "./evidence.ts";
 import { resolve, trynew } from "./resolve.ts";
 import { lastRun } from "../connectors/apify.ts";
+import { decide } from "../connectors/jev.ts";
 
 const calls: Report["calls"] = [];
 setRecorder((provider, route, status, ms) => calls.push({ provider, route, status, ms }));
@@ -74,6 +75,15 @@ try {
     if (!task) throw new Error("usage: observe-latest <apifyTaskId>");
     const run = await lastRun(task);
     out(await observe(run.id, run.defaultDatasetId, run.finishedAt ?? new Date().toISOString(), calls));
+  } else if (cmd === "jev-batch") {
+    // P3: read labelled pairs from stdin ([{id, line, listing}]) and return Jev's answers. Typed fields only.
+    const pairs = JSON.parse(readFileSync(0, "utf8"));
+    const res = [];
+    for (const p of pairs) {
+      try { const a = await decide({ raw_text: p.line, retailer: "target" }, p.listing, { id: "p3", text: p.clause ?? "" }); res.push({ id: p.id, same: a.same, conf: a.sameConf, owed_p: a.owedP }); }
+      catch (e) { res.push({ id: p.id, error: String((e as Error).message).slice(0, 120) }); }
+    }
+    out(res);
   } else if (cmd === "resolve") out(await resolve());
   else if (cmd === "try") {
     const [url, paid, date, retailer] = args;
