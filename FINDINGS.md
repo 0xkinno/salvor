@@ -48,4 +48,14 @@ These are observations, not answers to the questions above. Sources are in `evid
 
 (appended by `scripts/probe.mjs` runs, each with its date, the request and response redacted, and the rung chosen)
 
-_No probe has run yet. This section stays empty until it does, and the README's friction report reads only from here._
+### Partial answers, 2026-11-26 (Apify, Pinecone, Ollama, AgentMail keys; run from the build machine, not from a Sprite)
+
+Pre-registration commit: 6792274. Platform questions Q1 to Q8, Q12, Q13, Q16, Q17 stay unanswered until a Sprites token exists (see PROGRESS.md).
+
+- **Q9 Apify actor (answered).** `apify/e-commerce-scraping-tool` read 10 of 10 Target product pages found by a search page run. Fields returned: `name`, `offers.price`, `offers.priceText`, `offers.priceCurrency`, `url`, `image`, `rating`, `reviewCount`. Fields returned empty: `offers.availability`, `brand.name`, `gtin`. Not returned at all: seller, regular price. Cost: $0.0751 for 10 detail pages ($0.0075 per page). Consequence: the third-party seller exclusion cannot be read from the page, so a missing seller is treated as unknown, not as Target, and the claim packet tells the user to confirm "sold by Target". The regular (was) price is not shown. Raw log: `evidence/probe/actors-2026-11-26.json` (kept local).
+- **Q15 archived prices (answered, against us).** Apify can fetch a Wayback URL, but the nearest snapshot returned was dated 2026-05-14, and the archived page carries no price (`offers.price` null). Early-November prices are not obtainable this way. P1 is redesigned as "watched from first sight" (PROOF_PLAN amendment 1).
+- **Q14 Best Buy policy page (still open).** The same actor timed out at 120 seconds on the Best Buy help page. Best Buy stays held.
+- **Q9 Jev route (open).** The TypeSafe console asks for a payment method before issuing a key. Jev is not yet reachable, so no route has been probed.
+- **Q11 Ollama (partly answered).** The key works and lists 25 models. Vision-capable and used: `gemma4:31b` (vision), `gpt-oss:120b` (text, claim words). A model named `clef:27b` advertises the capabilities `decision` and `vision`; it has not been tested and is not used. Whether `/api/chat` with images passes the gateway is still open.
+- **Pinecone (answered).** The key works; `multilingual-e5-large` embeds through `POST /embed`. Index `salvor-household` (1024 dimensions, cosine, AWS us-east-1) was created for the household memory.
+- **AgentMail (answered).** The key is scoped to one inbox (`kings-8183@agentmail.to`) and lacks the `inbox_read` permission for listing inboxes, but it can read that inbox's messages.

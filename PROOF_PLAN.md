@@ -22,3 +22,11 @@ fails when FACTS is stale. Curated and wild data are reported apart. Misses are 
 ## What would make us withdraw a headline
 
 A wrong-claim rate above 5% at the chosen tau on the wild set, a verification failure that the verifier did not flag, or a clause misread. Any of these is written into `PROGRESS.md` with the fix.
+
+## Amendment 1 (2026-11-26, before any study run)
+
+Finding Q15 (FINDINGS.md): an archived early-November Target price cannot be obtained. The Wayback copy nearest to Nov 5 is from May and has no price. P1 is therefore changed, before any result exists, to:
+
+**P1 (amended).** For 24 Target items on a frozen list (hash in `evidence/labels/p1-items.sha256`), take the first reading on Nov 26 as the price a buyer on Nov 26 would have paid. For each later scheduled reading through the end of the watch, record whether Target's price fell below that first reading. Under the Holiday Price Match Guarantee a buyer from Nov 1 is owed that difference if the lower price appears on or before Dec 24. Reported: items with a usable first and later reading, the share that fell, total and median owed per unit, misses by id. The headline says "watched from Nov 26", not "early November".
+
+The expected result could come out against us: few items may fall, and a watch of a few days is short. Both are published as measured.

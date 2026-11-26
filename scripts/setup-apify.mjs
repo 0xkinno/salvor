@@ -6,7 +6,8 @@
 import { readFileSync, existsSync } from "node:fs";
 import { need } from "./lib/api.mjs";
 
-need("APIFY_TOKEN", "SALVOR_URL", "SALVOR_HOOK_SECRET");
+need("APIFY_TOKEN");
+const HOOK = Boolean(process.env.SALVOR_URL && process.env.SALVOR_HOOK_SECRET);   // without a live home URL the schedule still collects history; the webhook is added on a re-run
 const API = "https://api.apify.com/v2";
 const H = { authorization: `Bearer ${process.env.APIFY_TOKEN}`, "content-type": "application/json" };
 const actor = (process.env.SALVOR_APIFY_ACTOR ?? "apify/e-commerce-scraping-tool").replace("/", "~");
@@ -33,6 +34,7 @@ sched = sched ? (await j("PUT", `/schedules/${sched.id}`, body)).data : (await j
 console.log(`schedule ${sched.id}: every 6 hours UTC`);
 
 // Webhook payload carries just what slv-home needs. A duplicate delivery is harmless (idempotent by run id).
+if (!HOOK) { console.log("no SALVOR_URL yet: schedule created, webhook skipped (re-run once slv-home is live)"); console.log(`\nSALVOR_APIFY_TASK=${task.id}`); process.exit(0); }
 const url = `${process.env.SALVOR_URL.replace(/\/$/, "")}/hooks/apify/${process.env.SALVOR_HOOK_SECRET}`;
 const hooks = (await j("GET", `/actor-tasks/${task.id}/webhooks`)).data?.items ?? [];
 const payloadTemplate = '{"runId": {{resource.id}}, "datasetId": {{resource.defaultDatasetId}}, "finishedAt": {{resource.finishedAt}}, "status": {{resource.status}}}';
