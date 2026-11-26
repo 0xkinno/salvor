@@ -20,19 +20,27 @@ export function Wordmark() {
   );
 }
 
-export function GlowCard({ children, className = "", as = "div" }: { children: ReactNode; className?: string; as?: "div" | "li" | "article" }) {
-  const x = useMotionValue(-200), y = useMotionValue(-200);
-  const bg = useMotionTemplate`radial-gradient(260px circle at ${x}px ${y}px, rgba(106,75,224,0.16), transparent 70%)`;
+export function GlowCard({ children, className = "", as = "div", dark = false }: { children: ReactNode; className?: string; as?: "div" | "li" | "article"; dark?: boolean }) {
+  const x = useMotionValue(-300), y = useMotionValue(-300);
+  const border = useMotionTemplate`radial-gradient(320px circle at ${x}px ${y}px, rgba(106,75,224,0.95), rgba(201,164,92,0.55) 38%, transparent 68%)`;
+  const spot = useMotionTemplate`radial-gradient(280px circle at ${x}px ${y}px, ${dark ? "rgba(191,174,246,0.20)" : "rgba(106,75,224,0.13)"}, transparent 70%)`;
   const Tag = motion[as];
+  // Padding utilities written on a card are moved to its inner surface so the 1px glow border stays intact.
+  const parts = className.split(/\s+/).filter(Boolean);
+  const padCls = parts.filter((c) => /^((sm|md|lg|xl):)?(p|px|py|pt|pb|pl|pr)-/.test(c)).join(" ");
+  className = parts.filter((c) => !/^((sm|md|lg|xl):)?(p|px|py|pt|pb|pl|pr)-/.test(c)).join(" ");
   return (
     <Tag
       onMouseMove={(e: React.MouseEvent<HTMLElement>) => { const r = e.currentTarget.getBoundingClientRect(); x.set(e.clientX - r.left); y.set(e.clientY - r.top); }}
-      onMouseLeave={() => { x.set(-200); y.set(-200); }}
-      whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 300, damping: 26 }}
-      className={`relative rounded-[18px] border border-hair bg-white/80 backdrop-blur shadow-[0_1px_0_rgba(255,255,255,.8)_inset,0_10px_30px_-12px_rgba(23,19,43,.18)] hover:shadow-[0_0_0_1px_rgba(106,75,224,.28),0_18px_50px_-14px_rgba(106,75,224,.35)] ${className}`}
+      onMouseLeave={() => { x.set(-300); y.set(-300); }}
+      whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 26 }}
+      className={`group relative rounded-[22px] p-px shadow-[0_18px_44px_-24px_rgba(23,19,43,.35)] transition-shadow duration-300 hover:shadow-[0_28px_70px_-22px_rgba(106,75,224,.55)] ${dark ? "bg-[#2A2160]" : "bg-hair"} ${className}`}
     >
-      <motion.div aria-hidden className="pointer-events-none absolute inset-0 rounded-[18px]" style={{ background: bg }} />
-      <div className="relative">{children}</div>
+      <motion.div aria-hidden className="pointer-events-none absolute inset-0 rounded-[22px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: border }} />
+      <div className={`relative h-full rounded-[21px] ${dark ? "glass-dark" : "glass"}`}>
+        <motion.div aria-hidden className="pointer-events-none absolute inset-0 rounded-[21px]" style={{ background: spot }} />
+        <div className={`relative h-full ${padCls}`}>{children}</div>
+      </div>
     </Tag>
   );
 }
@@ -51,8 +59,13 @@ export function CountUp({ value, format }: { value: number; format: (n: number) 
   return <span ref={ref} className="num">{format(shown)}</span>;
 }
 
-export function Eyebrow({ n, children }: { n?: string; children: ReactNode }) {
-  return <p className="eyebrow">{n ? `${n} / ` : ""}{children}</p>;
+export function Eyebrow({ n, children, light = false }: { n?: string; children: ReactNode; light?: boolean }) {
+  return (
+    <p className={`flex items-center gap-3 ${light ? "eyebrow !text-lilac-200" : "eyebrow-gold"}`}>
+      <span aria-hidden className="inline-block h-px w-8 bg-gradient-to-r from-gold to-transparent" />
+      <span>{n ? `${n} / ` : ""}{children}</span>
+    </p>
+  );
 }
 
 export function Source({ kind }: { kind: "real public data" | "unattended run" | "platform meter" | "example" | "measured now" }) {

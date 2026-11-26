@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useGet, when } from "../api";
+import { Banner } from "../ui/Art";
 import { GlowCard, Eyebrow } from "../ui/bits";
 
 function Diagram() {
@@ -54,9 +55,9 @@ export default function How() {
   const st = useGet<any>("/api/status").data;
   return (
     <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-10 sm:px-6">
-      <Eyebrow n="01">How it works</Eyebrow>
+      <Banner motif="how"><Eyebrow n="01">How it works</Eyebrow>
       <h1 className="h-display mt-3 max-w-4xl text-[clamp(36px,5vw,64px)]">A Sprite has no clock and holds no keys.</h1>
-      <p className="mt-4 max-w-3xl text-[18px] text-muted">It sleeps until something knocks, and it reaches the outside only through a gateway that matches its name and labels. Salvor is built around those two facts.</p>
+      <p className="mt-4 max-w-3xl text-[18px] text-muted">It sleeps until something knocks, and it reaches the outside only through a gateway that matches its name and labels. Salvor is built around those two facts.</p></Banner>
 
       <GlowCard className="mt-8 p-4 sm:p-6"><Diagram /></GlowCard>
 

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Banner } from "../ui/Art";
 import { GlowCard, Eyebrow } from "../ui/bits";
 
 const PATHS = [
@@ -10,9 +11,9 @@ const PATHS = [
 export default function Judge() {
   return (
     <div className="mx-auto max-w-[920px] px-5 pb-10 pt-10 sm:px-6">
-      <Eyebrow n="01">For judges</Eyebrow>
+      <Banner motif="judge"><Eyebrow n="01">For judges</Eyebrow>
       <h1 className="h-display mt-3 text-[clamp(36px,5vw,64px)]">Three ways to look, no login.</h1>
-      <p className="mt-3 text-muted">Everything below works on the live site. The guided tour button at the top walks the same route in seven steps.</p>
+      <p className="mt-3 text-muted">Everything below works on the live site. The guided tour button at the top walks the same route in seven steps.</p></Banner>
       <div className="mt-8 space-y-5">
         {PATHS.map(([t, steps]) => (
           <GlowCard key={t} className="p-6"><h2 className="h-display text-[30px]">{t}</h2>

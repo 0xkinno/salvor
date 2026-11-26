@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useGet, money, when, type Receipt } from "../api";
+import { Banner } from "../ui/Art";
 import { GlowCard, StatusChip, DaysRing, Loading, ErrorBox, Empty, Eyebrow, CountUp } from "../ui/bits";
 
 type Resp = { receipts: Receipt[]; next_wake: string; headline: { receipts: number; owed_cents: number; claims: number; observations: number; asks_open: number } };
@@ -8,12 +9,12 @@ export default function Household() {
   const { data, error, loading, reload } = useGet<Resp>("/api/receipts", 30000);
   return (
     <div className="mx-auto max-w-[1180px] px-5 pb-8 pt-10 sm:px-6">
-      <Eyebrow n="01">The household</Eyebrow>
+      <Banner motif="ledger"><Eyebrow n="01">The household</Eyebrow>
       <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
         <h1 className="h-display text-[clamp(36px,5vw,64px)]">Teresa's receipts</h1>
         <span className="chip chip-mute">Sample household</span>
       </div>
-      <p className="mt-3 max-w-2xl text-muted">Teresa is a night shift pharmacist in Tucson who buys gifts on her phone. These are her sample receipts. Each one has its own Sprite, named on the card.</p>
+      <p className="mt-3 max-w-2xl text-muted">Teresa is a night shift pharmacist in Tucson who buys gifts on her phone. These are her sample receipts. Each one has its own Sprite, named on the card.</p></Banner>
 
       {loading && <div className="mt-8"><Loading steps={["Opening the ledger", "Reading each receipt's last wake", "Counting what is owed"]} /></div>}
       {error && <div className="mt-8"><ErrorBox title="The ledger could not be read." retry={reload}>{error}</ErrorBox></div>}

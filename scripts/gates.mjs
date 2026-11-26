@@ -40,7 +40,7 @@ for (const route of ROUTES) {
       try {
         await page.goto(base + route, { waitUntil: "networkidle", timeout: 30000 });
         // scroll through first so lazy and in-view content is real
-        await page.evaluate(async () => { const H = document.body.scrollHeight; for (let y = 0; y < H; y += 500) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 50)); } window.scrollTo(0, 0); });
+        await page.evaluate(async () => { const H = document.body.scrollHeight; for (let y = 0; y < H; y += 400) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 230)); } await new Promise((r) => setTimeout(r, 900)); window.scrollTo(0, 0); });
         await page.waitForTimeout(reduced ? 200 : 2200);
         const m = await page.evaluate(() => {
           const out = { hscroll: document.documentElement.scrollWidth > window.innerWidth + 1, overlaps: [], heroOverlap: [] };

@@ -6,6 +6,15 @@ An editorial money magazine printed on warm ash paper, lit with a soft lilac glo
 receipt that keeps working after you leave the shop. Calm, premium, trustworthy. Not a crypto dashboard
 and not a generic SaaS kit.
 
+## Luxury pass (2026-11-26)
+
+Built on the same house kit as the floorprice project (aurora sky, glass cards, a scroll progress bar, a gliding
+nav pill, a hanging tag) and made Salvor's own: a **midnight stage** for the hero and call to action (`#0E0A24` to
+`#2B1F78`), **champagne gold** `#C9A45C` for ornament only (text uses `#7A5A1E`), glass cards whose border and
+surface glow follow the cursor, orbit rings, a receipt that swings once on its thread, a drawn timeline, a
+constellation of sleeping Sprites with one awake, and an illustrated banner at the top of every inner page so no
+page opens on bare space. Motion honours `prefers-reduced-motion`.
+
 ## Colour tokens
 
 | Name | Value | Role |
@@ -20,6 +29,8 @@ and not a generic SaaS kit.
 | Muted | `#5C566F` | secondary text |
 | Owed | `#0E7A57` (text `#0B6648`) | money the store owes, only |
 | Ember | `#C2410C` (text `#9A3412`) | deadlines under 48 hours |
+| Midnight | `#0E0A24` / `#161036` / `#1F1850` | hero stage, call to action, dark glass |
+| Champagne | `#C9A45C` (text `#7A5A1E`, wash `#F6EBD3`) | ornament, eyebrow rules, gold hairlines |
 
 Every text pair passes WCAG 2.2 AA. The gates run axe on every route at five viewports.
 

@@ -1,4 +1,5 @@
 import { useGet, when, usd } from "../api";
+import { Banner } from "../ui/Art";
 import { GlowCard, Loading, ErrorBox, Empty, Eyebrow, StatusChip } from "../ui/bits";
 
 type F = { at: string; error: string | null; rung: string; sprites: any[] };
@@ -18,9 +19,9 @@ export default function Fleet() {
   const rule = (e: any) => { const r = e?.rules; if (!r) return "unknown"; if (!r.length) return "unrestricted"; return r.map((x: any) => `${x.action ?? "allow"} ${x.domain ?? x.include}`).join(", "); };
   return (
     <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-10 sm:px-6">
-      <Eyebrow n="01">The fleet</Eyebrow>
+      <Banner motif="fleet"><Eyebrow n="01">The fleet</Eyebrow>
       <h1 className="h-display mt-3 text-[clamp(36px,5vw,64px)]">Every Sprite, read from Fly now.</h1>
-      <p className="mt-3 max-w-2xl text-muted">Generated live from the Sprites API on each load: labels, network rule, newest checkpoints and CPU time. Nothing on this page is typed in.</p>
+      <p className="mt-3 max-w-2xl text-muted">Generated live from the Sprites API on each load: labels, network rule, newest checkpoints and CPU time. Nothing on this page is typed in.</p></Banner>
       {loading && <div className="mt-8"><Loading steps={["Listing Sprites named slv-*", "Reading each network policy", "Reading checkpoints and usage"]} /></div>}
       {error && <div className="mt-8"><ErrorBox title="The fleet could not be read." retry={reload}>{error}</ErrorBox></div>}
       {data?.error && <div className="mt-8"><ErrorBox title="The Sprites API did not answer.">{data.error}. Salvor shows this instead of a stale list.</ErrorBox></div>}

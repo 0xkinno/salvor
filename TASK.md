@@ -6,7 +6,7 @@ exists. "Verified" means a test or gate ran and passed; tasks proven only on the
 when the task is about the platform.
 
 ## Phase 0. Ground
-- [ ] Repo `0xkinno/salvor` created; hooks, workflow, `.claude/settings.json`, `.gitignore`, MIT licence. Local files done and committed (7a6cfee); needs: the GitHub repository and a push credential
+- [x] Repo `0xkinno/salvor` created and pushed; hooks, workflow, `.claude/settings.json`, `.gitignore`, MIT licence (7a6cfee, pushed 2026-11-26)
 - [x] `reference/` cloned (20 repos, gitignored); notes per repo in `reference/notes/` (local, never committed)
 - [x] G0: `RULES_EXTRACT.md`, `reference/LANE_MAP.md` (20 repos read plus a web search), `JUDGE_TASTE.md` (308e369)
 - [x] G1: `SPONSOR_INTEL.md` with links and snapshots (308e369)
@@ -17,7 +17,7 @@ when the task is about the platform.
 - [ ] Connectors created with the policy table; `scripts/setup-connectors.mjs` written and syntax checked (7e0dbb3); needs: `SPRITES_TOKEN` and the partner keys, Box needs one OAuth click
 - [ ] `slv-home` created, service on 8080, app deployed at the final URL, reachability check; `scripts/deploy-home.mjs` written (7e0dbb3); needs: `SPRITES_TOKEN`
 - [ ] `scripts/probe.mjs` answers Q1 to Q17; `PLATFORM_PROBE.md` written; rungs chosen; script written (7e0dbb3); needs: `SPRITES_TOKEN`
-- [ ] Apify actor chosen by measured completeness on 10 known URLs; `scripts/probe-actors.mjs` written (7e0dbb3); needs: `APIFY_TOKEN`
+- [x] Apify actor chosen by measured completeness: `apify/e-commerce-scraping-tool` read 10 of 10 Target pages (price and title; no seller or regular price). Recorded in `FINDINGS.md` Q9
 
 ## Phase 2. The mechanism (G3)
 - [x] `src/gateway.ts` with durable counters; `/api/status` measured, including an unreachable gateway shown as unreachable (5dbc3f0, tests in `test/server.test.ts`)
@@ -43,7 +43,7 @@ when the task is about the platform.
 - [ ] `scripts/setup-apify.mjs` creates the schedule and webhook; written (7e0dbb3); needs: `APIFY_TOKEN` and the live URL
 - [x] Webhook handler: verify secret, idempotent by run id, wake receipt Sprites (pool of 3) (5dbc3f0; secret, duplicate and bad payload tested in `test/server.test.ts`, idempotent wake in `test/pipeline.test.ts`)
 - [x] Backup knock: GitHub Actions cron calling `/tick` with a secret; both wake sources named in README (4a98a81). Needs the repository secrets once the repo exists
-- [ ] First unattended run recorded (nobody started it); evidence in `evidence/runs/`; needs: the live deployment and a schedule tick
+- [ ] First unattended run recorded (nobody started it); evidence in `evidence/runs/`. The Apify schedule (every 6 hours) and a baseline run started 2026-11-26; ingestion into run files needs the ingest script after the watch has data
 
 ## Phase 6. Proof (G6 then runs)
 - [x] `PROOF_PLAN.md` committed before any study run (308e369)

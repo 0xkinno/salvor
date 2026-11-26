@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { post, money, when, useGet } from "../api";
+import { Banner } from "../ui/Art";
 import { GlowCard, Loading, ErrorBox, Eyebrow } from "../ui/bits";
 
 const STEPS = ["Waking a pooled Sprite from sleep", "Locking its network to the gateway only", "Apify is reading the page in Apify's cloud", "Jev is deciding whether it is the same item", "Salvor's code is computing the amount from the store's clause"];
@@ -20,9 +21,9 @@ export default function Try() {
   const c = caps.data;
   return (
     <div className="mx-auto max-w-[920px] px-5 pb-10 pt-10 sm:px-6">
-      <Eyebrow n="01">Your own receipt</Eyebrow>
+      <Banner motif="try"><Eyebrow n="01">Your own receipt</Eyebrow>
       <h1 className="h-display mt-3 text-[clamp(36px,5vw,64px)]">Try a receipt of yours.</h1>
-      <p className="mt-3 max-w-2xl text-muted">Paste a Target or Best Buy product link, what you paid and the date. A pooled Sprite wakes, reads the page through Apify, and Salvor decides. Nothing about you is kept: the Sprite is restored to a blank checkpoint afterwards.</p>
+      <p className="mt-3 max-w-2xl text-muted">Paste a Target or Best Buy product link, what you paid and the date. A pooled Sprite wakes, reads the page through Apify, and Salvor decides. Nothing about you is kept: the Sprite is restored to a blank checkpoint afterwards.</p></Banner>
 
       <form onSubmit={go} className="mt-8 grid gap-4 rounded-2xl border border-hair bg-white/70 p-5 sm:p-6">
         <label className="block"><span className="text-[14px] font-medium">Product link</span>

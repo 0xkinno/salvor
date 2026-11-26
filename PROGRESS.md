@@ -13,14 +13,22 @@ Dated, honest log. Things that could not be done, and why, are written here with
 - Built: policy engine with 39 tests, gateway and connectors, receipt worker, fleet, notary, claims with digest-bound approval, ledger, home server, intake, web app, UI gates (40 page runs clean), scripts for setup, deploy, probe and facts. 62 tests pass on Node 22.
 - Pipeline tests run against a local emulator (`test/helpers/emulator.ts`). This proves our code paths only. No platform claim is made from it.
 
+## 2026-11-26, later
+
+- Repository pushed to https://github.com/0xkinno/salvor (all commits authored by 0xkinno).
+- Keys received and tested from the build machine: Apify, Pinecone, Ollama Cloud and AgentMail work. Stored in a gitignored local file, never in the repository.
+- **The Fly token provided is the wrong type.** It authenticates to Fly's own API but the Sprites API answers 401 to it under every header scheme. The Sprites API needs a token created on the Sprites side (see the owner steps in the hand-off note). Until then connectors, probe and deploy cannot run.
+- **TypeSafe Jev** asks for a payment method before issuing a key. Not yet connected. Jev is a judge's product and the decision step, so the plan is to keep it and fund the minimum; the documented price is about $0.00002 per call.
+- Pinecone index `salvor-household` created. Ollama models chosen: `gemma4:31b` (vision), `gpt-oss:120b` (text).
+- **Apify watch started** the same day: task `salvor-watch` over 24 frozen Target items (list hash in `evidence/labels/p1-items.sha256`), schedule every 6 hours UTC, first baseline run started manually. Budget: the free plan allows $5 a month; a product read costs about $0.0075.
+- Interface redesigned (aurora backdrop, glass cards with a cursor-following border glow, midnight hero stage, champagne gold ornament, new SVG illustrations, illustrated page banners, scroll progress bar). 17 end-to-end checks pass; gates re-run.
+
 ## Open, needs accounts
 
 | Item | Needs |
 |---|---|
-| Create `0xkinno/salvor`, push | a GitHub repository and a push credential |
-| Connectors, probe, deploy, `slv-home` | `SPRITES_TOKEN` |
-| Real readings, schedule, webhook | `APIFY_TOKEN` |
-| Jev, Pinecone, Ollama, AgentMail | their API keys |
-| Box | one OAuth click from the owner |
-| Real labels (P3) | the owner labels about 200 pairs with the codebook |
-| Video, posts, submission form | owner approval (rule 3) |
+| Connectors, probe, deploy of `slv-home`, the webhook, the judge pool | a Sprites API token created on the Sprites side |
+| TypeSafe Jev | a key; the console asks for a payment method first |
+| Box | one OAuth approval by the owner (printed by `scripts/setup-connectors.mjs` with `BOX_OAUTH=1`) |
+| Decision-quality study (P3) | the owner's labels on about 200 pairs, with the codebook |
+| Video, posts, submission form | the owner's approval (plan rule 3) |

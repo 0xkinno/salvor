@@ -3,6 +3,7 @@ import { LayoutGroup, motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Wordmark } from "./bits";
 import { Tour } from "./Tour";
+import { Backdrop } from "./Backdrop";
 
 const PILLS: [string, string][] = [["/#receipt", "The receipt"], ["/how", "How it works"], ["/proof", "Proof"], ["/try", "Try yours"]];
 
@@ -21,10 +22,11 @@ export function Layout() {
 
   return (
     <div className="min-h-screen">
+      <Backdrop />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2 focus:text-paper">Skip to content</a>
       {!render && (
         <header className="sticky top-0 z-40 px-3 pt-3 sm:px-6">
-          <nav aria-label="Main" className="mx-auto flex max-w-[1180px] items-center justify-between rounded-cap border border-hair bg-paper/80 px-3 py-2 shadow-[0_10px_34px_-16px_rgba(106,75,224,.45)] backdrop-blur-xl">
+          <nav aria-label="Main" className="mx-auto flex max-w-[1180px] items-center justify-between rounded-cap glass px-3 py-2 shadow-[0_18px_50px_-18px_rgba(75,51,181,.5)]">
             <Link to="/" aria-label="Salvor home" className="rounded-lg px-1 py-1 no-underline"><Wordmark /></Link>
             <LayoutGroup id="pills">
               <ul className="hidden items-center gap-1 md:flex">
@@ -63,7 +65,8 @@ export function Layout() {
 
 function Footer() {
   return (
-    <footer className="mt-24 border-t border-hair">
+    <footer className="relative mt-24">
+      <div className="gold-rule" />
       <div className="mx-auto grid max-w-[1180px] gap-8 px-5 py-12 sm:grid-cols-3 sm:px-6">
         <div><Wordmark /><p className="mt-3 max-w-xs text-[15px] text-muted">One who recovers value that would otherwise be lost. Built by 0xkinno for Fly.io Hacksgiving 2026.</p></div>
         <div className="text-[15px]"><p className="eyebrow mb-3">Disclosures</p>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGet, post, money, when, dateOnly } from "../api";
+import { Banner } from "../ui/Art";
 import { GlowCard, StatusChip, Loading, ErrorBox, Eyebrow } from "../ui/bits";
 
 type Obs = { id: string; observed_at: string; price_cents: number | null; regular_cents: number | null; decision: string; why: string | null; jev_same_item: string | null; jev_same_conf: number | null; jev_owed_p: number | null; checkpoint_id: string | null; evidence_sha256: string | null; owed_cents: number | null; apify_run_id: string | null };
@@ -34,11 +35,11 @@ export default function ReceiptPage() {
   return (
     <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-8 sm:px-6">
       <p className="text-[14px]"><Link to="/app">Household</Link> / <span className="mono">{d.id}</span></p>
-      <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
+      <div className="mt-3"><Banner motif="receipt"><div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0"><Eyebrow n="01">The receipt</Eyebrow><h1 className="h-display mt-2 text-[clamp(32px,4.4vw,56px)]">{d.title}</h1>
           <p className="mono mt-2 break-all text-muted">{d.raw_text}</p></div>
         <div className="flex items-center gap-2"><StatusChip status={d.status} /><span className="chip chip-mute mono">{d.sprite ?? "no Sprite"}</span></div>
-      </div>
+      </div></Banner></div>
 
       {/* then and now */}
       <section data-tour="ladder" className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_.9fr]">

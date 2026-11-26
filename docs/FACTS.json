@@ -1,12 +1,109 @@
 {
-  "empty": true,
+  "empty": false,
   "p1": {
-    "n_listed": 0,
+    "n_listed": 24,
     "n_items": 0,
     "share_cheaper": null,
     "owed_total_cents": 0,
     "median_owed_cents": null,
-    "misses": []
+    "misses": [
+      {
+        "id": "W01",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W02",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W03",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W04",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W05",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W06",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W07",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W08",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W09",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W10",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W11",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W12",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W13",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W14",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W15",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W16",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W17",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W18",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W19",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W20",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W21",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W22",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W23",
+        "reason": "only one reading so far"
+      },
+      {
+        "id": "W24",
+        "reason": "only one reading so far"
+      }
+    ]
   },
   "p2": {
     "runs_completed": 0,
@@ -23,11 +120,14 @@
   },
   "p5": [],
   "hero": null,
-  "sources": {},
+  "sources": {
+    "p1.jsonl": "38715cf32ab74de922ec01d6c0d85fdc796b32d82bfefe0c1503af861ec9f6c3",
+    "watch.jsonl": "417b40555196cc83fc85ef322f16b5f7421d8c9d3bca023bae13013786baa524"
+  },
   "n_items": 0,
   "owed_total_cents": 0,
   "share_cheaper": null,
   "cost_per_receipt_usd": null,
   "wrong_claim_rate": null,
-  "generated_at": "2026-11-26T06:18:24.886Z"
+  "generated_at": "2026-11-26T16:11:44.221Z"
 }

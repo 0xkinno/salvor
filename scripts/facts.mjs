@@ -48,7 +48,8 @@ function rates(origin, who) {
 const costs = of("p4_cost");
 const costTotal = costs.reduce((s, r) => s + r.total_usd, 0);
 const costDays = costs.reduce((s, r) => s + (r.days ?? 0), 0);
-const runs = of("watch_run");
+// P2 counts only runs the schedule started. A manual baseline run is kept in the file but not counted as unattended.
+const runs = of("watch_run").filter((r) => r.origin === "SCHEDULER");
 
 const facts = {
   empty: rows.length === 0,
