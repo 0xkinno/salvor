@@ -8,6 +8,8 @@ import { execFileSync } from "node:child_process";
 import { setRecorder, call } from "../gateway.ts";
 import { observe, type Report } from "./observe.ts";
 import { DIR } from "./evidence.ts";
+import { resolve, trynew } from "./resolve.ts";
+import { lastRun } from "../connectors/apify.ts";
 
 const calls: Report["calls"] = [];
 setRecorder((provider, route, status, ms) => calls.push({ provider, route, status, ms }));
@@ -65,6 +67,17 @@ try {
     const [runId, datasetId, observedAt] = args;
     if (!runId || !datasetId || !observedAt) throw new Error("usage: observe <runId> <datasetId> <observedAtIso>");
     out(await observe(runId, datasetId, observedAt, calls));
+  } else if (cmd === "observe-latest") {
+    // Backup knock: find the newest successful scheduled run ourselves, then observe it. The
+    // run id makes this idempotent with the webhook path.
+    const [task] = args;
+    if (!task) throw new Error("usage: observe-latest <apifyTaskId>");
+    const run = await lastRun(task);
+    out(await observe(run.id, run.defaultDatasetId, run.finishedAt ?? new Date().toISOString(), calls));
+  } else if (cmd === "resolve") out(await resolve());
+  else if (cmd === "try") {
+    const [url, paid, date, retailer] = args;
+    out(await trynew(url, Number(paid), date, retailer === "bestbuy" ? "bestbuy" : "target"));
   } else if (cmd === "selftest") out(await selftest());
   else if (cmd === "tamper") out(tamper());
   else if (cmd === "whoami") out(whoami());

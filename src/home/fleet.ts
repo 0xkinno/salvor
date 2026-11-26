@@ -30,7 +30,6 @@ export const EYES_EGRESS = [{ domain: "api.sprites.dev", action: "allow" }];
 export async function birth(receiptId: string, lineId: string): Promise<Birth> {
   const t0 = Date.now();
   const line = lineRow(lineId);
-  if (!line.listing_url) throw new Error("line has no listing URL yet; resolve it first");
   const name = spriteNameFor(receiptId);
   const open = applicableClauses({ paid_cents: line.paid_cents, qty: line.qty, purchased_date: line.purchased_at, retailer: line.retailer })
     .sort((a, b) => b.ends.getTime() - a.ends.getTime())[0];
@@ -39,7 +38,7 @@ export async function birth(receiptId: string, lineId: string): Promise<Birth> {
   const labels = await sprites.setLabels(name, [EYES_LABEL]);
   // The clause text Jev sees comes from the policy file, never from a page.
   const job: Job = {
-    id: lineId, sprite: name, listing_url: line.listing_url, retailer: line.retailer,
+    id: lineId, sprite: name, listing_url: line.listing_url ?? "", retailer: line.retailer,
     line: { raw_text: line.raw_text, paid_cents: line.paid_cents, qty: line.qty },
     clause: { id: open.clause.id, text: open.clause.text },
   };
@@ -71,6 +70,8 @@ export async function wake(name: string, runId: string, datasetId: string, obser
     try { report = JSON.parse(r.stdout.trim().split("\n").pop() ?? ""); } catch { throw new Error(`worker printed no report (exit ${r.code}): ${(r.stderr || r.stdout).slice(0, 200)}`); }
     if ((report as any).error) throw new Error((report as any).error);
     db().prepare("UPDATE wakes SET finished_at=?, ok=1, cold_ms=? WHERE run_id=? AND sprite=?").run(new Date().toISOString(), ms, runId, name);
+    const at = new Date().toISOString();
+    for (const c of report.calls ?? []) db().prepare("INSERT INTO sponsor_calls VALUES (?,?,?,?,?,?)").run(c.provider, c.route, c.status, c.ms, name, at);
     return { sprite: name, ok: true, cold_ms: ms, report };
   } catch (e) {
     db().prepare("UPDATE wakes SET finished_at=?, ok=0 WHERE run_id=? AND sprite=?").run(new Date().toISOString(), runId, name);
@@ -119,4 +120,28 @@ export async function retire(name: string, createdAtIso: string) {
   db().prepare("UPDATE receipts SET status='retired' WHERE sprite=?").run(name);
   event("sprite_retired", { sprite: name, cpu_sec: u.cpu_time_sec, partial: u.partial, total_usd: priced.total_usd });
   return { usage: u, priced, storageGb };
+}
+
+// Backup knock: each watching Sprite finds the newest successful scheduled run itself.
+export async function wakeLatestAll(taskId: string, opts: { now?: Date } = {}) {
+  const targets = watching();
+  const results = await mapPool(targets, POOL, async (t) => {
+    const t0 = Date.now();
+    try {
+      const r = await sprites.exec(t.sprite, ["node", WORKER_PATH, "observe-latest", taskId]);
+      const report: Report = JSON.parse(r.stdout.trim().split("\n").pop() ?? "");
+      if ((report as any).error) throw new Error((report as any).error);
+      const seen = db().prepare("SELECT 1 x FROM wakes WHERE run_id=? AND sprite=?").get(report.run_id, t.sprite);
+      if (seen) return { sprite: t.sprite, ok: true, duplicate: true };
+      db().prepare("INSERT INTO wakes (run_id,sprite,source,started_at,finished_at,ok,cold_ms) VALUES (?,?,?,?,?,1,?)").run(report.run_id, t.sprite, "backup-tick", new Date(t0).toISOString(), new Date().toISOString(), Date.now() - t0);
+      for (const c of report.calls ?? []) db().prepare("INSERT INTO sponsor_calls VALUES (?,?,?,?,?,?)").run(c.provider, c.route, c.status, c.ms, t.sprite, new Date().toISOString());
+      const ing = await ingestReport(t.line_id, report, { now: opts.now, draft: claimWords });
+      return { sprite: t.sprite, ok: true, decision: ing.decision, claim: ing.claim_id };
+    } catch (e) {
+      event("tick_failed", { sprite: t.sprite, error: String((e as Error).message).slice(0, 200) });
+      return { sprite: t.sprite, ok: false, error: String((e as Error).message) };
+    }
+  });
+  event("tick", { sprites: targets.length, ok: results.filter((r) => r.ok).length });
+  return results;
 }

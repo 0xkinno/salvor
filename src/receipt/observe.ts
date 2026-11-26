@@ -40,6 +40,7 @@ export function readJob(): Job {
 }
 
 const reportPath = () => `${DIR}/report.json`;
+export function writeReport(r: Report) { writeFileSync(reportPath(), JSON.stringify(r)); }
 
 export function lastReport(): Report | null {
   return existsSync(reportPath()) ? (JSON.parse(readFileSync(reportPath(), "utf8")) as Report) : null;
@@ -60,6 +61,15 @@ export async function observe(runId: string, datasetId: string, observedAt: stri
   try { items = await datasetItemsFor(datasetId, job.listing_url); }
   catch (e) { return finish({ decision: "error", reason: `could not read the dataset: ${(e as Error).message}` }); }
   if (!items.length) return finish({ decision: "stale", reason: `no observation for this URL in run ${runId}` });
+  return decideFromItems(job, items, runId, datasetId, observedAt, finish);
+}
+
+// Shared by a scheduled observation and by the "try your own receipt" path, which reads one URL
+// directly from an Apify run and never stores the result beyond an hour.
+export async function decideFromItems(
+  job: Job, items: any[], runId: string, datasetId: string, observedAt: string,
+  finish: (r: Omit<Report, "job_id" | "run_id" | "sabotage" | "calls" | "observed_at">) => Report,
+): Promise<Report> {
 
   let listing: ListingFields;
   try { listing = normalizeListing(items[0], observedAt, job.retailer === "target" ? "Target" : "Best Buy"); }

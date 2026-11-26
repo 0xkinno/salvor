@@ -44,7 +44,7 @@ export function lineRow(lineId: string): any {
 }
 
 export function watching(): any[] {
-  return db().prepare("SELECT l.id AS line_id, r.* FROM receipts r JOIN lines l ON l.receipt_id=r.id WHERE r.status IN ('watching','asking','owed') AND r.sprite IS NOT NULL").all();
+  return db().prepare("SELECT l.id AS line_id, r.* FROM receipts r JOIN lines l ON l.receipt_id=r.id WHERE r.status IN ('watching','asking','owed') AND r.sprite IS NOT NULL AND l.listing_url IS NOT NULL AND l.listing_url != ''").all();
 }
 
 export type Ingested = { decision: Decision; why: string; observation_id: string; claim_id: string | null; ask_id: string | null; verdict: Verdict | null };
@@ -150,7 +150,15 @@ export function answerAsk(askId: string, answer: "same" | "different" | "in_stor
   db().prepare("UPDATE asks SET answered_at=?, answer=? WHERE id=?").run(now.toISOString(), answer, askId);
   const statement = answer === "same" ? "Teresa confirmed the listing is the same item." : answer === "different" ? "Teresa said the listing is a different item." : "Teresa said she bought it in store.";
   db().prepare("INSERT INTO facts_human (id,line_id,statement,at) VALUES (?,?,?,?)").run("f-" + randomUUID().slice(0, 8), a.line_id, statement, now.toISOString());
-  if (answer === "same") db().prepare("UPDATE lines SET confirmed_by_human=1 WHERE id=?").run(a.line_id);
+  if (answer === "same") {
+    db().prepare("UPDATE lines SET confirmed_by_human=1 WHERE id=?").run(a.line_id);
+    // An answer to "is this your item?" fixes the listing the Sprite will watch.
+    const cand = db().prepare("SELECT v FROM kv WHERE k=?").get(`cand:${a.line_id}`) as { v: string } | undefined;
+    if (cand) {
+      const top = JSON.parse(cand.v)[0];
+      db().prepare("UPDATE lines SET listing_url=? WHERE id=? AND (listing_url IS NULL OR listing_url='')").run(top?.url ?? null, a.line_id);
+    }
+  }
   if (answer === "in_store") db().prepare("UPDATE receipts SET channel='store' WHERE id=(SELECT receipt_id FROM lines WHERE id=?)").run(a.line_id);
   if (answer === "different") db().prepare("UPDATE receipts SET status='watching' WHERE id=(SELECT receipt_id FROM lines WHERE id=?)").run(a.line_id);
   event("human_fact", { ask: askId, answer });

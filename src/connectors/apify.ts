@@ -120,3 +120,9 @@ export async function datasetItemsFor(datasetId: string, listingUrl: string): Pr
     return tcin ? JSON.stringify(it.url ?? it.inputUrl ?? it.tcin ?? "").includes(tcin) : false;
   });
 }
+
+// Newest successful run of the scheduled task. Used by the backup knock path.
+export async function lastRun(taskId: string): Promise<{ id: string; defaultDatasetId: string; finishedAt: string | null }> {
+  const j = await json<{ data: { id: string; defaultDatasetId: string; finishedAt?: string } }>(CONN, "GET", `/v2/actor-tasks/${encodeURIComponent(taskId)}/runs/last?status=SUCCEEDED`);
+  return { id: j.data.id, defaultDatasetId: j.data.defaultDatasetId, finishedAt: j.data.finishedAt ?? null };
+}
