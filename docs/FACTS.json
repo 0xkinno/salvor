@@ -1,0 +1,33 @@
+{
+  "empty": true,
+  "p1": {
+    "n_listed": 0,
+    "n_items": 0,
+    "share_cheaper": null,
+    "owed_total_cents": 0,
+    "median_owed_cents": null,
+    "misses": []
+  },
+  "p2": {
+    "runs_completed": 0,
+    "drops_seen": 0,
+    "first_run_at": null,
+    "last_run_at": null
+  },
+  "p3": null,
+  "p4": {
+    "receipts_metered": 0,
+    "per_receipt_usd": null,
+    "per_receipt_per_day_usd": null,
+    "partial_rows": 0
+  },
+  "p5": [],
+  "hero": null,
+  "sources": {},
+  "n_items": 0,
+  "owed_total_cents": 0,
+  "share_cheaper": null,
+  "cost_per_receipt_usd": null,
+  "wrong_claim_rate": null,
+  "generated_at": "2026-11-26T06:01:30.360Z"
+}
