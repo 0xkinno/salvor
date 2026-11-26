@@ -1,0 +1,24 @@
+{
+  "name": "salvor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Every receipt gets its own sleeping Sprite. It wakes when the price falls and hands you the claim.",
+  "license": "MIT",
+  "author": "0xkinno",
+  "type": "module",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "test": "node --test test/*.test.ts",
+    "build:worker": "node scripts/build-worker.mjs",
+    "build:web": "cd web && npm run build",
+    "build": "npm run build:worker && npm run build:web",
+    "start": "node src/home/server.ts",
+    "facts": "node scripts/facts.mjs",
+    "check:copy": "node scripts/check-copy.mjs",
+    "check:facts": "node scripts/facts.mjs --check",
+    "gates": "node scripts/gates.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.0"
+  }
+}

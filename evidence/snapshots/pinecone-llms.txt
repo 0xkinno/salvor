@@ -1,0 +1,290 @@
+SOURCE: https://docs.pinecone.io/llms.txt
+RETRIEVED: 2026-11-26 (UTC)
+----
+# Pinecone Docs
+
+> Official documentation for Pinecone's trusted AI knowledge platform, including Pinecone Database, Pinecone Assistant, and Pinecone Nexus.
+
+- [Pinecone Database (575 pages)](https://docs.pinecone.io/_llms/pinecone-database.txt): Search engine for AI agents and applications
+- [Pinecone Assistant (128 pages)](https://docs.pinecone.io/_llms/pinecone-assistant.txt): Managed RAG for chat and agent applications
+
+## Pinecone Nexus
+
+### Guides
+
+#### Get started
+
+- [Pinecone Nexus](https://docs.pinecone.io/guides/nexus/overview.md): Pinecone Nexus is the knowledge engine for agents. It compiles your data into queryable knowledge once, then serves grounded, cited answers on every call.
+- [Nexus quickstart](https://docs.pinecone.io/guides/nexus/quickstart.md): Deploy Pinecone Nexus with BYOC, curate a context from your own documents, and run KnowQL queries that return grounded, cited multi-document answers.
+- [Nexus key terms](https://docs.pinecone.io/guides/nexus/concepts.md): Learn the key Pinecone Nexus terms, from sources and contexts to artifacts, sessions, and queries, and how they connect.
+- [Nexus architecture](https://docs.pinecone.io/guides/nexus/architecture.md): Pinecone Nexus curates your sources into typed artifacts, then answers queries by writing code against a retrieval SDK.
+
+#### Build contexts
+
+- [Nexus context design](https://docs.pinecone.io/guides/nexus/context-design.md): Learn how a Pinecone Nexus context's manifest turns your sources into queryable knowledge.
+- [Nexus curation](https://docs.pinecone.io/guides/nexus/how-curation-works.md): Curation is the write path that turns sources into chunks and artifacts incrementally, driven by the manifest.
+- [Design your own manifest](https://docs.pinecone.io/guides/nexus/design-your-own-manifest.md): Author a Pinecone Nexus context's manifest through the API by defining custom artifact and edge types, then curating.
+- [Configure artifact formats](https://docs.pinecone.io/guides/nexus/configure-artifact-formats.md): Configure Pinecone Nexus artifact types as markdown prose or queryable SQLite tables through the manifest API.
+- [Nexus models](https://docs.pinecone.io/guides/nexus/models.md): Learn how Pinecone Nexus uses models for generation, curation, and retrieval, and how to choose the right one.
+- [Import and export Open Knowledge Format bundles](https://docs.pinecone.io/guides/nexus/import-and-export-with-okf.md): Export a Pinecone Nexus context as an Open Knowledge Format (OKF) bundle, or import an OKF bundle from Nexus or another tool into a new context.
+
+#### Query contexts
+
+- [Nexus queries](https://docs.pinecone.io/guides/nexus/queries.md): Pinecone Nexus queries gather evidence and compose a grounded, cited answer.
+- [Set session instructions](https://docs.pinecone.io/guides/nexus/set-session-instructions.md): Set a per-session system prompt on a Pinecone Nexus query to shape how a session answers, layered over the context's default instructions.
+- [Nexus query traces](https://docs.pinecone.io/guides/nexus/query-tracing.md): Learn what each part of a Pinecone Nexus query trace shows, from the summary bar and token detail to the reasoning steps and tool calls behind an answer.
+- [Use the Pinecone Nexus MCP server](https://docs.pinecone.io/guides/nexus/mcp-server.md): Connect AI agents to the Pinecone Nexus MCP server to query your contexts from any MCP client, such as Claude Desktop, over Streamable HTTP.
+
+#### Bring Your Own Cloud
+
+- [Nexus BYOC overview](https://docs.pinecone.io/guides/nexus/byoc/overview.md): Learn what Nexus BYOC deploys in your cloud account, what data leaves it, and how it compares to Database BYOC.
+- [Deploy Nexus BYOC](https://docs.pinecone.io/guides/nexus/byoc/deploy.md): Install and operate Pinecone Nexus in your own cloud account.
+- [Nexus BYOC data residency and limits](https://docs.pinecone.io/guides/nexus/byoc/reference.md): See where your data lives and travels in Nexus BYOC, plus its authentication, encryption, cluster footprint, and limitations.
+
+##### Fireworks AI
+
+- [Fireworks AI with Nexus BYOC](https://docs.pinecone.io/guides/nexus/byoc/fireworks/overview.md): Learn how Fireworks AI open models fit into a Nexus BYOC deployment and why you'd use them for generation and curation.
+- [Use Fireworks AI models in Nexus BYOC](https://docs.pinecone.io/guides/nexus/byoc/fireworks/use-models.md): Add Fireworks AI models to your Nexus BYOC inference catalog, deploy them, and set them as the default models for each work area.
+- [Fireworks AI reference for Nexus BYOC](https://docs.pinecone.io/guides/nexus/byoc/fireworks/reference.md): Supported Fireworks AI models, catalog fields, and constraints for using Fireworks models in the Nexus BYOC inference catalog.
+
+### Reference
+
+#### APIs
+
+- [Pinecone Nexus API](https://docs.pinecone.io/reference/api/nexus/introduction.md): Programmatic access to Nexus workspaces, contexts, sources, curation, and KnowQL queries.
+- [Pinecone Nexus API authentication](https://docs.pinecone.io/reference/api/nexus/authentication.md): Authenticate to the Nexus API with your Pinecone API key, sent directly or exchanged for a short-lived session token.
+
+#### Control plane
+
+##### Manage Workspaces
+
+- [List workspaces](https://docs.pinecone.io/api-reference/manage-workspaces/list-workspaces.md): List the workspaces in the project. Results are paginated; the `pagination` object is omitted when there are no further results.
+- [Create a workspace](https://docs.pinecone.io/api-reference/manage-workspaces/create-a-workspace.md): Create a Nexus workspace. The workspace name must be unique within the project.
+- [Describe a workspace](https://docs.pinecone.io/api-reference/manage-workspaces/describe-a-workspace.md): Get a description of a workspace.
+- [Delete a workspace](https://docs.pinecone.io/api-reference/manage-workspaces/delete-a-workspace.md): Delete an existing workspace. Deletion is asynchronous: the workspace transitions to the `Terminating` state and its contexts are deleted, after which the workspace itself is removed.
+
+#### Data plane
+
+##### Auth
+
+- [Exchange a Pinecone API key for a session token](https://docs.pinecone.io/api-reference/auth/exchange-a-pinecone-api-key-for-a-session-token.md): Exchange a Pinecone API key for the session token every other endpoint expects. Send the token as a bearer credential.
+- [Current identity (whoami)](https://docs.pinecone.io/api-reference/auth/current-identity-whoami.md): Who the current credential authenticates, and which project and workspace it is scoped to.
+
+##### Project
+
+- [Get the active project](https://docs.pinecone.io/api-reference/project/get-the-active-project.md): The project the session is scoped to, plus whether this deployment requires a workspace host.
+- [Project-wide task stats](https://docs.pinecone.io/api-reference/project/project-wide-task-stats.md): Aggregate task counters across the whole project (all contexts), broken down by state and workflow. The per-context equivalent is `GET /contexts/{slug}/tasks/stats`.
+
+##### Connectors
+
+- [List the project's linked connectors](https://docs.pinecone.io/api-reference/connectors/list-the-projects-linked-connectors.md): The project's linked source providers. Filter by `kind` to those valid for a context kind.
+- [Get a connector](https://docs.pinecone.io/api-reference/connectors/get-a-connector.md): One linked connector, secrets stripped.
+- [Unlink a connector](https://docs.pinecone.io/api-reference/connectors/unlink-a-connector.md): Unlink the connector from the project. Sources it already imported stay in place.
+- [Start the OAuth link flow for a provider](https://docs.pinecone.io/api-reference/connectors/start-the-oauth-link-flow-for-a-provider.md): Returns an `authorize_url` for the user to open in a browser. The connector is persisted by the provider's OAuth redirect callback once the user approves access.
+- [Link a connector with an API key](https://docs.pinecone.io/api-reference/connectors/link-a-connector-with-an-api-key.md): Link a key-based provider by supplying its API key directly, instead of running the OAuth flow.
+- [Browse a connector's folders/files](https://docs.pinecone.io/api-reference/connectors/browse-a-connectors-foldersfiles.md): Browse the provider's folders and files to find the ids to import. Omit `folder` for the root.
+- [List a context's connectors (with per-context enabled flag)](https://docs.pinecone.io/api-reference/connectors/list-a-contexts-connectors-with-per-context-enabled-flag.md): The project's connectors, each with whether this context may import from it.
+- [Enable or disable a connector for a context](https://docs.pinecone.io/api-reference/connectors/enable-or-disable-a-connector-for-a-context.md): Enable or disable one connector for this context.
+
+##### Contexts
+
+- [List contexts (newest first, with stats)](https://docs.pinecone.io/api-reference/contexts/list-contexts-newest-first-with-stats.md): Every context in the active project, newest first, each with its aggregate task counters.
+- [Create a context](https://docs.pinecone.io/api-reference/contexts/create-a-context.md): Created empty, and not queryable until you import sources and curate them — curate is explicit. Optionally seed a `manifest`. A `work` context is the exception: queryable from day zero, built from traces of work rather than documents.
+- [Get a context](https://docs.pinecone.io/api-reference/contexts/get-a-context.md): One context and its derived lifecycle flags.
+- [Update a context](https://docs.pinecone.io/api-reference/contexts/update-a-context.md): All fields optional; an absent one is left untouched. An empty string clears `description`/`guide`, and `{}` clears the manifest back to defaults.
+- [Delete a context (and its Pinecone indexes)](https://docs.pinecone.io/api-reference/contexts/delete-a-context-and-its-pinecone-indexes.md): Delete the context, its sources, its curated knowledge, and its Pinecone indexes. Not reversible.
+- [Per-context task statistics](https://docs.pinecone.io/api-reference/contexts/per-context-task-statistics.md): Aggregate counters over every task this context has run. The project-wide equivalent is `GET /stats`.
+- [Trigger an on-demand self-tuning optimize](https://docs.pinecone.io/api-reference/contexts/trigger-an-on-demand-self-tuning-optimize.md): Tunes the manifest from real query traffic, then chains a forced re-curate. Every field of the required body is optional, so `{}` is valid — and a no-op without `candidate_queries`. The context must be curated, and only one optimize runs at a time.
+- [Run the Design-flow explore agent (propose a manifest)](https://docs.pinecone.io/api-reference/contexts/run-the-design-flow-explore-agent-propose-a-manifest.md): Inspects the uploaded source and proposes manifest-template matches in the task's `output` (see `ExploreOutput`). Persists nothing — review the proposal, then apply it with a manifest update and a forced curate. Body is optional.
+- [Estimate the token + time cost of curating the in-progress manifest](https://docs.pinecone.io/api-reference/contexts/estimate-the-token-+-time-cost-of-curating-the-in-progress-manifest.md): Estimates the token and time cost of curating the sources under the manifest in the request body, reported as the task's `output` (see `ProfileEstimateOutput`). Persists nothing. Body is optional.
+
+##### Manifest
+
+- [Get the context's manifest](https://docs.pinecone.io/api-reference/manifest/get-the-contexts-manifest.md): The context's pinned manifest document. A context that pins nothing returns `null` — the runtime fills defaults. Writes go through the `manifest` field on `PUT /contexts/{slug}`.
+- [List the built-in manifest templates](https://docs.pinecone.io/api-reference/manifest/list-the-built-in-manifest-templates.md): The templates a new context can be seeded from.
+
+##### Curation
+
+- [Get the curation ledger](https://docs.pinecone.io/api-reference/curation/get-the-curation-ledger.md): What the last curate recorded: the per-source hash and timestamp map, artifact edges, corpus groups, the live version pin, delete tombstones, artifact-reclaim intents, and the pointer and glossary resume cursors. Chunk ids are tracked too but not served — an internal retrieval unit.
+- [Build or rebuild the context's index from its sources](https://docs.pinecone.io/api-reference/curation/build-or-rebuild-the-contexts-index-from-its-sources.md): Curate the staged sources under the active manifest. **Required before querying** — there is no auto-curate. Body is optional; `force: true` rebuilds fully, which is what a manifest edit needs. Search contexts only: a work context builds via `work`/`groom`.
+- [Drop named sources from the index + ledger](https://docs.pinecone.io/api-reference/curation/drop-named-sources-from-the-index-+-ledger.md): Drop named sources from the index and the curation ledger without re-reading the rest of the corpus.
+
+##### Source Files
+
+- [Import source documents from a project connector](https://docs.pinecone.io/api-reference/source-files/import-source-documents-from-a-project-connector.md): Pull source documents from a linked project connector (Box, ...) into the context. Supply either `folder` or `files`. Stages the source only — curate explicitly before querying.
+- [Upload a source file or archive](https://docs.pinecone.io/api-reference/source-files/upload-a-source-file-or-archive.md): One file per request, max 2 GiB; archives (`.zip`, `.tar`, `.tar.gz`, `.tgz`) are expanded by the import runtime. Stages the source without indexing it — curate explicitly before querying.
+- [List the source file tree (root)](https://docs.pinecone.io/api-reference/source-files/list-the-source-file-tree-root.md): The root of the source tree — what has been staged but not necessarily curated.
+- [Source file/dir/size counts](https://docs.pinecone.io/api-reference/source-files/source-filedirsize-counts.md): Aggregate counts. Where source limits apply, five more fields carry the caps and usage against them (`max_files_per_context`, `max_bytes_per_context`, `max_bytes_per_file`, `used_files`, `used_bytes`); they are absent otherwise.
+- [Flat manifest of source files (path, size, last_modified)](https://docs.pinecone.io/api-reference/source-files/flat-manifest-of-source-files-path-size-last_modified.md): Flat source-object inventory. Excludes the `_inbox/` staging directory.
+- [List the source file tree under a path](https://docs.pinecone.io/api-reference/source-files/list-the-source-file-tree-under-a-path.md): One directory of the source tree.
+- [Read a source file (raw bytes)](https://docs.pinecone.io/api-reference/source-files/read-a-source-file-raw-bytes.md): The raw bytes of one staged source file.
+- [Delete a source file](https://docs.pinecone.io/api-reference/source-files/delete-a-source-file.md): Remove one file from the source tree. Its index entries survive until the next curate.
+
+##### Knowledge
+
+- [List curated knowledge (root)](https://docs.pinecone.io/api-reference/knowledge/list-curated-knowledge-root.md): The root of the curated knowledge tree — chunks and artifacts the last curate wrote.
+- [Knowledge file/dir/size counts](https://docs.pinecone.io/api-reference/knowledge/knowledge-filedirsize-counts.md): File, directory, and byte counts over the curated knowledge tree.
+- [List curated knowledge under a path](https://docs.pinecone.io/api-reference/knowledge/list-curated-knowledge-under-a-path.md): One directory of the curated knowledge tree.
+- [Read a curated knowledge file (raw bytes)](https://docs.pinecone.io/api-reference/knowledge/read-a-curated-knowledge-file-raw-bytes.md): The raw bytes of one curated knowledge file.
+
+##### Query
+
+- [Run one KnowQL query turn](https://docs.pinecone.io/api-reference/query/run-one-knowql-query-turn.md): Send `ask` and, on a new session, a `scope` of 1–10 contexts; continue an existing one with `session_id` or `previous_query_id`. Scoped search contexts must be curated, and a scope may not mix work and search contexts. Read the answer from `output[].content[].text`.
+- [Fetch one query (turn)](https://docs.pinecone.io/api-reference/query/fetch-one-query-turn.md): One turn, including its steps, citations, and usage. This is what a background run is polled with.
+- [Cancel an in-progress query turn](https://docs.pinecone.io/api-reference/query/cancel-an-in-progress-query-turn.md): Idempotent — an already-terminal query is returned unchanged. On success the turn's `status` becomes `cancelled`.
+- [Fetch the recorded trace for a query turn](https://docs.pinecone.io/api-reference/query/fetch-the-recorded-trace-for-a-query-turn.md): The per-turn debug trace (steps, tool calls, strategy, cost, rollup). Trace persistence is unconditional — every turn lands a trace blob — so this is available once the turn is terminal.
+- [Stream a query turn's events (SSE)](https://docs.pinecone.io/api-reference/query/stream-a-query-turns-events-sse.md): The turn's events as they land — the same `type`-named events `POST /query` emits with `stream: true`, as a standalone resumable subscription. Reconnect with `Last-Event-ID` to replay from where the stream dropped.
+- [Record thumbs-up/down feedback on a query turn](https://docs.pinecone.io/api-reference/query/record-thumbs-updown-feedback-on-a-query-turn.md): Record a thumbs-up or thumbs-down on a turn. The rating is returned on the turn thereafter.
+- [List the selectable query models](https://docs.pinecone.io/api-reference/query/list-the-selectable-query-models.md): What the `model` field on `POST /query` draws from: the default, every catalog entry, the tier → model-id map, per-phase defaults, and the curate-capable ids. Only entries with `available: true` are selectable; the rest are rejected with `400`.
+- [List project-wide query sessions (newest first)](https://docs.pinecone.io/api-reference/query/list-project-wide-query-sessions-newest-first.md): Every conversation thread in the project, newest first.
+- [Get a session with its queries (conversation order)](https://docs.pinecone.io/api-reference/query/get-a-session-with-its-queries-conversation-order.md): One session with its turns in conversation order.
+- [Delete a session and its queries](https://docs.pinecone.io/api-reference/query/delete-a-session-and-its-queries.md): Delete a session and every turn belonging to it.
+
+##### Tasks
+
+- [List tasks (project-wide, paginated)](https://docs.pinecone.io/api-reference/tasks/list-tasks-project-wide-paginated.md): Task records across the project, newest first. Filter by workflow, state, or context, and page with `limit` plus `page` or `offset`.
+- [Get a task (with steps)](https://docs.pinecone.io/api-reference/tasks/get-a-task-with-steps.md): Unlike the listing, this carries the task's `steps` — every one by default, or the newest N with `steps_limit`, where `steps_total` reports the true count.
+- [Cancel/terminate a task](https://docs.pinecone.io/api-reference/tasks/cancelterminate-a-task.md): Body is optional. Max body 1 MiB.
+
+##### Task Files
+
+- [Read a task file (raw bytes)](https://docs.pinecone.io/api-reference/task-files/read-a-task-file-raw-bytes.md): Serves a task's files while it runs and after it finishes. This is how a finished pack's `<slug>.context.zip` is downloaded.
+- [Stat a task file](https://docs.pinecone.io/api-reference/task-files/stat-a-task-file.md): Stat one file in the task container without reading its bytes.
+- [List a task's files under a path](https://docs.pinecone.io/api-reference/task-files/list-a-tasks-files-under-a-path.md): One directory inside the task's working directory.
+- [List a task's working-directory files](https://docs.pinecone.io/api-reference/task-files/list-a-tasks-working-directory-files.md): The root of the task's working directory.
+- [Delete a task file](https://docs.pinecone.io/api-reference/task-files/delete-a-task-file.md): Delete one file from a running task container.
+
+## pg_pinecone
+
+### Guides
+
+#### Get started
+
+- [pg_pinecone](https://docs.pinecone.io/guides/pg-pinecone/overview.md): pg_pinecone is an open-source PostgreSQL extension that runs the search engine Pinecone uses at scale inside Postgres, or on an index in Pinecone's cloud.
+- [Install pg_pinecone](https://docs.pinecone.io/guides/pg-pinecone/install.md): Install the pg_pinecone extension on PostgreSQL 17 or 18 from a release archive, Postgres.app, PGXN, or Docker, or deploy it to a hosting platform.
+- [pg_pinecone quickstart](https://docs.pinecone.io/guides/pg-pinecone/quickstart.md): Create a sample Postgres table and search it with pg_pinecone's native index, which runs the search engine Pinecone uses at scale.
+
+#### Engines
+
+- [pg_pinecone storage engines](https://docs.pinecone.io/guides/pg-pinecone/storage-engines.md): Learn how pg_pinecone's pgvector, native, and remote storage engines work, when to use each, and how to switch between them.
+- [Switch from pgvector to native](https://docs.pinecone.io/guides/pg-pinecone/switch-from-pgvector.md): Replace a table's pgvector index with a pg_pinecone native index without changing your queries, and switch back to pgvector if you need to.
+- [Switch from native to remote](https://docs.pinecone.io/guides/pg-pinecone/switch-to-remote.md): Switch a pg_pinecone table from the native engine to the remote engine, so Pinecone serves its vector search while Postgres keeps the rows.
+
+#### Search
+
+- [Search a table with full-text search](https://docs.pinecone.io/guides/pg-pinecone/full-text-search.md): Search a Postgres table with BM25 keyword search and filters in SQL, using a Pinecone index that pg_pinecone keeps in sync.
+- [Search a table with semantic search](https://docs.pinecone.io/guides/pg-pinecone/semantic-search.md): Search a Postgres table by meaning in SQL, with a hosted embedding model or your own vectors, using a Pinecone index that pg_pinecone keeps in sync.
+
+#### Resources
+
+- [pg_pinecone SQL reference](https://docs.pinecone.io/reference/pg-pinecone/sql-reference.md): Reference for every pg_pinecone SQL function, configuration setting, and error message, maintained in the pg_pinecone repository on GitHub.
+- [pg_pinecone operator runbook](https://docs.pinecone.io/reference/pg-pinecone/operator-runbook.md): Monitor and maintain pg_pinecone in production: the write queue, engine changes, upgrades, and maintenance, in the pg_pinecone repository on GitHub.
+- [pg_pinecone support](https://docs.pinecone.io/guides/pg-pinecone/support.md): Check a pg_pinecone install with pinecone.doctor(), ask questions in the Pinecone Discord community, and report bugs or request features in GitHub issues.
+
+## Other
+
+- [Semantic search](https://docs.pinecone.io/examples/sample-apps/legal-semantic-search.md): Next.js sample app for semantic search over PDF legal documents using Pinecone serverless indexes and Voyage AI voyage-law-2 embeddings.
+- [Multi-tenant RAG](https://docs.pinecone.io/examples/sample-apps/namespace-notes.md): Next.js multi-tenant RAG sample app that uses Pinecone namespaces to isolate document context and chatbot memory per workspace tenant.
+- [Pinecone Assistant](https://docs.pinecone.io/examples/sample-apps/pinecone-assistant.md): Next.js sample chat app that connects to a Pinecone Assistant for grounded answers over uploaded PDFs with citations and file references.
+- [Multimodal search](https://docs.pinecone.io/examples/sample-apps/shop-the-look.md): Sample Next.js + FastAPI app for multimodal search across text, images, and videos using Pinecone and Google Vertex AI multimodal embeddings.
+- [all-MiniLM-L12-v2](https://docs.pinecone.io/models/all-MiniLM-L12-v2.md): all-MiniLM-L12-v2 is an open-source 384-dimension encoder for sentences and short paragraphs. Generate vectors with it outside Pinecone, then upsert them.
+- [all-mpnet-base-v2](https://docs.pinecone.io/models/all-mpnet-base-v2.md): all-mpnet-base-v2 is an open-source 768-dimension encoder for sentences and short paragraphs. Generate vectors with it outside Pinecone, then upsert them.
+- [bge-reranker-v2-m3](https://docs.pinecone.io/models/bge-reranker-v2-m3.md): Use the bge-reranker-v2-m3 embedding or reranking model with Pinecone: specs and index setup. This is an open source, high performance, multilingual model.
+- [CLIP](https://docs.pinecone.io/models/clip.md): OpenAI's CLIP embeds text and images in a shared space for zero-shot image search. Generate vectors with it outside Pinecone, then upsert them to an index.
+- [CLIP-ViT-B-32-laion2B-s34B-b79K](https://docs.pinecone.io/models/CLIP-ViT-B-32-laion2B-s34B-b79K.md): LAION's open-source CLIP-ViT-B-32-laion2B-s34B-b79K embeds text and images in 512 dimensions. Generate vectors outside Pinecone, then upsert them.
+- [embed-english-light-v3.0](https://docs.pinecone.io/models/cohere-embed-english-light-v3.0.md): Cohere's embed-english-light-v3.0 makes 384-dimension English text embeddings. Generate vectors with Cohere's API, then upsert them to a Pinecone index.
+- [embed-english-v3.0](https://docs.pinecone.io/models/cohere-embed-english-v3.0.md): Cohere's embed-english-v3.0 makes 1024-dimension English text embeddings. Generate vectors with Cohere's API, then upsert them to a Pinecone index.
+- [embed-multilingual-v3.0](https://docs.pinecone.io/models/cohere-embed-multilingual-v3.0.md): Cohere's embed-multilingual-v3.0 makes 1024-dimension multilingual text embeddings. Generate vectors with Cohere's API, then upsert them to Pinecone.
+- [cohere-rerank-4-fast](https://docs.pinecone.io/models/cohere-rerank-4-fast.md): Cohere Rerank 4.0 Fast is Cohere's latest reranking model, providing high-quality relevance scoring across enterprise search workloads.
+- [e5-base-v2](https://docs.pinecone.io/models/e5-base-v2.md): Microsoft's e5-base-v2 is an open-source text embedding model with 768 dimensions. Generate vectors with it outside Pinecone, then upsert them to an index.
+- [e5-large-v2](https://docs.pinecone.io/models/e5-large-v2.md): Microsoft's e5-large-v2 is an open-source text embedding model with 1024 dimensions. Generate vectors with it outside Pinecone, then upsert them to an index.
+- [Gemini Embedding 2 (gemini-embedding-2)](https://docs.pinecone.io/models/gemini-embedding-2.md): Google's Gemini Embedding 2 embeds text for the task you choose, such as search or clustering, and works with integrated embedding on document indexes.
+- [gte-base](https://docs.pinecone.io/models/gte-base.md): Alibaba's gte-base is an open-source text embedding model with 768 dimensions. Generate vectors with it outside Pinecone, then upsert them to an index.
+- [gte-large](https://docs.pinecone.io/models/gte-large.md): Alibaba's gte-large is the larger open-source GTE text embedding model, with 1024 dimensions. Generate vectors with it outside Pinecone, then upsert them.
+- [instructor-large](https://docs.pinecone.io/models/instructor-large.md): instructor-large is an open-source, instruction-tuned text embedding model with 768 dimensions. Generate vectors with it outside Pinecone, then upsert them.
+- [instructor-xl](https://docs.pinecone.io/models/instructor-xl.md): instructor-xl is the larger open-source, instruction-tuned text embedding model, with 768 dimensions. Generate vectors outside Pinecone, then upsert them.
+- [jina-clip-v2](https://docs.pinecone.io/models/jina-clip-v2.md): Jina AI's jina-clip-v2 makes multilingual text and image embeddings with 1024 dimensions. Generate vectors with Jina AI's API, then upsert them to Pinecone.
+- [jina-embeddings-v4](https://docs.pinecone.io/models/jina-embeddings-v4.md): Jina AI's jina-embeddings-v4 makes text and image embeddings with 128 to 2048 dimensions. Generate vectors with Jina AI's API, then upsert them to Pinecone.
+- [llama-text-embed-v2](https://docs.pinecone.io/models/llama-text-embed-v2.md): Developed by NVIDIA Research, it's built on the Llama 3.2 1B architecture and optimized for high retrieval quality with low-latency inference.
+- [mistral-embed](https://docs.pinecone.io/models/mistral-embed.md): Mistral AI's mistral-embed makes 1024-dimension text embeddings. Generate vectors with Mistral AI's API, then upsert them to a Pinecone index.
+- [multilingual-e5-large](https://docs.pinecone.io/models/multilingual-e5-large.md): Use the multilingual-e5-large embedding or reranking model with Pinecone: specs and index setup. Ideal multilingual model for high performance while keeping.
+- [pinecone-rerank-v0](https://docs.pinecone.io/models/pinecone-rerank-v0.md): Pinecone rerank v0 is a Pinecone-hosted reranking model for RAG relevance scoring with 512-token context and query-document pair scores.
+- [pinecone-sparse-english-v0](https://docs.pinecone.io/models/pinecone-sparse-english-v0.md): Use the pinecone-sparse-english-v0 embedding or reranking model with Pinecone: specs and index setup. Built on the innovations of the DeepImpact.
+- [rerank-2](https://docs.pinecone.io/models/rerank-2.md): Voyage AI's rerank-2 is a multilingual reranker with a 16,000-token context. Call Voyage AI's API to rerank the results you query from a Pinecone index.
+- [rerank-2-lite](https://docs.pinecone.io/models/rerank-2-lite.md): Voyage AI's rerank-2-lite is a faster multilingual reranker with an 8,000-token context. Call Voyage AI's API to rerank results you query from Pinecone.
+- [text-embedding-3-large](https://docs.pinecone.io/models/text-embedding-3-large.md): OpenAI's text-embedding-3-large is its largest text embedding model, and you can use it for integrated embedding on Pinecone document indexes.
+- [text-embedding-3-small](https://docs.pinecone.io/models/text-embedding-3-small.md): OpenAI's text-embedding-3-small is a compact, low-cost text embedding model that you can use for integrated embedding on Pinecone document indexes.
+- [text-embedding-ada-002](https://docs.pinecone.io/models/text-embedding-ada-002.md): OpenAI's text-embedding-ada-002 is a legacy 1536-dimension text embedding model. Generate vectors with OpenAI's API, then upsert them to a Pinecone index.
+- [voyage-2](https://docs.pinecone.io/models/voyage-02.md): Voyage AI's voyage-2 is a second-generation 1024-dimension text embedding model. Generate vectors with Voyage AI's API, then upsert them to a Pinecone index.
+- [voyage-3](https://docs.pinecone.io/models/voyage-3.md): Voyage AI's voyage-3 makes general-purpose multilingual text embeddings with 1024 dimensions. Generate vectors with Voyage AI's API, then upsert them.
+- [voyage-3-large](https://docs.pinecone.io/models/voyage-3-large.md): Voyage AI's voyage-3-large makes multilingual text embeddings with 256 to 2048 dimensions. Generate vectors with Voyage AI's API, then upsert them to Pinecone.
+- [voyage-3-lite](https://docs.pinecone.io/models/voyage-3-lite.md): Voyage AI's voyage-3-lite makes low-latency 512-dimension text embeddings. Generate vectors with Voyage AI's API, then upsert them to a Pinecone index.
+- [voyage-code-2](https://docs.pinecone.io/models/voyage-code-2.md): Voyage AI's voyage-code-2 makes 1536-dimension embeddings for code search. Generate vectors with Voyage AI's API, then upsert them to a Pinecone index.
+- [voyage-code-3](https://docs.pinecone.io/models/voyage-code-3.md): Voyage AI's voyage-code-3 makes code embeddings with 256 to 2048 dimensions. Generate vectors with Voyage AI's API, then upsert them to a Pinecone index.
+- [voyage-finance-2](https://docs.pinecone.io/models/voyage-finance-2.md): Voyage AI's voyage-finance-2 makes 1024-dimension embeddings for financial text. Generate vectors with Voyage AI's API, then upsert them to a Pinecone index.
+- [voyage-large-2](https://docs.pinecone.io/models/voyage-large-2.md): Voyage AI's voyage-large-2 is a second-generation 1536-dimension text embedding model. Generate vectors with Voyage AI's API, then upsert them to Pinecone.
+- [voyage-law-2](https://docs.pinecone.io/models/voyage-law-2.md): Voyage AI's voyage-law-2 makes 1024-dimension embeddings for legal text. Generate vectors with Voyage AI's API, then upsert them to a Pinecone index.
+- [voyage-multimodal-3](https://docs.pinecone.io/models/voyage-multimodal-3.md): Voyage AI's voyage-multimodal-3 embeds interleaved text and images, like PDFs and slides, in 1024 dimensions. Generate vectors with Voyage AI, then upsert them.
+
+## OpenAPI Specs
+
+- [db_control_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/db_control_2026-07.oas.yaml)
+- [db_data_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/db_data_2026-07.oas.yaml)
+- [inference_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/inference_2026-07.oas.yaml)
+- [admin_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/admin_2026-07.oas.yaml)
+- [db_control_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/db_control_2026-04.oas.yaml)
+- [db_data_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/db_data_2026-04.oas.yaml)
+- [inference_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/inference_2026-04.oas.yaml)
+- [admin_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/admin_2026-04.oas.yaml)
+- [oauth_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/oauth_2026-04.oas.yaml)
+- [db_control_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/db_control_2025-10.oas.yaml)
+- [db_data_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/db_data_2025-10.oas.yaml)
+- [inference_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/inference_2025-10.oas.yaml)
+- [admin_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/admin_2025-10.oas.yaml)
+- [oauth_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/oauth_2025-10.oas.yaml)
+- [db_control_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/db_control_2025-04.oas.yaml)
+- [db_data_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/db_data_2025-04.oas.yaml)
+- [inference_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/inference_2025-04.oas.yaml)
+- [admin_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/admin_2025-04.oas.yaml)
+- [oauth_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/oauth_2025-04.oas.yaml)
+- [db_control_2025-01.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-01/db_control_2025-01.oas.yaml)
+- [db_data_2025-01.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-01/db_data_2025-01.oas.yaml)
+- [inference_2025-01.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-01/inference_2025-01.oas.yaml)
+- [db_control_2024-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-10/db_control_2024-10.oas.yaml)
+- [db_data_2024-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-10/db_data_2024-10.oas.yaml)
+- [inference_2024-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-10/inference_2024-10.oas.yaml)
+- [control_2024-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-07/control_2024-07.oas.yaml)
+- [data_2024-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-07/data_2024-07.oas.yaml)
+- [control_2024-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-04/control_2024-04.oas.yaml)
+- [data_2024-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2024-04/data_2024-04.oas.yaml)
+- [assistant_control_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/assistant_control_2026-07.oas.yaml)
+- [assistant_data_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/assistant_data_2026-07.oas.yaml)
+- [assistant_evaluation_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/assistant_evaluation_2026-07.oas.yaml)
+- [assistant_control_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/assistant_control_2026-04.oas.yaml)
+- [assistant_data_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/assistant_data_2026-04.oas.yaml)
+- [assistant_evaluation_2026-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-04/assistant_evaluation_2026-04.oas.yaml)
+- [assistant_control_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/assistant_control_2025-10.oas.yaml)
+- [assistant_data_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/assistant_data_2025-10.oas.yaml)
+- [assistant_evaluation_2025-10.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-10/assistant_evaluation_2025-10.oas.yaml)
+- [assistant_control_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/assistant_control_2025-04.oas.yaml)
+- [assistant_data_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/assistant_data_2025-04.oas.yaml)
+- [assistant_evaluation_2025-04.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-04/assistant_evaluation_2025-04.oas.yaml)
+- [assistant_control_2025-01.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-01/assistant_control_2025-01.oas.yaml)
+- [assistant_data_2025-01.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-01/assistant_data_2025-01.oas.yaml)
+- [assistant_evaluation_2025-01.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2025-01/assistant_evaluation_2025-01.oas.yaml)
+- [nexus_control_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/nexus_control_2026-07.oas.yaml)
+- [nexus_data_2026-07.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-07/nexus_data_2026-07.oas.yaml)
+- [db_control_2026-01.alpha.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-01.alpha/db_control_2026-01.alpha.oas.yaml)
+- [db_data_2026-01.alpha.oas](https://raw.githubusercontent.com/pinecone-io/pinecone-api/refs/heads/main/2026-01.alpha/db_data_2026-01.alpha.oas.yaml)
+
+> The links below point to documentation indexes. Follow each `/_llms/` index recursively until you reach documentation pages.
+
+## Indexes
+
+- [Pinecone Database (575 pages)](https://docs.pinecone.io/_llms/pinecone-database.txt): Search engine for AI agents and applications
+- [Pinecone Database / Guides (102 pages)](https://docs.pinecone.io/_llms/pinecone-database/guides.txt): Get started, Indexes, Data, Search, Optimize, Cost, Production, Agents, Legacy.
+- [Pinecone Database / Reference (375 pages)](https://docs.pinecone.io/_llms/pinecone-database/reference.txt): 2026-07 (latest), 2026-04, 2025-10, 2025-04, 2025-01, 2024-10, 2024-07, 2024-04.
+- [Pinecone Database / Reference / 2026-07 (latest) (121 pages)](https://docs.pinecone.io/_llms/pinecone-database/reference/2026-07-latest.txt): APIs, Database, Inference, Admin, SDKs, CLI, Tools.
+- [Pinecone Assistant (128 pages)](https://docs.pinecone.io/_llms/pinecone-assistant.txt): Managed RAG for chat and agent applications
+- [Pinecone Assistant / Reference (108 pages)](https://docs.pinecone.io/_llms/pinecone-assistant/reference.txt): 2026-07 (latest), 2026-04, 2025-10, 2025-04, 2025-01.
+
