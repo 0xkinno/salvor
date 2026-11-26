@@ -1,0 +1,983 @@
+SOURCE: https://fly.io/connectors
+RETRIEVED: 2026-11-26 (UTC)
+----
+<!doctype html>
+<html lang="en-US" class="no-js h-full " data-menu-state="off" data-motion="off">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="Cys9Ci8dFx8EFAw_IDhARDAFOTwkFXMjgqJHiPcmFLHpawu2AcHUJt1n">
+
+    <title data-suffix=" · Fly">Connectors: connect agents to APIs without handing over the keys · Fly</title>
+
+    <script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#organization","@type":"Organization","address":{"@type":"PostalAddress","addressCountry":"US","addressLocality":"San Francisco","addressRegion":"CA","postalCode":"94114","streetAddress":"2261 Market Street #4990"},"contactPoint":{"@type":"ContactPoint","availableLanguage":["English"],"contactType":"customer support","email":"support@fly.io","url":"https:\/\/fly.io\/support\/"},"description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","foundingDate":"2017","legalName":"Fly.io, Inc.","logo":"https:\/\/fly.io\/phx\/images\/fly-balloon-icon-417a0f1be37234f7d3aca46fb6ebbe08.svg?vsn=d","name":"Fly.io","sameAs":["https:\/\/www.wikidata.org\/wiki\/Q133943318","https:\/\/github.com\/superfly","https:\/\/www.linkedin.com\/company\/flydotio","https:\/\/x.com\/flydotio","https:\/\/twitter.com\/flydotio","https:\/\/bsky.app\/profile\/fly.io","https:\/\/hachyderm.io\/@flydotio","https:\/\/www.youtube.com\/@flydotio","https:\/\/community.fly.io\/"],"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#website","@type":"WebSite","name":"Fly.io","publisher":{"@id":"https:\/\/fly.io\/#organization"},"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#software-application","@type":"SoftwareApplication","applicationCategory":"DeveloperApplication","description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","featureList":"Machines, Sprites, Managed Postgres, Private Networking, Autoscaling, Zero Downtime Deploys, Granular Routing, Monitoring","isPartOf":{"@id":"https:\/\/fly.io\/#website"},"name":"Fly.io","operatingSystem":"Web","provider":{"@id":"https:\/\/fly.io\/#organization"},"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#service","@type":"Service","areaServed":"Worldwide","description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","hasOfferCatalog":{"@type":"OfferCatalog","itemListElement":[{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/machines\/#service","@type":"Service","name":"Fly Machines"}},{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/sprites\/#service","@type":"Service","name":"Sprites"}},{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/mpg\/#service","@type":"Service","name":"Managed Postgres"}}],"name":"Fly.io products"},"name":"Fly.io","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Public cloud platform","url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/machines\/#service","@type":"Service","areaServed":"Worldwide","description":"Lightweight, fast-booting virtual machines for running any code.","name":"Fly Machines","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Cloud compute","url":"https:\/\/fly.io\/machines\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/sprites\/#service","@type":"Service","areaServed":"Worldwide","description":"Full Linux computers designed for agents instead of people. As persistent or disposable as you want, with full environment checkpointing and restore.","name":"Sprites","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Agent sandboxes","url":"https:\/\/fly.io\/sprites\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/mpg\/#service","@type":"Service","areaServed":"Worldwide","description":"Fully-managed production PostgreSQL with automatic backups, high availability with automatic failover, connection pooling and encryption at rest and in transit.","name":"Managed Postgres","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Managed database","url":"https:\/\/fly.io\/mpg\/"}
+</script>
+
+    <meta name="description" content="Connect Sprites to GitHub, Slack, OpenRouter or any HTTP API with Fly.io Connectors. They inject credentials, so raw tokens never land inside the Sprite.">
+
+    <meta property="og:type" content="website">
+    
+    
+    <meta property="og:site_name" content="Fly.io">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://fly.io/connectors/">
+    <meta property="og:title" content="Connectors: connect agents to APIs without handing over the keys">
+    <meta property="og:description" content="Connect Sprites to GitHub, Slack, OpenRouter or any HTTP API with Fly.io Connectors. They inject credentials, so raw tokens never land inside the Sprite.">
+
+    <meta property="og:image" content="https://fly.io/phx/images/og/connectors-d2a7e0841f2375e338d76d68ad9ca509.jpg?vsn=d">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Connectors: connect agents to APIs without handing over the keys, over rockets and servers riding through the clouds, with a Sign up button">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@flydotio">
+    <meta name="twitter:title" content="Connectors: connect agents to APIs without handing over the keys">
+    <meta name="twitter:description" content="Connect Sprites to GitHub, Slack, OpenRouter or any HTTP API with Fly.io Connectors. They inject credentials, so raw tokens never land inside the Sprite.">
+    <meta name="twitter:image" content="https://fly.io/phx/images/og/connectors-d2a7e0841f2375e338d76d68ad9ca509.jpg?vsn=d">
+    <meta name="twitter:image:alt" content="Connectors: connect agents to APIs without handing over the keys, over rockets and servers riding through the clouds, with a Sign up button">
+
+    <link rel="canonical" href="https://fly.io/connectors/">
+
+    
+
+    <link rel="alternate" type="text/markdown" href="https://fly.io/connectors.md">
+
+    <meta content="origin" name="referrer">
+    <meta content="True" name="HandheldFriendly">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script defer data-domain="fly.io" src="/js/events.js">
+    </script>
+
+    <link href="/phx/ui/images/favicon/favicon-595d1312b35dfe32838befdf8505515e.ico?vsn=d" rel="shortcut icon" type="image/x-icon">
+<link href="/phx/ui/images/favicon/apple-touch-icon-3e4c9ce127b5cd6f5516638d4bbf1dd5.png?vsn=d" rel="apple-touch-icon" sizes="180x180">
+<link href="/phx/ui/images/favicon/favicon-32x32-803ad2058b86df3f8a9f8af1505a59d2.png?vsn=d" rel="icon" sizes="32x32" type="image/png">
+<link href="/phx/ui/images/favicon/favicon-16x16-6963a8113fc4dc87910c17c4279a9bd4.png?vsn=d" rel="icon" sizes="16x16" type="image/png">
+<link href="/phx/ui/images/favicon/site-4ed2b515513825854b905e85931b4a55.webmanifest?vsn=d" rel="manifest">
+<link href="/phx/ui/images/favicon/safari-pinned-tab-987c7fc8f545337872c691fbc736e9c4.svg?vsn=d" rel="mask-icon" color="#4d7cfe">
+<meta content="#4d7cfe" name="msapplication-TileColor">
+<meta content="#ffffff" name="theme-color">
+    <style>
+  html:not(.motion-on) * { 
+    transition: none !important; 
+    animation: none !important;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.documentElement.classList.add('motion-on')
+  })
+</script>
+    <style>
+  
+  @font-face {
+    font-family: 'Fricolage Grotesque';
+    src: url("/phx/ui/fonts/fricolage-grotesque.var-c4e68eb9708a077874be07be1d9f2ab9.woff2?vsn=d") format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-medium-72452da8f9470257c609f26a1349f0d2.woff2?vsn=d") format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-medium-italic-adb66b2b22d7a691a214ab0e7971264f.woff2?vsn=d") format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-bold-6a92de456437e3636084b0b8203e4af6.woff2?vsn=d") format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-bold-italic-04208325eb2543e41f5d70c7e281309a.woff2?vsn=d") format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Fragment Mono';
+    src: url("/phx/ui/fonts/fragment-mono-regular-e6a1881f8b2d71568ae7935d098c7590.woff2?vsn=d") format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Fragment Mono';
+    src: url("/phx/ui/fonts/fragment-mono-italic-a01dfaeb25824e4279013d8497b0d7f6.woff2?vsn=d") format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: fallback;
+  }
+  
+</style>
+<link rel="preload" href="/phx/ui/fonts/fricolage-grotesque.var-c4e68eb9708a077874be07be1d9f2ab9.woff2?vsn=d" as="font" type="font/woff2" crossorigin><link rel="preload" href="/phx/ui/fonts/mackinac-medium-72452da8f9470257c609f26a1349f0d2.woff2?vsn=d" as="font" type="font/woff2" crossorigin><link rel="preload" href="/phx/ui/fonts/mackinac-medium-italic-adb66b2b22d7a691a214ab0e7971264f.woff2?vsn=d" as="font" type="font/woff2" crossorigin>
+
+    <link phx-track-static rel="stylesheet" href="/phx/assets/app-1459de2617b70f731a2077fc798d638d.css?vsn=d">
+
+    <script>
+      document.documentElement.classList.remove("no-js")
+    </script>
+    <style>
+      .no-js [data-src] {
+        display: none;
+      }
+    </style>
+    <script defer phx-track-static type="text/javascript" src="/phx/assets/js/app-133f20dec1b535adf846754674aa10de.js?vsn=d">
+    </script>
+    <script defer phx-track-static type="text/javascript" src="/phx/assets/js/webmcp-f7cb6010ac5e3b5c83dd66a2537d801a.js?vsn=d">
+</script>
+    
+
+    <link rel="me" href="https://hachyderm.io/@flydotio">
+
+    <script id="google-tag-sdk" async src="https://analytics.fly.io/gtag/js?id=G-EX6DMZ1DZV">
+</script>
+<script id="google-tag-trigger">
+  const tagId = 'G-EX6DMZ1DZV'
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  gtag('config', tagId, {
+    'transport_url': 'https://analytics.fly.io',
+    'first_party_collection': true
+  });
+
+  // client_id / session_id reach the server via the _ga / _ga_<id> cookies
+  // gtag writes (FlyWeb.Plugs.GoogleAnalyticsCookies) — no JS handoff needed.
+  // Conversions are never sent from here: "User Signed Up" goes server-side
+  // through the sGTM container (FlyWeb.Sgtm) with this visitor's cookies,
+  // so it lands on the same GA4 user and session as these page views.
+</script>
+    <script type="application/json" id="posthog-config">
+  {"api_key":"phc_nuaUijb3iLWut9Kbr56bSHSP4MYdeb8CFd9BgPm3LAVY","eu_scope":false,"api_host":"https://posthog.fly.io"}
+</script>
+<script defer type="text/javascript" src="/phx/assets/js/posthog-11f6f160a07792a1a08cd0da8f8800da.js?vsn=d">
+</script>
+  </head>
+
+  <body class="my-app-sandbox w-full min-h-full">
+    
+    <header class="navbar relative z-500 container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-24 text-navy font-medium text-sm" data-menu-container>
+  <nav aria-label="Logo menu" class="relative z-60 flex">
+    <a href="/" aria-label="Fly.io home" class="block h-8 sm:h-10">
+
+
+        
+
+  <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 100%; ">
+
+
+    </a>
+  </nav>
+
+  <button data-menu-toggle aria-expanded="false" class="ml-auto menu-toggle lg:hidden relative z-60 flex-none flex items-center justify-center w-6 h-6 text-navy">
+    <span class="sr-only">Open main menu</span>
+    <svg width="22" height="18" viewBox="0 0 22 18" fill="none" aria-hidden="true">
+      <path d="M1 1H21M1 9H21M1 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <nav aria-label="Main menu" class="pointer-events-auto hidden lg:flex lg:w-full items-center justify-end">
+    <div class="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2 rounded-full bg-white/75 bg-linear-to-r from-pink-200/40 via-violet-200/40 to-indigo-200/40 border border-white/50 px-3 text-sm font-medium text-gray-800 shadow-lg shadow-gray-800/5 ring-1 ring-gray-800/7.5 backdrop-blur-xl">
+
+      <div class="flex-none hidden shrink-0 lg:flex group static">
+        <button id="nav-products" type="button" aria-haspopup="true" class="relative flex items-center whitespace-nowrap px-3 py-2.5 cursor-pointer transition-colors group-hover:text-violet-600 group-focus-within:text-violet-600">
+          Products
+          <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+          <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+            <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+          </span>
+        </button>
+        <div id="nav-products-panel" class="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[min(72rem,calc(100vw-4rem))] invisible opacity-0 translate-y-1 transition-[opacity,translate,visibility] duration-200 motion-reduce:transition-none group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+          <div class="rounded-2xl border border-[#e4def7] bg-white p-7 text-navy shadow-[0_24px_60px_rgb(40_25_80/.14)]">
+            <div class="grid grid-cols-[repeat(3,minmax(0,1fr))_auto] gap-7">
+              <div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Compute
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/machines/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        App VMs
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Fly Machines: fast-booting VMs for production apps, in 18 regions.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/sprites/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Agent sandboxes
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Fly Sprites: fast-starting, hardware-isolated sandboxes. Always on, scaling to zero when idle.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div><div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Storage
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/mpg/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Managed Postgres
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Backups and failover built in.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/object-storage/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Object storage
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Global, S3-compatible.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/volumes/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Volumes
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Local NVMe disks for your VMs.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/redis/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Redis
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Caching and queues.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/vector-database/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Vector database
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Embeddings next to your compute.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div><div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Networking
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/networking/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Private networking
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Every workload on a private network by default.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/granular-routing/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Global routing
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Requests land on the closest healthy instance.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/connectors/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Connectors
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Pre-built connections to the services agents use, like GitHub and Slack. Credentials never enter the computer.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="border-l border-[#eee9fd] pl-5">
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Features
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/sprites/ecosystem/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Integrations
+                    </a>
+                  </li><li>
+                    <a href="/autoscaling/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Autoscaling
+                    </a>
+                  </li><li>
+                    <a href="/zero-downtime-deploys/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Zero-downtime deploys
+                    </a>
+                  </li><li>
+                    <a href="/monitoring/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Monitoring
+                    </a>
+                  </li><li>
+                    <a href="/mcp/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      MCP server
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="https://docs.fly.io">
+        Docs
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="/customer-stories/">
+        Customers
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="/pricing/">
+        Pricing
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <dl class="flex-none bubble-wrap hidden shrink-0 lg:flex group relative px-3 py-2.5 cursor-pointer">
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+        <dt class="flex items-center justify-items-center whitespace-nowrap transition-colors group-hover:text-violet-600 group-focus-within-text-violet-400">
+          Resources
+        </dt>
+        <dd class="bubble-b tail text-sm text-navy flex flex-col w-44 rounded-2xl p-2">
+          <div class="rounded-tl w-3 h-3 absolute top-0 left-1/2 z-[-1] -ml-2 rotate-45 bg-white -mt-1.5">
+          </div>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/blog/">
+            Blog
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/infra-log/">
+            Infra Log
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/changelog">
+            Changelog
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="https://status.flyio.net">
+            Status
+          </a>
+        </dd>
+      </dl>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="https://community.fly.io">
+        Community
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+    </div>
+    <div id="nav-auth-buttons" class="ml-5 flex-none flex items-center rounded-full bg-white/75 bg-linear-to-r from-pink-200/40 via-violet-200/40 to-indigo-200/40 border border-white/50 px-3 text-sm font-medium text-gray-800 shadow-lg shadow-gray-800/5 ring-1 ring-gray-800/7.5 backdrop-blur-xl">
+
+        <a href="/app/sign-in" class="flex-none group relative text-base sm:text-sm -ml-2 my-1 inline-flex items-center bg-clip-padding rounded-l-[20px] rounded-r-[8px] border h-8 pl-3 pr-[10px] bg-white/40 border-white/90 shadow-sm hover:text-violet-600 hover:bg-violet-50/40 transition-colors duration-300">
+          Log In
+          <span class="absolute left-4 right-1 -bottom-2px h-px bg-linear-to-r from-violet-500/0 via-violet-400 to-violet-500/0 transition duration-300 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+          <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+            <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+          </span>
+        </a>
+        <a href="/app/sign-up" class="flex-none group relative text-base sm:text-sm ml-5px -mr-2 my-1 h-8 pr-3 btn-xs btn-orange border-none rounded-r-[20px] rounded-l-[8px] ">
+          Sign Up
+        </a>
+
+    </div>
+  </nav>
+
+  <nav data-menu aria-label="Main menu" class="lg:hidden fixed inset-0 z-600 text-navy overflow-y-auto overscroll-contain bg-white invisible opacity-0 transition-[opacity,visibility] duration-200 motion-reduce:transition-none in-data-[menu-state=on]:visible in-data-[menu-state=on]:opacity-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-24 border-b border-[#e6e0fe]">
+      <a href="/" aria-label="Fly.io home" class="block h-8 sm:h-10">
+        
+
+  <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 100%; ">
+
+      </a>
+      <button type="button" data-menu-toggle class="ml-auto flex-none flex items-center justify-center w-6 h-6 text-[#2e2e2e]">
+        <span class="sr-only">Close main menu</span>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M1 1L17 17M1 17L17 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="container mx-auto flex max-w-md flex-col gap-8 px-6 py-12 text-[#2e2e2e] sm:mx-0 sm:px-6 lg:px-8">
+      <details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Products
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/machines/" class="transition-colors hover:text-[#7c3aed]">
+            App VMs
+          </a><a href="/sprites/" class="transition-colors hover:text-[#7c3aed]">
+            Agent sandboxes
+          </a><a href="/mpg/" class="transition-colors hover:text-[#7c3aed]">
+            Managed Postgres
+          </a><a href="/object-storage/" class="transition-colors hover:text-[#7c3aed]">
+            Object storage
+          </a><a href="/volumes/" class="transition-colors hover:text-[#7c3aed]">
+            Volumes
+          </a><a href="/redis/" class="transition-colors hover:text-[#7c3aed]">
+            Redis
+          </a><a href="/vector-database/" class="transition-colors hover:text-[#7c3aed]">
+            Vector database
+          </a><a href="/networking/" class="transition-colors hover:text-[#7c3aed]">
+            Private networking
+          </a><a href="/granular-routing/" class="transition-colors hover:text-[#7c3aed]">
+            Global routing
+          </a><a href="/connectors/" class="transition-colors hover:text-[#7c3aed]">
+            Connectors
+          </a>
+        </div>
+      </details><details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Features
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/sprites/ecosystem/" class="transition-colors hover:text-[#7c3aed]">
+            Integrations
+          </a><a href="/autoscaling/" class="transition-colors hover:text-[#7c3aed]">
+            Autoscaling
+          </a><a href="/zero-downtime-deploys/" class="transition-colors hover:text-[#7c3aed]">
+            Zero-downtime deploys
+          </a><a href="/monitoring/" class="transition-colors hover:text-[#7c3aed]">
+            Monitoring
+          </a><a href="/mcp/" class="transition-colors hover:text-[#7c3aed]">
+            MCP server
+          </a>
+        </div>
+      </details><details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Resources
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/blog/" class="transition-colors hover:text-[#7c3aed]">
+            Blog
+          </a><a href="/infra-log/" class="transition-colors hover:text-[#7c3aed]">
+            Infra Log
+          </a><a href="/changelog" class="transition-colors hover:text-[#7c3aed]">
+            Changelog
+          </a><a href="https://docs.fly.io" class="transition-colors hover:text-[#7c3aed]">
+            Docs
+          </a><a href="/customer-stories/" class="transition-colors hover:text-[#7c3aed]">
+            Customers
+          </a><a href="https://community.fly.io/" class="transition-colors hover:text-[#7c3aed]">
+            Community
+          </a><a href="https://status.flyio.net/" class="transition-colors hover:text-[#7c3aed]">
+            Status
+          </a>
+        </div>
+      </details>
+      <a href="/pricing/" class="text-[20px] font-semibold leading-normal transition-colors hover:text-[#7c3aed]">
+        Pricing
+      </a>
+      <div class="flex flex-col gap-3 py-4 text-sm font-normal">
+
+          <a href="/app/sign-in" class="flex h-10 items-center justify-center rounded-md border border-[#d4c4fd] bg-[#e6e0fe] px-3 text-[#7c3aed] transition-colors hover:bg-[#d4c4fd]">
+            Log In
+          </a>
+          <a href="/app/sign-up" class="flex h-10 items-center justify-center rounded-md bg-[#f86d60] px-3 text-white ring-[1.5px] ring-inset ring-[#fcb9b2] transition-colors hover:bg-[#ec5a4c]">
+            Sign Up
+          </a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="relative w-full h-full overflow-hidden -mt-24 pt-24">
+  <main>
+  <header class="hero relative flex flex-col -mt-24 pt-24 bg-white">
+
+    <div class="w-full overflow-hidden">
+      <img id="connectors-hero" src="/phx/ui/images/connectors-hero-fd8e422dba9f386dfe29a48f4fcfff98.webp?vsn=d" srcset="/phx/ui/images/connectors-hero-1400-a559b3b119c8d10571c3ce55414a69c7.webp?vsn=d 1400w, /phx/ui/images/connectors-hero-fd8e422dba9f386dfe29a48f4fcfff98.webp?vsn=d 2097w" sizes="100vw" width="2097" height="460" fetchpriority="high" class="w-full h-[140px] sm:h-[220px] lg:h-[300px] object-cover object-bottom mask-[linear-gradient(to_bottom,transparent,black_3rem)]" alt="">
+    </div>
+    <div class="relative container lg:max-w-4xl m-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10 lg:pt-20 lg:pb-12">
+      <div class="relative flex flex-col items-start sm:items-center sm:text-center">
+
+        <h1 class="font-heading text-3.5xl/[1.2] xs:text-4xl/[1.2] sm:text-4.5xl/[1.15] lg:text-5.5xl/[1.15] tracking-[-.045em]! relative text-navy mb-5 -mt-4 sm:-mt-5 lg:-mt-6">
+          Hook your agent up to your APIs without handing it the keys
+        </h1>
+        <p class="text-base lg:text-[18px] tracking-prose mb-9 max-w-187.5 mx-auto">
+          Sprites connect seamlessly to any HTTP API through Connectors. Set up a Connector once and allow any or all of your Sprites to use it with granular permissions. The raw token never lands inside the Sprite where an agent can read it.
+        </p>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <a href="https://fly.io/sprites/" class="gap-2 btn-xl btn-purple group/btn btn-border-dark rounded-full justify-center">
+  
+
+    
+            Deploy a Sprite
+          
+  
+
+  <div class="flex items-center opacity-50 group-hover/btn:opacity-100 transition-opacity ">
+    <svg role="img" viewBox="0 0 16 16" width="0" height="10" fill="currentColor" class="w-0 group-hover/btn:w-2.5 h-3 translate-x-2.5 ease-out duration-200 transition-all transform-gpu">
+      <path d="M1 9h14a1 1 0 000-2H1a1 1 0 000 2z"></path>
+    </svg>
+    <svg role="img" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" class="size-[0.7em]">
+      <path d="M7.293 1.707L13.586 8l-6.293 6.293a1 1 0 001.414 1.414l7-7a.999.999 0 000-1.414l-7-7a1 1 0 00-1.414 1.414z"></path>
+    </svg>
+  </div>
+
+</a>
+
+
+          <a href="https://docs.fly.io/sprites" class="gap-2 btn-xl btn-border-dark rounded-full justify-center">
+  
+
+    
+            Read the Docs
+          
+  
+
+</a>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="container max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 mt-6">
+      <hr class="border-t border-gray-200">
+    </div>
+  </header>
+
+  <article class="relative bg-white">
+
+    <div class="relative container mx-auto pt-12 xl:pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-heading text-3xl md:text-4xl text-navy mb-8">
+          What Connectors actually do
+        </h2>
+        <p class="text-lg text-gray-700 mb-8">
+          From inside a Sprite, calling an external API looks like calling a plain HTTP endpoint with no auth attached:
+        </p>
+        <pre class="bg-gray-900! text-gray-100 p-4 rounded-lg overflow-x-auto text-[0.9375rem] font-mono leading-relaxed mb-8"><code class="bg-transparent! border-0! p-0!">curl https://api.sprites.dev/v1/gateway/github/user/repos</code></pre>
+        <p class="text-lg text-gray-700 mb-8">
+          See? No token in that request. You select which Sprites get access to each Connector. The Connector injects the real credentials, and proxies the call. The response streams back as if the Sprite had called the API directly. What the Sprite never gets is the key: that stays in the control plane (encrypted) and is attached to the request on the way out.
+        </p>
+        <p class="text-lg text-gray-700">
+          This is why you can safely run agents and their integrations (along with the code they generate) in Sprites. An agent that never holds a raw token can't leak it, log it, or ship it off in a curl to somewhere it shouldn't. You get the reach of a fully credentialed client with none of the exposure.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+          <div>
+            <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12">
+              Connect a service once
+            </h2>
+            <p class="text-lg lg:text-xl text-gray-700 mb-6">
+              Connect a service once at the org level, and it becomes a named Connector that any authorized Sprite can use. OAuth providers like GitHub and Slack go through the normal authorize-and-grant flow.
+            </p>
+            <p class="text-lg lg:text-xl text-gray-700 mb-6">
+              OpenRouter connects for model access with your OpenRouter key. Anything else fits the custom Connector; point it at a base URL, give it a token and how the token is sent, and it's ready to use.
+            </p>
+            <p class="text-lg lg:text-xl text-gray-700">
+              S3-compatible object stores connect the same way, with their own endpoint and credentials. One setup, reused everywhere, instead of a key copied into every environment that needs it.
+            </p>
+          </div>
+
+          <div class="flex justify-center lg:justify-end">
+            <img id="connectors-connect-once" src="/phx/images/connectors/connect-once-1816c6f553992c0be7a6cafb4595dcc3.webp?vsn=d" width="1481" height="894" loading="lazy" class="max-w-full h-auto" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center mb-16">
+          <h2 class="font-heading text-3xl md:text-4xl text-navy mb-8">
+            Agents with Connectors
+          </h2>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+            More power and efficiency, without sacrificing security
+          </p>
+        </div>
+
+        <ul id="connectors-cards" class="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          <li class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col">
+            <img src="/phx/images/connectors/connections-openrouter-4e5c2983fbdf8eaa640a6a6e499f428b.webp?vsn=d" alt="" loading="lazy" class="h-[200px] w-full object-contain mb-8">
+            <h3 class="font-heading text-2xl text-navy mb-4">Every model behind one Connector</h3>
+            <p class="text-gray-700 mb-4 last:mb-0">Want to try the latest model blowing up the &quot;trust-me-bro&quot; benchmarks? Your OpenRouter Connector puts a huge catalog of models behind a single OpenAI-compatible endpoint. Your agent asks for a model by name and the Connector routes the call, streams the tokens back, and keeps a running tally of what was used.</p>
+          </li><li class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col">
+            <img src="/phx/images/connectors/connections-key-b664466d9c93961126f3685604c5a778.webp?vsn=d" alt="" loading="lazy" class="h-[200px] w-full object-contain mb-8">
+            <h3 class="font-heading text-2xl text-navy mb-4">The key never enters the sprite</h3>
+            <p class="text-gray-700 mb-4 last:mb-0">The credential lives in the control plane, and is injected per request on the way to the provider. Your agent works with your real services while never being able to read the secret behind them. That is Spriteish behavior: hardware isolation around the environment, controlled egress out of it, and a way to hold real API access without the raw token ever touching the box.</p>
+          </li><li class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col">
+            <img src="/phx/images/connectors/connections-scope-6647cae20b41946d1c48246899f12048.webp?vsn=d" alt="" loading="lazy" class="h-[200px] w-full object-contain mb-8">
+            <h3 class="font-heading text-2xl text-navy mb-4">Scope every Connector</h3>
+            <p class="text-gray-700 mb-4 last:mb-0">A Connector is not all-or-nothing. No Sprites can use it by default, and you grant access deliberately. Connect all Sprites with a specific label, or those whose name starts with a given prefix.</p><p class="text-gray-700 mb-4 last:mb-0">You scope the endpoints too, with allow and block patterns on the request path: a Connector can permit posting messages on Slack and refuse everything else.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          <div class="flex justify-center lg:justify-start">
+            <img id="connectors-discovery" src="/phx/images/connectors/discovery-78816c4194bbfc91b944373a312a907d.webp?vsn=d" width="1555" height="1520" loading="lazy" class="w-[75%] max-w-full h-auto" alt="">
+          </div>
+
+          <div>
+            <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12">
+              Fresh token, self service discovery
+            </h2>
+            <p class="text-lg lg:text-xl text-gray-700 mb-6">
+              When OAuth tokens expire, Connectors refresh them. A Connector you set up months ago will still work without anyone having to rotate a token by hand. Sprites don't have to guess what they can reach.
+            </p>
+            <p class="text-lg lg:text-xl text-gray-700 mb-6">
+              A single list call returns the Connectors that are ready to use, each with its base URL, granted scopes, and a copy-paste example, alongside the providers still available to set up.
+            </p>
+            <p class="text-lg lg:text-xl text-gray-700">
+              When an agent wants a permission it doesn't have, the same response points it at the URL to request more scopes. The agent discovers and uses its own integrations, and you decide what shows up there.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section class="bg-white py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12 text-center">
+          Frequently asked questions
+        </h2>
+        <div id="faq-list" class="space-y-4">
+          <details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>What are Fly.io Sprites Connectors?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">Connectors let a Fly.io Sprite call external APIs like GitHub, Slack, and OpenRouter without holding the credentials. You set up a Connector once at the organization level, and it injects the stored credentials and forwards each request, so a Sprite reaches your real services while the raw token stays in Fly.io&#39;s control plane.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>Do I have to put API keys inside a Sprite to call external services?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">No. That is the whole point of Connectors on Fly.io. A Sprite calls the Connector URL with no token attached, and the Connector adds the credentials on the way to the provider. The key is never written to the Sprite, so an agent or the code it runs cannot read or leak it.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>What services can I connect through Fly.io?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">GitHub and Slack connect over OAuth, OpenRouter connects for model access with a key you supply, and any other HTTP API connects as a custom Connector using a base URL and token. S3-compatible object stores connect the same way. Each becomes a named Connector that authorized Sprites on Fly.io can use.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>Can I call LLMs through Connectors with OpenRouter?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">Yes. OpenRouter is a first-class Connector on Fly.io, and it reaches a large catalog of models through one OpenAI-compatible endpoint. You connect it with your own OpenRouter key, and your agent calls models through the Connector while the key that pays for them never enters the Sprite.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>How do Connectors know which Sprite is calling?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">Each Fly.io Sprite has its own platform-issued identity, and Connectors authenticate the request by that identity rather than by a key in the request. From there they map the Sprite to its organization and find the matching Connector, so there is nothing for the Sprite itself to present or store.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>Can I limit which Sprites use a Connector and which endpoints they can hit?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">Yes. On Fly.io every Connector is default-deny, and you grant access to specific Sprites by label or name prefix, or to all of them explicitly. You also scope the allowed request paths with allow and block patterns, so a Connector can permit one endpoint, like posting a Slack message, and refuse everything else.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>Do Connectors handle OAuth token refresh?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">Yes. Fly.io Connectors refresh expiring OAuth tokens on their own, so a Connector keeps working without anyone rotating credentials by hand. Your Sprites keep calling the same Connector URL, and the fresh token is injected for them each time.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>How does an agent find out what it can reach?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">A Fly.io Sprite calls the Connectors list endpoint, which returns the Connectors that are ready to use, each with its base URL, granted scopes, and a ready-to-run example, plus the providers still available to set up. When more permissions are needed, the response includes a URL to request additional scopes.</p>
+          </details><details class="group rounded-2xl border border-gray-200 bg-white p-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-heading text-lg text-navy">
+              <span>Can I connect an API that isn&#39;t built in?</span>
+              <span class="shrink-0 text-2xl leading-none text-purple-600 transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-700 leading-relaxed">Yes. Alongside the built-in providers, Fly.io supports a custom Connector where you supply a base URL, a token, and how the token should be sent, which turns any HTTP API into something your Sprites can call. S3-compatible object stores are supported the same way, so most services a Sprite needs can go through Connectors.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Connectors let a Fly.io Sprite call external APIs like GitHub, Slack, and OpenRouter without holding the credentials. You set up a Connector once at the organization level, and it injects the stored credentials and forwards each request, so a Sprite reaches your real services while the raw token stays in Fly.io's control plane."},"name":"What are Fly.io Sprites Connectors?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"No. That is the whole point of Connectors on Fly.io. A Sprite calls the Connector URL with no token attached, and the Connector adds the credentials on the way to the provider. The key is never written to the Sprite, so an agent or the code it runs cannot read or leak it."},"name":"Do I have to put API keys inside a Sprite to call external services?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"GitHub and Slack connect over OAuth, OpenRouter connects for model access with a key you supply, and any other HTTP API connects as a custom Connector using a base URL and token. S3-compatible object stores connect the same way. Each becomes a named Connector that authorized Sprites on Fly.io can use."},"name":"What services can I connect through Fly.io?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes. OpenRouter is a first-class Connector on Fly.io, and it reaches a large catalog of models through one OpenAI-compatible endpoint. You connect it with your own OpenRouter key, and your agent calls models through the Connector while the key that pays for them never enters the Sprite."},"name":"Can I call LLMs through Connectors with OpenRouter?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Each Fly.io Sprite has its own platform-issued identity, and Connectors authenticate the request by that identity rather than by a key in the request. From there they map the Sprite to its organization and find the matching Connector, so there is nothing for the Sprite itself to present or store."},"name":"How do Connectors know which Sprite is calling?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes. On Fly.io every Connector is default-deny, and you grant access to specific Sprites by label or name prefix, or to all of them explicitly. You also scope the allowed request paths with allow and block patterns, so a Connector can permit one endpoint, like posting a Slack message, and refuse everything else."},"name":"Can I limit which Sprites use a Connector and which endpoints they can hit?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes. Fly.io Connectors refresh expiring OAuth tokens on their own, so a Connector keeps working without anyone rotating credentials by hand. Your Sprites keep calling the same Connector URL, and the fresh token is injected for them each time."},"name":"Do Connectors handle OAuth token refresh?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"A Fly.io Sprite calls the Connectors list endpoint, which returns the Connectors that are ready to use, each with its base URL, granted scopes, and a ready-to-run example, plus the providers still available to set up. When more permissions are needed, the response includes a URL to request additional scopes."},"name":"How does an agent find out what it can reach?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside the built-in providers, Fly.io supports a custom Connector where you supply a base URL, a token, and how the token should be sent, which turns any HTTP API into something your Sprites can call. S3-compatible object stores are supported the same way, so most services a Sprite needs can go through Connectors."},"name":"Can I connect an API that isn't built in?"}]}
+</script>
+  <div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div>
+</div>
+
+<footer class="relative text-sm text-navy-400 leading-6 pb-8 pt-12 lg:pt-20 text-medium bg-navy-950 bg-linear-to-br from-gray-900/50 via-navy-900/50 to-navy-950/50" role="contentinfo">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-20 grid md:grid-cols-auto-span items-start gap-10 md:gap-16">
+    <a href="/" class="justify-self-start" aria-label="Fly">
+      
+
+  <img src="/phx/images/icons/fly_logo_footer-655af29a7d7e6849e560c7edb711797b.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 36px; ">
+
+    </a>
+    <div class="grid grid-cols-fit-24 gap-10 items-start lg:justify-items-center">
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Company</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/about/" class="hover:text-violet-500 transition-colors">About</a>
+          <a href="/news/" class="hover:text-violet-500 transition-colors">News</a>
+          <a href="/pricing/" class="hover:text-violet-500 transition-colors">
+            Pricing
+          </a>
+          <a href="/jobs/" class="hover:text-violet-500 transition-colors">Jobs</a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Resources</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="https://docs.fly.io" class="hover:text-violet-500 transition-colors">Docs</a>
+          <a href="/blog/" class="hover:text-violet-500 transition-colors">Blog</a>
+          <a href="/infra-log/" class="hover:text-violet-500 transition-colors">Infra Log</a>
+          <a href="/changelog" class="hover:text-violet-500 transition-colors">Changelog</a>
+          <a href="/customer-stories/" class="hover:text-violet-500 transition-colors">Customers</a>
+          <a href="https://docs.fly.io/about/support" class="hover:text-violet-500 transition-colors">Support</a>
+          <a href="/support/" class="hover:text-violet-500 transition-colors">Support Metrics</a>
+          <a href="https://status.flyio.net/" class="hover:text-violet-500 transition-colors">
+            Status
+          </a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Contact</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/contact/" class="hover:text-violet-500 transition-colors">Contact us</a>
+          <a href="https://github.com/superfly/" class="hover:text-violet-500 transition-colors">
+            GitHub
+          </a>
+          <a href="https://twitter.com/flydotio" class="hover:text-violet-500 transition-colors">
+            Twitter
+          </a>
+          <a href="https://community.fly.io/" class="hover:text-violet-500 transition-colors">
+            Community
+          </a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Legal</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/security/" class="hover:text-violet-500 transition-colors">Security</a>
+          <a href="/legal/privacy-policy/" class="hover:text-violet-500 transition-colors">
+            Privacy policy
+          </a>
+          <a href="/legal/terms-of-service/" class="hover:text-violet-500 transition-colors">
+            Terms of service
+          </a>
+          <a href="/legal/acceptable-use-policy/" class="hover:text-violet-500 transition-colors">
+            Acceptable Use Policy
+          </a>
+
+          <button id="footer-cookie-prefs" type="button" hidden class="text-left hover:text-violet-500 transition-colors">
+            Cookie preferences
+          </button>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="border-navy-800 border-t pt-8 grid gap-6 md:grid-cols-2 md:items-center">
+      <div>
+        <p class="font-bold uppercase tracking-wider text-xs text-white mb-1">
+          Sign up to the Fly.io Newsletter
+        </p>
+        <p class="mb-0">
+          What we shipped, what we learned, like ... stuff you put in a newsletter.
+          Get it monthly.
+        </p>
+      </div>
+      <div data-email-capture-wrapper class="md:justify-self-end md:w-full md:max-w-md">
+  <form action="/email-signups" method="post" class="flex flex-col gap-3" data-email-capture>
+  
+  <input name="_csrf_token" type="hidden" hidden value="Cys9Ci8dFx8EFAw_IDhARDAFOTwkFXMjgqJHiPcmFLHpawu2AcHUJt1n">
+  
+    <input type="hidden" name="list" value="newsletter">
+    <input type="hidden" name="source" value="footer">
+    <input type="hidden" name="return_to" value="/">
+
+    
+    <div class="hidden" aria-hidden="true">
+      <label>
+        Company <input type="text" name="company" tabindex="-1" autocomplete="off">
+      </label>
+    </div>
+
+    
+
+    
+    <div class="flex gap-3 flex-col sm:flex-row sm:items-center">
+      <label class="block sm:w-40">
+        <span class="sr-only">Your name</span>
+        <input type="text" name="name" class="block w-full rounded-lg border border-navy-700 bg-navy-900 px-3 py-2 text-sm text-white placeholder:text-navy-400 focus:border-violet-400 focus:outline-hidden focus:ring-2 focus:ring-violet-500/30" placeholder="Your name" required autocomplete="name">
+      </label>
+      <label class="block sm:flex-1">
+        <span class="sr-only">Email address</span>
+        <input type="email" name="email" class="block w-full rounded-lg border border-navy-700 bg-navy-900 px-3 py-2 text-sm text-white placeholder:text-navy-400 focus:border-violet-400 focus:outline-hidden focus:ring-2 focus:ring-violet-500/30" placeholder="you@example.com" required autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </label>
+      <button type="submit" class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 font-medium text-sm text-white transition-colors hover:bg-violet-500">
+        Subscribe
+      </button>
+    </div>
+  
+</form>
+
+  <p data-email-capture-success class="hidden font-medium text-violet-300">
+    You&#39;re subscribed. Look out for the next issue.
+  </p>
+</div>
+    </div>
+  </div>
+
+  <p class="text-xs text-center mb-0">
+    Copyright &copy;&nbsp;2026&nbsp;Fly.io
+  </p>
+</footer>
+    <dialog id="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-message" class="m-auto w-[calc(100%-2rem)] max-w-lg p-0 bg-transparent rounded-3xl backdrop:bg-navy-950/50 backdrop:backdrop-blur-xs">
+  <form method="dialog" class="sm:p-2.5 bg-white/20 rounded-3xl shadow-2xl shadow-navy-700/20 ring-1 ring-inset ring-white/10">
+    <div class="rounded-2xl bg-white p-5 sm:p-8 shadow-lg shadow-navy-700/20 ring-1 ring-black/5">
+      <h2 id="confirm-dialog-title" class="font-medium text-navy-900 text-[1.0625rem] " data-confirm-dialog="title">
+  
+</h2>
+      <p id="confirm-dialog-message" data-confirm-dialog="message" class="mt-2.5 text-[0.9375rem] leading-relaxed text-navy-700 wrap-break-word whitespace-pre-line">
+      </p>
+      <div class="mt-6 flex flex-wrap justify-end gap-2">
+        
+
+<button type="submit" class="gap-2 btn btn-secondary gap-2 btn btn-secondary" id="confirm-dialog-cancel" value="cancel" autofocus>
+  
+
+    
+          <span data-confirm-dialog="cancel-label"></span>
+        
+  
+
+</button>
+        
+
+<button type="submit" class="gap-2 btn btn-primary gap-2 btn btn-primary" id="confirm-dialog-confirm" value="confirm" data-confirm-dialog="confirm">
+  
+
+    
+          <span data-confirm-dialog="confirm-label"></span>
+        
+  
+
+</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+    
+  </body>
+</html>

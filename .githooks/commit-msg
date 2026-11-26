@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if grep -Eiq '^\s*(co-authored-by:.*(claude|anthropic)|claude-session:|.*generated with.*claude code)' "$1"; then
+  echo "Commit blocked: AI attribution line found. Remove it."; exit 1
+fi
+name=$(git config user.name); email=$(git config user.email)
+if echo "$name $email" | grep -Eiq 'claude|anthropic'; then echo "Commit blocked: identity is not 0xkinno."; exit 1; fi
+if [ "$name" != "0xkinno" ]; then echo "Commit blocked: git user.name must be 0xkinno (is: $name)."; exit 1; fi

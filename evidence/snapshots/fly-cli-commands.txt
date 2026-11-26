@@ -1,0 +1,982 @@
+SOURCE: https://docs.fly.io/sprites/cli/commands.md
+RETRIEVED: 2026-11-26 (UTC)
+----
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.fly.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# CLI Commands Reference
+
+> Reference for each sprite CLI command and flag: org, create, use, list, destroy, exec, console, checkpoint, restore, proxy and url, plus exit codes.
+
+Complete reference for all `sprite` CLI commands.
+
+## Authentication Commands
+
+### `sprite login`
+
+sprite login - Authenticate with Fly.io
+
+```bash theme={null}
+sprite login [flags] [api-url]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--force` - Skip the "already logged in" confirmation prompt
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite login
+sprite login -o my-org
+sprite login --force                # add another account without prompting
+sprite login https://custom-api.sprites.dev
+Related Commands:
+sprite auth --help      Non-interactive token setup (CI/CD)
+sprite org --help       Manage organizations and tokens after login
+```
+
+### `sprite logout`
+
+sprite logout - Remove Sprites configuration
+
+```bash theme={null}
+sprite logout [flags]
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite logout
+```
+
+### `sprite org auth`
+
+sprite org auth - Add an API token
+
+```bash theme={null}
+sprite org auth [-o <api>:<org>] [api-url|alias]
+```
+
+**Aliases:** `sprite orgs`, `sprite organizations`, `sprite o`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite org auth                                    # Use default API
+sprite org auth https://custom-api.sprites.dev     # Custom API URL
+sprite org auth prod                               # Use 'prod' alias
+sprite org auth -o myorg                           # Specific organization
+sprite org auth -o prod:my-org                     # Alias with org override
+sprite org auth https://staging-api.sprites.dev -o staging:test-org
+```
+
+### `sprite org list`
+
+sprite org list - Show configured tokens
+
+```bash theme={null}
+sprite org list [api-url|alias]
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+### `sprite org logout`
+
+sprite org logout - Remove all tokens
+
+```bash theme={null}
+sprite org logout [flags]
+```
+
+**Options:**
+
+* `--force` - Skip confirmation prompt
+* `-h, --help` - Show this help message
+
+### `sprite org keyring disable`
+
+sprite org keyring disable - Disable keyring usage
+
+```bash theme={null}
+sprite org keyring disable
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite org keyring disable
+```
+
+### `sprite org keyring enable`
+
+sprite org keyring enable - Enable keyring usage
+
+```bash theme={null}
+sprite org keyring enable
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+### `sprite auth setup`
+
+sprite auth setup - Set up authentication using a pre-generated token.
+
+```bash theme={null}
+sprite auth setup --token <token>
+```
+
+**Options:**
+
+* `--token <token>` - Token in format: org-slug/org-id/token-id/token-value
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite auth setup --token "org-slug/org-id/token-id/token-value"
+```
+
+### `sprite org set-default`
+
+sprite org set-default - Set the default organization
+
+```bash theme={null}
+sprite org set-default [alias:]<org-name>
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite org set-default myorg           # Set default org
+sprite org set-default prod:myorg      # Set org for 'prod' alias
+```
+
+### `sprite org keyring status`
+
+sprite org keyring status - Show current keyring status
+
+```bash theme={null}
+sprite org keyring status
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+### `sprite auth migrate`
+
+sprite auth migrate - Migrate token keys to URL-based format
+
+```bash theme={null}
+sprite auth migrate
+```
+
+### `sprite keyring`
+
+sprite keyring - Browse organization tokens stored in keyring
+
+```bash theme={null}
+sprite keyring
+```
+
+**Options:**
+
+* `-h, --help` - Show this help message
+
+> Opens an interactive TUI to browse organization tokens.
+> Use arrow keys to navigate, Enter to view tokens.
+> Press 'v' to show/hide the selected token value.
+
+**Examples:**
+
+```bash theme={null}
+sprite keyring
+```
+
+## Sprite Management
+
+### `sprite create`
+
+sprite create - Create a new sprite
+
+```bash theme={null}
+sprite create [flags] [sprite-name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--skip-console` - Exit after creating instead of connecting to console
+* `--label <label>` - Label to apply to the sprite (can be repeated)
+* `-h, --help` - Show this help message
+
+> Creates a new sprite with the specified name.
+> The sprite will be created in the selected organization.
+> If sprite name is not provided, you will be prompted.
+> Lifecycle:
+>
+> * Sprites pause when idle (no HTTP requests and no active sessions)
+> * Services keep sprites alive and auto-restart on boot
+> * Use checkpoints to save and restore filesystem state
+>   Related Commands:
+>   sprite list --help        List your sprites
+>   sprite destroy --help     Delete a sprite permanently
+>   sprite console --help     Open an interactive shell
+
+**Examples:**
+
+```bash theme={null}
+sprite create my-sprite
+sprite create -o myorg development-sprite
+sprite create
+```
+
+### `sprite use`
+
+sprite use - Activate a sprite for the current directory
+
+```bash theme={null}
+sprite use [flags] [sprite-name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--unset` - Remove the .sprite file from current directory
+* `-h, --help` - Show this help message
+
+> Creates a .sprite file in the current directory to set the active sprite.
+> This file will be used by other commands when no sprite is explicitly specified.
+> Similar to 'nvm use' or 'asdf local' for version management.
+> If no sprite name is provided, shows an interactive list to choose from.
+
+**Examples:**
+
+```bash theme={null}
+sprite use my-sprite
+sprite use -o myorg dev-sprite
+sprite use
+```
+
+### `sprite list`
+
+sprite list - List all sprites
+
+```bash theme={null}
+sprite list [flags]
+```
+
+**Aliases:** `sprite ls`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-w, --watch` - Watch for live updates
+* `--prefix <prefix>` - Filter sprites by name prefix
+* `--json` - Output sprite and organization details as JSON
+* `-h, --help` - Show this help message
+
+> Lists all sprites in the selected organization.
+> Use --prefix to filter sprites by name prefix.
+> \--json cannot be combined with --watch.
+
+**Examples:**
+
+```bash theme={null}
+sprite list
+sprite list -o myorg
+sprite list --prefix dev
+sprite --json list | jq '.sprites[].name'
+```
+
+### `sprite destroy`
+
+sprite destroy - Destroy a sprite
+
+```bash theme={null}
+sprite destroy [flags] [sprite-name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--force` - Skip confirmation prompt
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite destroy mysprite
+sprite destroy -o myorg mysprite
+sprite destroy -s mysprite
+sprite destroy --force mysprite    # Skip confirmation
+Related Commands:
+sprite create --help       Create a new sprite
+sprite checkpoint --help   Save state before destroying
+```
+
+### `sprite info`
+
+sprite info - Show sprite info including URL and labels
+
+```bash theme={null}
+sprite info [flags] [sprite-name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite info                     # Show info for selected sprite
+sprite info my-sprite           # Show info for a specific sprite
+sprite info -o myorg my-sprite  # Show info for a sprite in a specific org
+Output:
+Displays the sprite's URL, URL authentication setting, and labels.
+Related Commands:
+sprite config --help           Show or update sprite configuration
+sprite list --help             List your sprites
+```
+
+### `sprite config`
+
+sprite config - Show or update sprite configuration
+
+```bash theme={null}
+sprite config [flags] [sprite-name]
+sprite config update [flags] [sprite-name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite config                       # Show current config for selected sprite
+sprite config my-sprite             # Show config for a specific sprite
+sprite config update --url-auth public
+sprite config update --label env:prod
+Related Commands:
+sprite config update --help    Update sprite configuration
+sprite info --help             Show sprite info including URL and labels
+```
+
+### `sprite config update`
+
+sprite config update - Update sprite configuration
+
+```bash theme={null}
+sprite config update [flags] [sprite-name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--url-auth <type>` - URL authentication type: 'public' or 'sprite'
+* `--private-access <type>` - Private URL access type: 'admins' or 'org\_users'
+* `--label <label>` - Label to apply to the sprite (can be repeated)
+* `--clear-labels` - Clear all existing labels before applying --label
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite config update --url-auth public              # Make URL publicly accessible
+sprite config update --url-auth sprite              # Require org membership (default)
+sprite config update --url-auth sprite --private-access admins  # Restrict private URLs to admins
+sprite config update --label env:prod               # Apply a label
+sprite config update --label env:prod --label tier:free  # Apply multiple labels
+sprite config update --clear-labels                 # Remove all labels
+sprite config update --clear-labels --label env:staging  # Replace all labels
+Related Commands:
+sprite config --help    Show current sprite configuration
+sprite info --help      Show sprite info including URL and labels
+```
+
+### `sprite file edit`
+
+sprite file edit - Edit a file in a sprite
+
+```bash theme={null}
+sprite file edit [flags] [<sprite>:]<path>
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+### `sprite file push`
+
+sprite file push - Copy local files into a sprite
+
+```bash theme={null}
+sprite file push [flags] <source>... [<sprite>:]<path>
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-p, --parents` - Create missing parent directories on the remote
+* `-r, --recursive` - Recursively push a directory
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+# Push a single file
+sprite file push -s mysprite ./config.yml /etc/app/config.yml
+# Push to a named sprite
+sprite file push ./config.yml mysprite:/etc/app/config.yml
+# Push multiple files into a remote directory
+sprite file push -s mysprite ./a.txt ./b.txt /tmp/uploads/
+# Push a whole directory tree
+sprite file push -s mysprite -r ./dist/ /srv/app/
+# Push and create parents
+sprite file push -s mysprite -p ./app.conf /etc/nested/dir/app.conf
+```
+
+### `sprite file pull`
+
+sprite file pull - Copy files out of a sprite to the local machine
+
+```bash theme={null}
+sprite file pull [flags] [<sprite>:]<path>... <target>
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-p, --parents` - Create missing parent directories locally
+* `-r, --recursive` - Recursively pull a directory
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+# Pull a single file to the current directory
+sprite file pull -s mysprite /var/log/app.log .
+# Pull a file from a named sprite to a specific local path
+sprite file pull -s mysprite /etc/app/config.yml ./config.yml
+# Pull multiple files from different sprites a local directory
+sprite file pull mysprite:/tmp/a.txt othersprite:/tmp/b.txt ./downloads/
+# Pull multiple files into a local directory
+sprite file pull -s mysprite /tmp/a.txt /tmp/b.txt ./downloads/
+# Pull a whole remote directory tree
+sprite file pull -s mysprite -r /srv/app/dist/ ./dist/
+# Pull and create local parent directories
+sprite file pull -s mysprite -p /etc/nested/file.conf ./local/nested/file.conf
+```
+
+## Command Execution
+
+### `sprite exec`
+
+sprite exec - Execute a command in the sprite environment
+
+```bash theme={null}
+sprite exec [flags] -- <command> [args...]
+```
+
+**Aliases:** `sprite x`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--dir <path>` - Working directory for command
+* `--tty` - Allocate pseudo-TTY
+* `--env <vars>` - Environment variables (KEY=value,KEY2=value2)
+* `--http-post` - Use HTTP/1.1 POST instead of WebSockets (non-TTY only)
+* `--stdin` - Read and forward stdin (non-TTY only)
+* `--no-stdin` - Do not read or forward stdin (non-TTY only)
+* `--no-port-forward` - Disable automatic local port forwarding for ports opened by the command
+* `--file <source:dest>` - Upload file before exec (repeatable)
+* `-h, --help` - Show this help message
+
+> When using --tty, terminal environment variables (TERM, COLORTERM, LANG,
+> LC\_ALL) are automatically passed through from your local environment.
+> Piped stdin continues to be forwarded when neither stdin flag is supplied,
+> but this compatibility mode cannot reconnect safely after a connection loss.
+> Use --stdin to make input forwarding explicit or --no-stdin to keep
+> output-only commands reconnectable.
+> Use 'sprite sessions' to list, attach to, or kill running sessions.
+
+**Examples:**
+
+```bash theme={null}
+sprite exec -- ls -la
+sprite exec --no-stdin -- sh -c 'run-output-only-job'
+printf 'hello' | sprite exec --stdin -- cat
+sprite exec --dir /app -- echo hello world
+sprite exec --env KEY=value,FOO=bar -- env
+sprite exec --tty -- /bin/bash
+sprite exec -o myorg -s mysprite -- npm start
+```
+
+### `sprite console`
+
+sprite console - Open an interactive shell in the sprite environment
+
+```bash theme={null}
+sprite console [flags]
+```
+
+**Aliases:** `sprite c`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--no-port-forward` - Disable automatic local port forwarding for ports opened by the console
+* `-h, --help` - Show this help message
+
+> Opens an interactive shell with a TTY allocated.
+> Uses shell environment variables to determine which shell to use.
+> Supported shells: bash, zsh, fish, tcsh, ksh.
+> Falls back to bash if shell detection fails.
+> Detach with Ctrl+\ to leave the session running in the background.
+> Related Commands:
+> sprite exec --help        Run a command without an interactive shell
+> sprite attach --help      Reconnect to a detached session
+> sprite sessions --help    List and manage running sessions
+
+**Examples:**
+
+```bash theme={null}
+sprite console
+sprite console -o myorg -s mysprite
+```
+
+### `sprite attach`
+
+sprite attach - Attach to a running session
+
+```bash theme={null}
+sprite attach [flags] [session_id|command_name]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--no-port-forward` - Disable automatic local port forwarding for ports opened by the session
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite attach                 # Show interactive session selector
+sprite attach 3               # Attach to session ID 3
+sprite attach bash            # Attach to oldest session running bash
+sprite attach /bin/zsh        # Attach to oldest session running /bin/zsh
+```
+
+### `sprite sessions list`
+
+sprite sessions list - List running exec sessions
+
+```bash theme={null}
+sprite sessions list [flags]
+```
+
+**Aliases:** `sprite s list`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+### `sprite sessions attach`
+
+sprite sessions attach - Attach to a running exec session
+
+```bash theme={null}
+sprite sessions attach [flags] <session_id>
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--no-port-forward` - Disable automatic local port forwarding for ports opened by the session
+* `-h, --help` - Show this help message
+
+### `sprite sessions kill`
+
+sprite sessions kill - Kill a running exec session
+
+```bash theme={null}
+sprite sessions kill [flags] <session_id>
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--signal <signal>` - Signal to send (default: TERM)
+* `--timeout <duration>` - Timeout before SIGKILL (default: 10s)
+* `-h, --help` - Show this help message
+
+## Checkpoints
+
+### `sprite checkpoint create`
+
+sprite checkpoint create - Create a new checkpoint
+
+```bash theme={null}
+sprite checkpoint create [flags]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--comment <text>` - Optional comment describing this checkpoint
+* `-h, --help` - Show this help message
+
+### `sprite checkpoint list`
+
+sprite checkpoint list - List all checkpoints
+
+```bash theme={null}
+sprite checkpoint list [flags]
+```
+
+**Aliases:** `sprite checkpoint ls`, `sprite checkpoints ls`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `--history <version>` - Filter by history version
+* `--include-auto` - Include auto-generated checkpoints
+* `-h, --help` - Show this help message
+
+### `sprite checkpoint info`
+
+sprite checkpoint info - Show information about a specific checkpoint
+
+```bash theme={null}
+sprite checkpoint info [flags] <version-id>
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite checkpoint info v2              # Show details for checkpoint v2
+```
+
+### `sprite checkpoint delete`
+
+sprite checkpoint delete - Delete a checkpoint
+
+```bash theme={null}
+sprite checkpoint delete [flags] <version-id>
+```
+
+**Aliases:** `sprite checkpoint rm`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite checkpoint delete v3            # Delete checkpoint v3
+```
+
+### `sprite restore`
+
+sprite restore - Restore from a checkpoint version
+
+```bash theme={null}
+sprite restore [flags] <version-id>
+```
+
+**Aliases:** `sprite checkpoint restore`
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite restore v1
+sprite restore -o myorg -s mysprite v2
+# Safe restore workflow
+sprite checkpoint create --comment "before rollback"
+sprite restore v1
+See also:
+sprite checkpoint --help    Full checkpoint documentation
+```
+
+## Networking
+
+### `sprite proxy`
+
+sprite proxy - Forward local ports through the remote server proxy
+
+```bash theme={null}
+sprite proxy [flags] <port1> [port2] ... or <local1:remote1> [local2:remote2] ...
+sprite proxy --ssh
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-W, --stdio <[host]:port>` - Forward stdin and stdout to host:port on the Sprite
+* `--ssh` - Emulate an SSH session with a Sprite over stdio, for use as an ssh ProxyCommand.
+* `-h, --help` - Show this help message
+
+> Each port will be forwarded from localhost to the remote environment.
+> Use LOCAL:REMOTE syntax to map different local and remote ports.
+> Multiple ports can be specified to forward multiple services simultaneously.
+> If a port was auto-forwarded by a running `sprite exec`, stop that command
+> or rerun it with `--no-port-forward` before using the same local port here.
+> Related Commands:
+> sprite url --help         Manage the sprite's always-on HTTP URL
+
+**Examples:**
+
+```bash theme={null}
+sprite proxy 8080
+sprite proxy 3000 8080
+sprite proxy 4005:4000
+sprite proxy 3001:3000 8081:8080
+sprite proxy -W :22
+sprite proxy -o myorg -s mysprite 8080
+sprite proxy --ssh -s mysprite
+```
+
+### `sprite url`
+
+sprite url - Manage sprite URL settings
+
+```bash theme={null}
+sprite url                  Show sprite URL and auth setting
+sprite url update [flags]   Update URL authentication settings
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-h, --help` - Show this help message
+* `--auth <type>` - Authentication type: 'public' or 'sprite'
+
+**Examples:**
+
+```bash theme={null}
+sprite url                         # Show current URL and auth setting
+sprite url update --auth public    # Make URL publicly accessible
+sprite url update --auth sprite    # Require org membership (default)
+sprite url -o myorg -s mysprite    # Show URL for specific sprite
+Accessing Authenticated URLs:
+Visit the URL in your browser and log in with Fly.io, or use an org token:
+curl -H "Authorization: Bearer $SPRITE_API_TOKEN" https://mysprite-myorg.sprites.app/
+Security Notes:
+- Public URLs are accessible to anyone on the internet
+- Never expose secrets, env vars, or sensitive data via HTTP
+- Use 'public' only for demos, webhooks, or truly public services
+```
+
+### `sprite url update`
+
+sprite url update - Update URL authentication settings
+
+```bash theme={null}
+sprite url update --auth <type> [flags]
+```
+
+**Options:**
+
+* `-o, --org <name>` - Specify organization
+* `-s, --sprite <name>` - Specify sprite
+* `-a, --auth <type>` - Authentication type: 'public' or 'sprite'
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite url update --auth public        # Make URL publicly accessible
+sprite url update --auth sprite        # Require org membership (default)
+sprite url update --auth public -s demo  # Make specific sprite public
+```
+
+## Utility Commands
+
+### `sprite api`
+
+Error: api requires a path argument
+
+```bash theme={null}
+sprite api [flags] <path> -- [curl options]
+```
+
+### `sprite upgrade`
+
+sprite upgrade - Upgrade the sprite client to the latest version
+
+```bash theme={null}
+sprite upgrade [flags]
+```
+
+**Options:**
+
+* `--check` - Check for updates without installing
+* `--force` - Force upgrade even if already up to date
+* `--version <version>` - Upgrade to a specific version
+* `--channel <channel>` - Release channel (release, rc, dev)
+* `-h, --help` - Show this help message
+
+**Examples:**
+
+```bash theme={null}
+sprite upgrade                  # Upgrade to the latest version
+sprite upgrade --check          # Check for available updates
+sprite upgrade --force          # Force upgrade even if up to date
+sprite upgrade --channel dev    # Switch to the dev channel
+sprite upgrade --channel rc     # Switch to the rc channel
+```
+
+### `sprite completion`
+
+completion - Generate shell completion scripts
+
+```bash theme={null}
+sprite completion <bash|zsh|fish|powershell>
+```
+
+## Exit Codes
+
+| Code | Meaning |
+| - | - |
+| 0 | Success |
+| 1 | General error |
+| 2 | Command not found |
+| 126 | Command cannot execute |
+| 127 | Command not found (in sprite) |
+| 128+ | Command terminated by signal |
+
+## Environment Variables
+
+| Variable | Description |
+| - | - |
+| `SPRITE_TOKEN` | API token override (legacy; falls back if no stored token) |
+| `SPRITE_URL` | Direct sprite URL (for local/dev direct connections) |
+| `SPRITES_API_URL` | API URL override (default: `https://api.sprites.dev`) |
+
+## Configuration Files
+
+### Global Config
+
+`~/.sprites/sprites.json` (managed by the CLI; format may evolve):
+
+```json theme={null}
+{
+  "version": "1",
+  "current_selection": {
+    "url": "https://api.sprites.dev",
+    "org": "personal"
+  },
+  "urls": {
+    "https://api.sprites.dev": {
+      "url": "https://api.sprites.dev",
+      "orgs": {
+        "personal": {
+          "name": "personal",
+          "keyring_key": "sprites-cli:<user-id>",
+          "use_keyring": true,
+          "sprites": {}
+        }
+      }
+    }
+  }
+}
+```
+
+### Local Context
+
+`.sprite` (in project directory):
+
+```json theme={null}
+{
+  "organization": "personal",
+  "sprite": "my-project-sprite"
+}
+```
+
+## Related Documentation
+
+> [card] [Installation](https://docs.fly.io/sprites/cli/installation.md)
+>
+> Install the Sprites CLI on your platform
+
+> [card] [Authentication](https://docs.fly.io/sprites/cli/authentication.md)
+>
+> Set up your Fly.io account and manage tokens
+
+> [card] [Working with Sprites](https://docs.fly.io/sprites/working-with-sprites.md)
+>
+> Beyond the basics guide
+
+> [card] [Checkpoints](https://docs.fly.io/sprites/concepts/checkpoints.md)
+>
+> Save and restore sprite state

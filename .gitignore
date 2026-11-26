@@ -1,0 +1,12 @@
+reference/
+.env*
+node_modules/
+web/node_modules/
+*.db
+*.sqlite
+secrets/
+.DS_Store
+dist/
+web/dist/
+.salvor-local/
+*.log

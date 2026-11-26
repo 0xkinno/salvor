@@ -1,0 +1,149 @@
+SOURCE: https://docs.fly.io/llms.txt
+RETRIEVED: 2026-11-26 (UTC)
+----
+# Fly.io
+
+- [Fly docs (706 pages)](https://docs.fly.io/_llms/fly-docs.txt): Fly docs.
+- [Machines API (106 pages)](https://docs.fly.io/_llms/machines-api.txt): Machines API.
+
+## Sprite docs
+
+### Getting Started
+
+- [Sprites Overview](https://docs.fly.io/sprites/index.md): Sprites are persistent, hardware-isolated Linux VMs on Fly.io for AI agents, dev environments and untrusted code, billed by the second and free when idle.
+- [Quickstart](https://docs.fly.io/sprites/quickstart.md): Install the sprite CLI, sign in with sprite org auth, create a Sprite, run commands with sprite exec, and serve HTTP from its Fly.io URL on port 8080.
+- [Working with Sprites](https://docs.fly.io/sprites/working-with-sprites.md): Day-to-day Sprites use: sprite exec vs console, detachable sessions, warm and cold wakes, URL auth, sprite proxy port forwarding, checkpoints and SSHFS.
+- [Keeping a Sprite Running](https://docs.fly.io/sprites/keeping-sprites-running.md): Keep a Sprite from pausing mid-task with the Tasks API on /.sprite/api.sock: create, refresh and delete holds, plus a heartbeat for long agent runs.
+- [Sprite Maintenance](https://docs.fly.io/sprites/sprite-maintenance.md): Upgrade an older Sprite to Ubuntu 26.04, then move it to the newer sbd storage system in place or by copying to a new Sprite, and roll back if needed.
+
+### Concepts
+
+- [Checkpoints](https://docs.fly.io/sprites/concepts/checkpoints.md): Snapshot a Sprite's filesystem with sprite checkpoint create, roll back with sprite restore, browse old versions in /.sprite/checkpoints, and prune them.
+- [Connectors](https://docs.fly.io/sprites/concepts/connectors.md): Let Sprites call GitHub, OpenRouter or any HTTP API through the Sprites gateway without holding the token, using deny-by-default access policies.
+- [Link Agent Payments](https://docs.fly.io/sprites/concepts/link-agent-payments.md): Let an agent in a Sprite pay for things with a single-use card from Link, Stripe's wallet. You approve every purchase in the Link app, and your card details stay with Link.
+- [Lifecycle and Persistence](https://docs.fly.io/sprites/concepts/lifecycle.md): How a Sprite moves from active to warm to cold, what survives each pause, how NVMe and object storage back its ext4 disk, and its 8 vCPU, 100 GB limits.
+- [Sprite networking](https://docs.fly.io/sprites/concepts/networking.md): See how traffic reaches a Sprite on Fly.io and how a Sprite reaches out: its HTTPS URL, the port proxy to your laptop, and the network policy for egress.
+- [Services](https://docs.fly.io/sprites/concepts/services.md): Create Sprite services with sprite-env so processes start at boot, restart on crash and wake on requests via --http-port. Covers logs and dependencies.
+
+### CLI Reference
+
+- [CLI Installation](https://docs.fly.io/sprites/cli/installation.md): Install the Sprites CLI on macOS, Linux or Windows via script or download, then run sprite upgrade, set a per-directory .sprite file and add completions.
+- [CLI Authentication](https://docs.fly.io/sprites/cli/authentication.md): Sign the sprite CLI in with your Fly.io account, switch orgs, keep tokens in the keyring, and use sprite auth setup --token for CI like GitHub Actions.
+- [CLI Commands Reference](https://docs.fly.io/sprites/cli/commands.md): Reference for each sprite CLI command and flag: org, create, use, list, destroy, exec, console, checkpoint, restore, proxy and url, plus exit codes.
+
+### Integrations
+
+- [Integrations](https://docs.fly.io/sprites/integrations/index.md): Choose how to connect Sprites: agent plugins, SDK adapters like OpenAI Agents and Google ADK, Claude and QM platform setups, or the remote MCP server.
+- [Remote MCP Server](https://docs.fly.io/sprites/integrations/remote-mcp.md): Point any MCP client at sprites.dev/mcp and sign in with Fly.io OAuth. Covers the mcp- name prefix limit, available tools, the safety model and fixes.
+- [Agent plugins](https://docs.fly.io/sprites/integrations/agent-plugins.md): Install Sprites plugins for Codex, Cursor, Antigravity, Grok Build, DeepSeek Harness, OpenCode, Pi, Herdr and Hermes Agent, mostly via hosted MCP.
+- [SDKs and frameworks](https://docs.fly.io/sprites/integrations/agent-sdks.md): Run agents in Sprites with adapters for Hugging Face OpenEnv, Google ADK, OpenAI Agents SDK, OpenRouter Agent SDK, Pydantic AI and TanStack AI, with runnable examples.
+- [Claude Managed Agents](https://docs.fly.io/sprites/integrations/claude-managed-agents.md): Run Claude Managed Agents tool calls in a per-session Sprite: set up a self-hosted environment, a poller or webhook worker, Tasks keep-alive and cleanup.
+- [Gemini Managed Agents](https://docs.fly.io/sprites/integrations/gemini-managed-agents.md): Run Gemini Managed Agents shell and file tools in a Sprite with Bring Your Own Sandbox: create an environment, connect a Sprite, keep it running.
+- [Cursor Cloud Agents](https://docs.fly.io/sprites/integrations/cursor-cloud-agents.md): Turn a Sprite into a Cursor self-hosted machine from the Sprites dashboard with a Cursor API key, then start, stop or delete it, with computer use.
+- [Cortex Code](https://docs.fly.io/sprites/integrations/cortex-code.md): Add the Sprites plugin to Snowflake Cortex Code, authorize hosted MCP with OAuth, and run dbt tests, Streamlit previews and long builds in Sprites.
+- [Platform integrations](https://docs.fly.io/sprites/integrations/platform-integrations.md): Connect Claude to Sprites from Anthropic's Connectors Directory with Fly.io OAuth, or deploy QM by Y Combinator with a Sprites sandbox backend.
+
+## Sprites API
+
+### Connectors
+
+- [List connectors](https://docs.fly.io/sprites/api/connectors/list-connectors.md): List connectors configured for the authenticated organization.
+- [Create an API-key connector](https://docs.fly.io/sprites/api/connectors/create-an-api-key-connector.md): Create a connector from a user-provided API key for providers that support key validation.
+- [Create a custom API connector](https://docs.fly.io/sprites/api/connectors/create-a-custom-api-connector.md): Create a connector for any token-authenticated HTTP API. The connector's `name` is its identity within the organization: creating another custom API connector with the same name updates that connector in place instead of adding a second one. Creating does not test the credential; use the test endpoi…
+- [Test a custom API connector](https://docs.fly.io/sprites/api/connectors/test-a-custom-api-connector.md): Send one request to a custom API's test URL with the credential attached, without storing anything. Pass `connection_id` to test a stored connector, filling in only the fields you want to override. The stored credential is only sent to the connector's stored `base_api_url` or `test_url` origin (sche…
+- [Update a custom API connector](https://docs.fly.io/sprites/api/connectors/update-a-custom-api-connector.md): Update a custom API connector. Every field is optional; omitted fields keep their stored value, and a blank `access_token` keeps the stored credential. Moving `base_api_url` or `test_url` to a new origin (scheme, host or port) requires a new `access_token` in the same request and replaces the stored…
+- [Provision a connector](https://docs.fly.io/sprites/api/connectors/provision-a-connector.md): Provision a system-managed connector for providers that support platform-managed keys.
+- [Get a connector](https://docs.fly.io/sprites/api/connectors/get-a-connector.md): Get a single connector by ID.
+- [Update a connector](https://docs.fly.io/sprites/api/connectors/update-a-connector.md): Update a connector access policy.
+- [Delete a connector](https://docs.fly.io/sprites/api/connectors/delete-a-connector.md): Delete a connector and its encrypted credentials.
+- [Update a connector](https://docs.fly.io/sprites/api/connectors/update-a-connector-1.md): Update a connector access policy.
+- [Get a managed connector's balance](https://docs.fly.io/sprites/api/connectors/get-a-managed-connectors-balance.md): Read the provider's authoritative balance for a managed OpenRouter connector. Only connectors created with the provision endpoint have a balance; bring-your-own-key and OAuth connectors answer 404. Requires an unrestricted token, because the balance is organization-wide financial state.
+- [Get a connector's usage](https://docs.fly.io/sprites/api/connectors/get-a-connectors-usage.md): Read gateway spend telemetry for a connector for the current day, week and month to date, with per-model attribution for the month. Windows are calendar periods in UTC: since midnight today, since Monday 00:00 of this week and since the first of the month, not rolling 24-hour, 7-day or 30-day window…
+- [Authorize an OAuth connector](https://docs.fly.io/sprites/api/connectors/authorize-an-oauth-connector.md): Create an OAuth authorization URL for a provider. Use this to start a browser-based consent flow.
+- [Complete OAuth authorization](https://docs.fly.io/sprites/api/connectors/complete-oauth-authorization.md): Exchange an OAuth authorization code for an encrypted connector.
+
+### Sprites
+
+- [List sprites](https://docs.fly.io/sprites/api/sprites/list-sprites.md): List all sprites for the authenticated organization
+- [Create a sprite](https://docs.fly.io/sprites/api/sprites/create-a-sprite.md): Create a new sprite with a unique name in your organization
+- [Get a sprite](https://docs.fly.io/sprites/api/sprites/get-a-sprite.md): Get details for a specific sprite
+- [Update a sprite](https://docs.fly.io/sprites/api/sprites/update-a-sprite.md): Update sprite settings such as URL authentication
+- [Delete a sprite](https://docs.fly.io/sprites/api/sprites/delete-a-sprite.md): Delete a sprite and all associated resources
+
+### Checkpoints
+
+- [Create Checkpoint](https://docs.fly.io/sprites/api/checkpoints/create-checkpoint.md): Create a new checkpoint of the current sprite state. Returns streaming NDJSON progress.
+- [List Checkpoints](https://docs.fly.io/sprites/api/checkpoints/list-checkpoints.md): List all checkpoints.
+- [Get Checkpoint](https://docs.fly.io/sprites/api/checkpoints/get-checkpoint.md): Get details of a specific checkpoint.
+- [Restore Checkpoint](https://docs.fly.io/sprites/api/checkpoints/restore-checkpoint.md): Restore to a specific checkpoint. Returns streaming NDJSON progress.
+
+### Exec
+
+- [List Exec Sessions](https://docs.fly.io/sprites/api/exec/list-exec-sessions.md): List active exec sessions.
+- [Execute Command](https://docs.fly.io/sprites/api/exec/execute-command.md): Execute a command via simple HTTP POST (non-TTY only). Simpler alternative for exec for environments that can't handle websockets.
+- [Kill Exec Session](https://docs.fly.io/sprites/api/exec/kill-exec-session.md): Kill an exec session by session ID. Returns streaming NDJSON with kill progress.
+
+### Filesystem
+
+- [Change File Mode](https://docs.fly.io/sprites/api/filesystem/change-file-mode.md): Change file or directory permissions.
+- [Change File Owner](https://docs.fly.io/sprites/api/filesystem/change-file-owner.md): Change file or directory ownership.
+- [Copy File or Directory](https://docs.fly.io/sprites/api/filesystem/copy-file-or-directory.md): Copy a file or directory.
+- [Delete File or Directory](https://docs.fly.io/sprites/api/filesystem/delete-file-or-directory.md): Delete a file or directory.
+- [List Directory](https://docs.fly.io/sprites/api/filesystem/list-directory.md): List directory contents.
+- [Read File](https://docs.fly.io/sprites/api/filesystem/read-file.md): Read file contents from the sprite filesystem. Returns raw file bytes.
+- [Rename File or Directory](https://docs.fly.io/sprites/api/filesystem/rename-file-or-directory.md): Rename or move a file or directory.
+- [Write File](https://docs.fly.io/sprites/api/filesystem/write-file.md): Write file contents to the sprite filesystem. Request body contains raw file bytes.
+
+### Network Policy
+
+- [Get Network Policy](https://docs.fly.io/sprites/api/network-policy/get-network-policy.md): Get the current network policy configuration.
+- [Set Network Policy](https://docs.fly.io/sprites/api/network-policy/set-network-policy.md): Update the network policy configuration.
+- [Get Privileges Policy](https://docs.fly.io/sprites/api/network-policy/get-privileges-policy.md): Get the current privileges policy configuration (capability and device restrictions).
+- [Set Privileges Policy](https://docs.fly.io/sprites/api/network-policy/set-privileges-policy.md): Update the privileges policy configuration to restrict capabilities or devices.
+- [Delete Privileges Policy](https://docs.fly.io/sprites/api/network-policy/delete-privileges-policy.md): Remove privileges policy to revert to default (unrestricted) behavior.
+- [Get Resources Policy](https://docs.fly.io/sprites/api/network-policy/get-resources-policy.md): Get the current resources policy configuration (memory limits).
+- [Set Resources Policy](https://docs.fly.io/sprites/api/network-policy/set-resources-policy.md): Update the resources policy configuration to set memory limits.
+- [Delete Resources Policy](https://docs.fly.io/sprites/api/network-policy/delete-resources-policy.md): Remove resources policy to revert to default behavior.
+
+### Services
+
+- [List Services](https://docs.fly.io/sprites/api/services/list-services.md): List all configured services and their current state.
+- [Get Service](https://docs.fly.io/sprites/api/services/get-service.md): Get details of a specific service.
+- [Create Service](https://docs.fly.io/sprites/api/services/create-service.md): Create or update a service definition.
+- [Get Service Logs](https://docs.fly.io/sprites/api/services/get-service-logs.md): Stream logs for a service.
+- [Restart Service](https://docs.fly.io/sprites/api/services/restart-service.md): Restart a service (stop if running, then start). Returns streaming NDJSON with stop and start progress.
+- [Start Service](https://docs.fly.io/sprites/api/services/start-service.md): Start a service. Returns streaming NDJSON with stdout/stderr.
+- [Stop Service](https://docs.fly.io/sprites/api/services/stop-service.md): Stop a running service. Returns streaming NDJSON with service stop progress.
+
+### Usage
+
+- [Read organization usage](https://docs.fly.io/sprites/api/usage/read-organization-usage.md): CPU and reserved-memory usage for your organization. Optionally filter by cluster_id. Use group_by=sprite for a per-sprite breakdown.
+- [List sprites with recorded usage](https://docs.fly.io/sprites/api/usage/list-sprites-with-recorded-usage.md): List sprites with recorded usage in the requested period, including deleted sprites. Optionally filter by cluster_id.
+- [Read sprite usage](https://docs.fly.io/sprites/api/usage/read-sprite-usage.md): CPU and reserved-memory usage for a sprite. Includes deleted sprites with retained usage.
+
+### Websockets
+
+- [Execute Command](https://docs.fly.io/sprites/api/websockets/execute-command.md): Execute a command in the sprite environment via WebSocket. Commands continue running after disconnect; use `max_run_after_disconnect` to control timeout. Supports TTY and non-TTY modes.
+- [Attach to Exec Session](https://docs.fly.io/sprites/api/websockets/attach-to-exec-session.md): Attach to an existing exec session via WebSocket.
+- [TCP Proxy](https://docs.fly.io/sprites/api/websockets/tcp-proxy.md): Establish a WebSocket tunnel to a port inside the sprite environment.
+- [Control Channel](https://docs.fly.io/sprites/api/websockets/control-channel.md): Multiplexed control channel for sequential operations (exec, proxy) over a single persistent WebSocket connection. Reduces connection overhead for clients sending many operations.
+- [Watch Ports](https://docs.fly.io/sprites/api/websockets/watch-ports.md): Watch for port open/close events across all processes in the sprite namespace. On connect, sends a snapshot of all currently listening ports as a port_list message, then streams incremental port_opened/port_closed events.
+- [Watch Filesystem](https://docs.fly.io/sprites/api/websockets/watch-filesystem.md): Watch for filesystem changes via WebSocket.
+
+## OpenAPI Specs
+
+- [openapi](/api/machines/openapi.json)
+- [openapi](/sprites/api/openapi.json)
+
+## AsyncAPI Specs
+
+- [asyncapi](/sprites/api/asyncapi.json)
+
+> The links below point to documentation indexes. Follow each `/_llms/` index recursively until you reach documentation pages.
+
+## Indexes
+
+- [Fly docs (706 pages)](https://docs.fly.io/_llms/fly-docs.txt): Fly docs.
+- [Fly docs / Fly docs (706 pages)](https://docs.fly.io/_llms/fly-docs/fly-docs.txt): Getting Started, Guides (Blueprints), Model Context Protocol (MCP), App Guides, Apps on Fly.io, Language & Framework Guides, Fly Machines, Managed Postgres, Databases & Storage, Fly Volumes, Networking, Monitoring, Security, Reference, About, LiteFS.
+- [Fly docs / Fly docs / Reference (337 pages)](https://docs.fly.io/_llms/fly-docs/fly-docs/reference.txt): flyctl.
+- [Machines API (106 pages)](https://docs.fly.io/_llms/machines-api.txt): Machines API.

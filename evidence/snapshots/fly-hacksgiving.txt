@@ -1,0 +1,1205 @@
+SOURCE: https://fly.io/hacksgiving/
+RETRIEVED: 2026-11-26 (UTC)
+----
+<!doctype html>
+<html lang="en-US" class="no-js h-full " data-menu-state="off" data-motion="off">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="PRZbOR8FOGYmOAoiHCF7Im0UEQAxClgfkXmkgdJRkpKDpuVH8dUgcmlx">
+
+    <title data-suffix=" · Fly">Hacksgiving 2026 · Fly</title>
+
+    <script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#organization","@type":"Organization","address":{"@type":"PostalAddress","addressCountry":"US","addressLocality":"San Francisco","addressRegion":"CA","postalCode":"94114","streetAddress":"2261 Market Street #4990"},"contactPoint":{"@type":"ContactPoint","availableLanguage":["English"],"contactType":"customer support","email":"support@fly.io","url":"https:\/\/fly.io\/support\/"},"description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","foundingDate":"2017","legalName":"Fly.io, Inc.","logo":"https:\/\/fly.io\/phx\/images\/fly-balloon-icon-417a0f1be37234f7d3aca46fb6ebbe08.svg?vsn=d","name":"Fly.io","sameAs":["https:\/\/www.wikidata.org\/wiki\/Q133943318","https:\/\/github.com\/superfly","https:\/\/www.linkedin.com\/company\/flydotio","https:\/\/x.com\/flydotio","https:\/\/twitter.com\/flydotio","https:\/\/bsky.app\/profile\/fly.io","https:\/\/hachyderm.io\/@flydotio","https:\/\/www.youtube.com\/@flydotio","https:\/\/community.fly.io\/"],"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#website","@type":"WebSite","name":"Fly.io","publisher":{"@id":"https:\/\/fly.io\/#organization"},"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#software-application","@type":"SoftwareApplication","applicationCategory":"DeveloperApplication","description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","featureList":"Machines, Sprites, Managed Postgres, Private Networking, Autoscaling, Zero Downtime Deploys, Granular Routing, Monitoring","isPartOf":{"@id":"https:\/\/fly.io\/#website"},"name":"Fly.io","operatingSystem":"Web","provider":{"@id":"https:\/\/fly.io\/#organization"},"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#service","@type":"Service","areaServed":"Worldwide","description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","hasOfferCatalog":{"@type":"OfferCatalog","itemListElement":[{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/machines\/#service","@type":"Service","name":"Fly Machines"}},{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/sprites\/#service","@type":"Service","name":"Sprites"}},{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/mpg\/#service","@type":"Service","name":"Managed Postgres"}}],"name":"Fly.io products"},"name":"Fly.io","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Public cloud platform","url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/machines\/#service","@type":"Service","areaServed":"Worldwide","description":"Lightweight, fast-booting virtual machines for running any code.","name":"Fly Machines","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Cloud compute","url":"https:\/\/fly.io\/machines\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/sprites\/#service","@type":"Service","areaServed":"Worldwide","description":"Full Linux computers designed for agents instead of people. As persistent or disposable as you want, with full environment checkpointing and restore.","name":"Sprites","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Agent sandboxes","url":"https:\/\/fly.io\/sprites\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/mpg\/#service","@type":"Service","areaServed":"Worldwide","description":"Fully-managed production PostgreSQL with automatic backups, high availability with automatic failover, connection pooling and encryption at rest and in transit.","name":"Managed Postgres","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Managed database","url":"https:\/\/fly.io\/mpg\/"}
+</script>
+
+    <meta name="description" content="Build a personal agent on Sprites during Hacksgiving, a week-long hackathon from Fly.io, November 23–29. Prizes up to $2,500.">
+
+    <meta property="og:type" content="website">
+    
+    
+    <meta property="og:site_name" content="Fly.io">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://fly.io/hacksgiving/">
+    <meta property="og:title" content="Hacksgiving 2026">
+    <meta property="og:description" content="Build a personal agent on Sprites during Hacksgiving, a week-long hackathon from Fly.io, November 23–29. Prizes up to $2,500.">
+
+    <meta property="og:image" content="https://fly.io/phx/ui/images/hacksgiving-og-2183e171de6df43784706538ca812153.jpg?vsn=d">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Build an agent this Hacksgiving, over a Thanksgiving table where a bird eyes the pie and rolls while a robot helper cooks">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@flydotio">
+    <meta name="twitter:title" content="Hacksgiving 2026">
+    <meta name="twitter:description" content="Build a personal agent on Sprites during Hacksgiving, a week-long hackathon from Fly.io, November 23–29. Prizes up to $2,500.">
+    <meta name="twitter:image" content="https://fly.io/phx/ui/images/hacksgiving-og-2183e171de6df43784706538ca812153.jpg?vsn=d">
+    <meta name="twitter:image:alt" content="Build an agent this Hacksgiving, over a Thanksgiving table where a bird eyes the pie and rolls while a robot helper cooks">
+
+    <link rel="canonical" href="https://fly.io/hacksgiving/">
+
+    
+
+    <link rel="alternate" type="text/markdown" href="https://fly.io/hacksgiving.md">
+
+    <meta content="origin" name="referrer">
+    <meta content="True" name="HandheldFriendly">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script defer data-domain="fly.io" src="/js/events.js">
+    </script>
+
+    <link href="/phx/ui/images/favicon/favicon-595d1312b35dfe32838befdf8505515e.ico?vsn=d" rel="shortcut icon" type="image/x-icon">
+<link href="/phx/ui/images/favicon/apple-touch-icon-3e4c9ce127b5cd6f5516638d4bbf1dd5.png?vsn=d" rel="apple-touch-icon" sizes="180x180">
+<link href="/phx/ui/images/favicon/favicon-32x32-803ad2058b86df3f8a9f8af1505a59d2.png?vsn=d" rel="icon" sizes="32x32" type="image/png">
+<link href="/phx/ui/images/favicon/favicon-16x16-6963a8113fc4dc87910c17c4279a9bd4.png?vsn=d" rel="icon" sizes="16x16" type="image/png">
+<link href="/phx/ui/images/favicon/site-4ed2b515513825854b905e85931b4a55.webmanifest?vsn=d" rel="manifest">
+<link href="/phx/ui/images/favicon/safari-pinned-tab-987c7fc8f545337872c691fbc736e9c4.svg?vsn=d" rel="mask-icon" color="#4d7cfe">
+<meta content="#4d7cfe" name="msapplication-TileColor">
+<meta content="#ffffff" name="theme-color">
+    <style>
+  html:not(.motion-on) * { 
+    transition: none !important; 
+    animation: none !important;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.documentElement.classList.add('motion-on')
+  })
+</script>
+    <style>
+  
+  @font-face {
+    font-family: 'Fricolage Grotesque';
+    src: url("/phx/ui/fonts/fricolage-grotesque.var-c4e68eb9708a077874be07be1d9f2ab9.woff2?vsn=d") format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-medium-72452da8f9470257c609f26a1349f0d2.woff2?vsn=d") format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-medium-italic-adb66b2b22d7a691a214ab0e7971264f.woff2?vsn=d") format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-bold-6a92de456437e3636084b0b8203e4af6.woff2?vsn=d") format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-bold-italic-04208325eb2543e41f5d70c7e281309a.woff2?vsn=d") format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Fragment Mono';
+    src: url("/phx/ui/fonts/fragment-mono-regular-e6a1881f8b2d71568ae7935d098c7590.woff2?vsn=d") format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Fragment Mono';
+    src: url("/phx/ui/fonts/fragment-mono-italic-a01dfaeb25824e4279013d8497b0d7f6.woff2?vsn=d") format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: fallback;
+  }
+  
+</style>
+<link rel="preload" href="/phx/ui/fonts/fricolage-grotesque.var-c4e68eb9708a077874be07be1d9f2ab9.woff2?vsn=d" as="font" type="font/woff2" crossorigin><link rel="preload" href="/phx/ui/fonts/mackinac-medium-72452da8f9470257c609f26a1349f0d2.woff2?vsn=d" as="font" type="font/woff2" crossorigin><link rel="preload" href="/phx/ui/fonts/mackinac-medium-italic-adb66b2b22d7a691a214ab0e7971264f.woff2?vsn=d" as="font" type="font/woff2" crossorigin>
+
+    <link phx-track-static rel="stylesheet" href="/phx/assets/app-1459de2617b70f731a2077fc798d638d.css?vsn=d">
+
+    <script>
+      document.documentElement.classList.remove("no-js")
+    </script>
+    <style>
+      .no-js [data-src] {
+        display: none;
+      }
+    </style>
+    <script defer phx-track-static type="text/javascript" src="/phx/assets/js/app-133f20dec1b535adf846754674aa10de.js?vsn=d">
+    </script>
+    <script defer phx-track-static type="text/javascript" src="/phx/assets/js/webmcp-f7cb6010ac5e3b5c83dd66a2537d801a.js?vsn=d">
+</script>
+    
+
+    <link rel="me" href="https://hachyderm.io/@flydotio">
+
+    <script id="google-tag-sdk" async src="https://analytics.fly.io/gtag/js?id=G-EX6DMZ1DZV">
+</script>
+<script id="google-tag-trigger">
+  const tagId = 'G-EX6DMZ1DZV'
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  gtag('config', tagId, {
+    'transport_url': 'https://analytics.fly.io',
+    'first_party_collection': true
+  });
+
+  // client_id / session_id reach the server via the _ga / _ga_<id> cookies
+  // gtag writes (FlyWeb.Plugs.GoogleAnalyticsCookies) — no JS handoff needed.
+  // Conversions are never sent from here: "User Signed Up" goes server-side
+  // through the sGTM container (FlyWeb.Sgtm) with this visitor's cookies,
+  // so it lands on the same GA4 user and session as these page views.
+</script>
+    <script type="application/json" id="posthog-config">
+  {"api_key":"phc_nuaUijb3iLWut9Kbr56bSHSP4MYdeb8CFd9BgPm3LAVY","eu_scope":false,"api_host":"https://posthog.fly.io"}
+</script>
+<script defer type="text/javascript" src="/phx/assets/js/posthog-11f6f160a07792a1a08cd0da8f8800da.js?vsn=d">
+</script>
+  </head>
+
+  <body class="my-app-sandbox w-full min-h-full">
+    
+    <header class="navbar relative z-500 container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-24 text-navy font-medium text-sm" data-menu-container>
+  <nav aria-label="Logo menu" class="relative z-60 flex">
+    <a href="/" aria-label="Fly.io home" class="block h-8 sm:h-10">
+
+
+        
+
+  <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 100%; ">
+
+
+    </a>
+  </nav>
+
+  <button data-menu-toggle aria-expanded="false" class="ml-auto menu-toggle lg:hidden relative z-60 flex-none flex items-center justify-center w-6 h-6 text-navy">
+    <span class="sr-only">Open main menu</span>
+    <svg width="22" height="18" viewBox="0 0 22 18" fill="none" aria-hidden="true">
+      <path d="M1 1H21M1 9H21M1 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <nav aria-label="Main menu" class="pointer-events-auto hidden lg:flex lg:w-full items-center justify-end">
+    <div class="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2 rounded-full bg-white/75 bg-linear-to-r from-pink-200/40 via-violet-200/40 to-indigo-200/40 border border-white/50 px-3 text-sm font-medium text-gray-800 shadow-lg shadow-gray-800/5 ring-1 ring-gray-800/7.5 backdrop-blur-xl">
+
+      <div class="flex-none hidden shrink-0 lg:flex group static">
+        <button id="nav-products" type="button" aria-haspopup="true" class="relative flex items-center whitespace-nowrap px-3 py-2.5 cursor-pointer transition-colors group-hover:text-violet-600 group-focus-within:text-violet-600">
+          Products
+          <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+          <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+            <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+          </span>
+        </button>
+        <div id="nav-products-panel" class="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[min(72rem,calc(100vw-4rem))] invisible opacity-0 translate-y-1 transition-[opacity,translate,visibility] duration-200 motion-reduce:transition-none group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+          <div class="rounded-2xl border border-[#e4def7] bg-white p-7 text-navy shadow-[0_24px_60px_rgb(40_25_80/.14)]">
+            <div class="grid grid-cols-[repeat(3,minmax(0,1fr))_auto] gap-7">
+              <div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Compute
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/machines/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        App VMs
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Fly Machines: fast-booting VMs for production apps, in 18 regions.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/sprites/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Agent sandboxes
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Fly Sprites: fast-starting, hardware-isolated sandboxes. Always on, scaling to zero when idle.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div><div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Storage
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/mpg/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Managed Postgres
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Backups and failover built in.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/object-storage/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Object storage
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Global, S3-compatible.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/volumes/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Volumes
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Local NVMe disks for your VMs.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/redis/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Redis
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Caching and queues.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/vector-database/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Vector database
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Embeddings next to your compute.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div><div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Networking
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/networking/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Private networking
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Every workload on a private network by default.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/granular-routing/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Global routing
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Requests land on the closest healthy instance.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/connectors/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Connectors
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Pre-built connections to the services agents use, like GitHub and Slack. Credentials never enter the computer.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="border-l border-[#eee9fd] pl-5">
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Features
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/sprites/ecosystem/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Integrations
+                    </a>
+                  </li><li>
+                    <a href="/autoscaling/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Autoscaling
+                    </a>
+                  </li><li>
+                    <a href="/zero-downtime-deploys/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Zero-downtime deploys
+                    </a>
+                  </li><li>
+                    <a href="/monitoring/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Monitoring
+                    </a>
+                  </li><li>
+                    <a href="/mcp/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      MCP server
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="https://docs.fly.io">
+        Docs
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="/customer-stories/">
+        Customers
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="/pricing/">
+        Pricing
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <dl class="flex-none bubble-wrap hidden shrink-0 lg:flex group relative px-3 py-2.5 cursor-pointer">
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+        <dt class="flex items-center justify-items-center whitespace-nowrap transition-colors group-hover:text-violet-600 group-focus-within-text-violet-400">
+          Resources
+        </dt>
+        <dd class="bubble-b tail text-sm text-navy flex flex-col w-44 rounded-2xl p-2">
+          <div class="rounded-tl w-3 h-3 absolute top-0 left-1/2 z-[-1] -ml-2 rotate-45 bg-white -mt-1.5">
+          </div>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/blog/">
+            Blog
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/infra-log/">
+            Infra Log
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/changelog">
+            Changelog
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="https://status.flyio.net">
+            Status
+          </a>
+        </dd>
+      </dl>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="https://community.fly.io">
+        Community
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+    </div>
+    <div id="nav-auth-buttons" class="ml-5 flex-none flex items-center rounded-full bg-white/75 bg-linear-to-r from-pink-200/40 via-violet-200/40 to-indigo-200/40 border border-white/50 px-3 text-sm font-medium text-gray-800 shadow-lg shadow-gray-800/5 ring-1 ring-gray-800/7.5 backdrop-blur-xl">
+
+        <a href="/app/sign-in" class="flex-none group relative text-base sm:text-sm -ml-2 my-1 inline-flex items-center bg-clip-padding rounded-l-[20px] rounded-r-[8px] border h-8 pl-3 pr-[10px] bg-white/40 border-white/90 shadow-sm hover:text-violet-600 hover:bg-violet-50/40 transition-colors duration-300">
+          Log In
+          <span class="absolute left-4 right-1 -bottom-2px h-px bg-linear-to-r from-violet-500/0 via-violet-400 to-violet-500/0 transition duration-300 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+          <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+            <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+          </span>
+        </a>
+        <a href="/app/sign-up?s=hacksgiving" class="flex-none group relative text-base sm:text-sm ml-5px -mr-2 my-1 h-8 pr-3 btn-xs btn-orange border-none rounded-r-[20px] rounded-l-[8px] ">
+          Sign Up
+        </a>
+
+    </div>
+  </nav>
+
+  <nav data-menu aria-label="Main menu" class="lg:hidden fixed inset-0 z-600 text-navy overflow-y-auto overscroll-contain bg-white invisible opacity-0 transition-[opacity,visibility] duration-200 motion-reduce:transition-none in-data-[menu-state=on]:visible in-data-[menu-state=on]:opacity-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-24 border-b border-[#e6e0fe]">
+      <a href="/" aria-label="Fly.io home" class="block h-8 sm:h-10">
+        
+
+  <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 100%; ">
+
+      </a>
+      <button type="button" data-menu-toggle class="ml-auto flex-none flex items-center justify-center w-6 h-6 text-[#2e2e2e]">
+        <span class="sr-only">Close main menu</span>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M1 1L17 17M1 17L17 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="container mx-auto flex max-w-md flex-col gap-8 px-6 py-12 text-[#2e2e2e] sm:mx-0 sm:px-6 lg:px-8">
+      <details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Products
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/machines/" class="transition-colors hover:text-[#7c3aed]">
+            App VMs
+          </a><a href="/sprites/" class="transition-colors hover:text-[#7c3aed]">
+            Agent sandboxes
+          </a><a href="/mpg/" class="transition-colors hover:text-[#7c3aed]">
+            Managed Postgres
+          </a><a href="/object-storage/" class="transition-colors hover:text-[#7c3aed]">
+            Object storage
+          </a><a href="/volumes/" class="transition-colors hover:text-[#7c3aed]">
+            Volumes
+          </a><a href="/redis/" class="transition-colors hover:text-[#7c3aed]">
+            Redis
+          </a><a href="/vector-database/" class="transition-colors hover:text-[#7c3aed]">
+            Vector database
+          </a><a href="/networking/" class="transition-colors hover:text-[#7c3aed]">
+            Private networking
+          </a><a href="/granular-routing/" class="transition-colors hover:text-[#7c3aed]">
+            Global routing
+          </a><a href="/connectors/" class="transition-colors hover:text-[#7c3aed]">
+            Connectors
+          </a>
+        </div>
+      </details><details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Features
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/sprites/ecosystem/" class="transition-colors hover:text-[#7c3aed]">
+            Integrations
+          </a><a href="/autoscaling/" class="transition-colors hover:text-[#7c3aed]">
+            Autoscaling
+          </a><a href="/zero-downtime-deploys/" class="transition-colors hover:text-[#7c3aed]">
+            Zero-downtime deploys
+          </a><a href="/monitoring/" class="transition-colors hover:text-[#7c3aed]">
+            Monitoring
+          </a><a href="/mcp/" class="transition-colors hover:text-[#7c3aed]">
+            MCP server
+          </a>
+        </div>
+      </details><details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Resources
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/blog/" class="transition-colors hover:text-[#7c3aed]">
+            Blog
+          </a><a href="/infra-log/" class="transition-colors hover:text-[#7c3aed]">
+            Infra Log
+          </a><a href="/changelog" class="transition-colors hover:text-[#7c3aed]">
+            Changelog
+          </a><a href="https://docs.fly.io" class="transition-colors hover:text-[#7c3aed]">
+            Docs
+          </a><a href="/customer-stories/" class="transition-colors hover:text-[#7c3aed]">
+            Customers
+          </a><a href="https://community.fly.io/" class="transition-colors hover:text-[#7c3aed]">
+            Community
+          </a><a href="https://status.flyio.net/" class="transition-colors hover:text-[#7c3aed]">
+            Status
+          </a>
+        </div>
+      </details>
+      <a href="/pricing/" class="text-[20px] font-semibold leading-normal transition-colors hover:text-[#7c3aed]">
+        Pricing
+      </a>
+      <div class="flex flex-col gap-3 py-4 text-sm font-normal">
+
+          <a href="/app/sign-in" class="flex h-10 items-center justify-center rounded-md border border-[#d4c4fd] bg-[#e6e0fe] px-3 text-[#7c3aed] transition-colors hover:bg-[#d4c4fd]">
+            Log In
+          </a>
+          <a href="/app/sign-up?s=hacksgiving" class="flex h-10 items-center justify-center rounded-md bg-[#f86d60] px-3 text-white ring-[1.5px] ring-inset ring-[#fcb9b2] transition-colors hover:bg-[#ec5a4c]">
+            Sign Up
+          </a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="relative w-full h-full overflow-hidden -mt-24 pt-24">
+  <main>
+  <header class="hero relative flex flex-col -mt-24 pt-24 bg-[linear-gradient(to_bottom,#9eaced_9rem,transparent_9rem)]">
+    <div class="w-full overflow-hidden">
+      <img id="hacksgiving-hero" src="/phx/ui/images/hacksgiving-hero-5ab864f0def11785499f5f5c8000ab98.webp?vsn=d" srcset="/phx/ui/images/hacksgiving-hero-1400-edf58f8af09baa0a0f018d6d0a16b7cb.webp?vsn=d 1400w, /phx/ui/images/hacksgiving-hero-5ab864f0def11785499f5f5c8000ab98.webp?vsn=d 1900w" sizes="100vw" width="1900" height="480" fetchpriority="high" class="w-full h-[180px] sm:h-[260px] lg:h-[340px] object-cover object-bottom mask-[linear-gradient(to_bottom,transparent,black_3rem)]" alt="A bird eyeing pie and rolls at a Thanksgiving table while a robot helper cooks">
+    </div>
+    <div class="relative container lg:max-w-4xl m-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10 lg:pt-20 lg:pb-12">
+      <div class="relative flex flex-col items-start sm:items-center sm:text-center">
+        <h1 class="font-heading text-3.5xl/[1.2] xs:text-4.5xl/[1.2] sm:text-5xl/[1.15] md:text-5.5xl/[1.15] lg:text-6xl/[1.15] xl:text-6.5xl/[1.15] tracking-[-.045em]! relative text-navy mb-5 -mt-4 sm:-mt-5 lg:-mt-6 xl:mt-[-26px]">
+          Build an agent this
+          <em class="relative inline-block z-0">
+            Hacksgiving
+            <svg viewBox="0 0 1213 73" aria-hidden="true" preserveAspectRatio="none" height="12" class="absolute -bottom-1 sm:-bottom-0.5 lg:bottom-0 left-0 w-full h-3 text-purple-400 -z-1">
+              <g buffered-rendering="static">
+                <path fill="url(#underline-gradient)" d="M1213.19 35.377c2.37-13.011-22.95-10.753-31.04-14.087C1086.89 5.705 911.742 2.887 815.218 2.809c-78.003.231-155.966-1.833-233.961.481-57.545.429-114.885 6.164-172.419 7.383-121.164 5.39-242.94 10.751-362.507 32.199-12.356 3.286-25.614 4.255-37.332 9.401-29.507 22.983 27.103 20.15 39.468 17.234 357.956-47.703 362.767-46.261 636.452-50.97 121.033-2.508 241.892 6.658 428.341 19.243 4.74.404 8.98-4.032 8-8.788a942.105 942.105 0 0154.69 6.378c9.44 1.843 18.92 3.583 28.29 5.729 4.01.839 8.02-1.718 8.95-5.712v-.01z">
+                </path>
+              </g>
+              <defs>
+                <linearGradient id="underline-gradient" gradientTransform="rotate(110)">
+                  <stop offset="5%" stop-color="#CA7FF8"></stop>
+                  <stop offset="95%" stop-color="#795BE9"></stop>
+                </linearGradient>
+              </defs>
+            </svg>
+          </em>
+        </h1>
+        <p class="text-base lg:text-[18px] tracking-prose mb-9 max-w-187.5 mx-auto">
+          Hacksgiving is a hackathon from Fly.io, November 23–29, where you build a personal agent. Build it in an afternoon or spread it over the week. Whatever leaves time for pie.
+        </p>
+        <a href="/app/sign-up?s=hacksgiving" id="hacksgiving-enter-hero" class="gap-2 btn-xl btn-orange group/btn rounded-full">
+  
+
+    
+          Start For Free
+        
+  
+
+  <div class="flex items-center opacity-50 group-hover/btn:opacity-100 transition-opacity ">
+    <svg role="img" viewBox="0 0 16 16" width="0" height="10" fill="currentColor" class="w-0 group-hover/btn:w-2.5 h-3 translate-x-2.5 ease-out duration-200 transition-all transform-gpu">
+      <path d="M1 9h14a1 1 0 000-2H1a1 1 0 000 2z"></path>
+    </svg>
+    <svg role="img" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" class="size-[0.7em]">
+      <path d="M7.293 1.707L13.586 8l-6.293 6.293a1 1 0 001.414 1.414l7-7a.999.999 0 000-1.414l-7-7a1 1 0 00-1.414 1.414z"></path>
+    </svg>
+  </div>
+
+</a>
+
+
+        <div id="hacksgiving-hero-judges" class="mt-10 grid grid-cols-2 sm:grid-cols-3 place-items-center gap-x-10 gap-y-7 lg:flex lg:justify-center lg:gap-x-8 w-full">
+          <a href="https://typesafe.ai/" class="block">
+            <img src="/phx/ui/images/typesafe-lockup-cfa6b3a3bafd5d8ffcfb93347e53bc9d.svg?vsn=d" width="372" height="73" class="h-[29px] w-auto" alt="TypeSafe AI">
+          </a>
+          <a href="https://www.box.com/" class="block">
+            <img src="/phx/ui/images/box-logo-d3d0b0e1ca162f7fc25552024b873771.webp?vsn=d" width="222" height="120" class="h-[26px] w-auto" alt="Box">
+          </a>
+          <a href="/" class="block">
+            <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" width="259" height="84" class="h-[34px] w-auto" alt="Fly.io">
+          </a>
+          <a id="hacksgiving-ollama-logo" href="https://ollama.com/" class="flex items-center gap-2 text-[22px] font-semibold leading-none tracking-tight text-black">
+            <img src="/phx/ui/images/ollama-logo-255a0192cc7bcb4cbcb9dfa667937675.png?vsn=d" width="181" height="256" class="h-[30px] w-auto" alt=""> Ollama
+          </a>
+          <a href="https://app.pinecone.io/?sessionType=signup" class="block">
+            <img src="/phx/ui/images/pinecone-lockup-a66d54025e68e99ed6090e888980a98b.svg?vsn=d" width="298" height="64" class="h-[29px] w-auto" alt="Pinecone">
+          </a>
+          <a id="hacksgiving-apify-logo" href="https://apify.com/" class="block">
+            <img src="/phx/ui/images/apify-logo-6518c0c9b026ff842f2bc4b088f8e7aa.svg?vsn=d" width="512" height="141" class="h-[29px] w-auto" alt="Apify">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 mt-6">
+      <hr class="border-t border-gray-200">
+    </div>
+  </header>
+
+  <article class="relative bg-white">
+
+    <div class="relative container mx-auto pt-12 xl:pt-16 pb-24 xl:pb-32 px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+        <div class="flex justify-center lg:justify-start">
+          <img id="hacksgiving-what" src="/phx/ui/images/hacksgiving-robot-pies-77aa5d72d1c96a2ea406d81af6e99f8f.webp?vsn=d" width="928" height="480" loading="lazy" class="w-full max-w-xl h-auto" alt="Little flying robots carrying two pies and a plate of rolls">
+        </div>
+
+        <div>
+          <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12">
+            So what am I building?
+          </h2>
+          <p class="text-lg lg:text-xl text-gray-700 mb-8">
+            A personal agent that lives on <a href="/sprites" class="text-purple-600 hover:text-purple-700 underline">a Sprite</a>: a hardware isolated Linux computer that is exactly as persistent or disposable as you want it to be. Your agent should also use at least one Sprites <a href="/sprites/ecosystem/#connectors/meta" class="text-purple-600 hover:text-purple-700 underline">connector</a>. (Might we suggest one from our lovely partners above? 😉)
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg><span>Runs on a Sprite</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg><span>Uses at least one Sprites connector</span>
+            </li>
+          </ul>
+          <p class="text-lg text-gray-700">
+            Other than those two elements, the world is your oyster (sorry, we’re getting hungry).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+          <div>
+            <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12">
+              Uh, how do I hack and eat dinner at the same time?
+            </h2>
+            <p class="text-lg text-gray-700">
+              Great news. Your hackathon compute is on us with Fly’s new <a href="/pricing" class="text-purple-600 hover:text-purple-700 underline">Free plan</a>. And every Sprite comes with Claude Code, Codex, Gemini CLI, Antigravity, Cursor, Pi and Grok already installed. Bring your own model subscription and start building.
+            </p>
+          </div>
+
+          <div class="flex justify-center lg:justify-end">
+            <img id="hacksgiving-dinner" src="/phx/ui/images/hacksgiving-pie-ca8c17ed71cb4922e66f9f6fd39009b3.webp?vsn=d" width="928" height="480" loading="lazy" class="w-full max-w-xl h-auto" alt="A bird happily eating pie while a little robot works on a laptop beside it">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hacksgiving-how" class="relative bg-violet-800 bg-linear-to-br from-purple-800 via-violet-800 to-violet-900 overflow-hidden">
+      <img src="/phx/ui/images/fly-case-files-4a00a959c34bf70e707a455398c5915b.webp?vsn=d" srcset="/phx/ui/images/fly-case-files-1400-9198e3effdb55347d0468b4bd82ef5be.webp?vsn=d 1400w, /phx/ui/images/fly-case-files-4a00a959c34bf70e707a455398c5915b.webp?vsn=d 4234w" sizes="100vw" width="4234" height="1526" loading="lazy" alt="" class="absolute inset-0 h-full w-full object-cover pointer-events-none">
+      <div aria-hidden="true" class="absolute inset-0 bg-linear-to-br from-purple-800/85 via-violet-800/85 to-violet-900/90 pointer-events-none">
+      </div>
+      <div class="relative container mx-auto py-24 xl:py-32 px-4 sm:px-6 lg:px-8">
+        <div class="relative mx-auto max-w-2xl -rotate-1 bg-sky-100 px-8 pt-14 pb-12 sm:px-14 shadow-2xl shadow-black/40">
+          <div aria-hidden="true" class="absolute inset-x-0 top-0 h-8 bg-linear-to-b from-sky-200/80 to-transparent">
+          </div>
+          <div class="rotate-1">
+            <h2 class="font-heading text-3xl md:text-4xl text-navy mb-10 text-center">
+              Here’s how the hackathon works.
+            </h2>
+            <ol id="hacksgiving-steps" class="space-y-5">
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  1
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  Sign up for Fly.io (or ask your coding agent to do it for you).
+                </span>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  2
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  Build an agent that runs on Sprites and uses at least one Sprites <a href="/sprites/ecosystem/#connectors/meta" class="text-purple-600 hover:text-purple-700 underline">connector</a>.
+                </span>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  3
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  Share it and submit your link
+                  <a id="hacksgiving-submit-link-steps" href="https://docs.google.com/forms/d/e/1FAIpQLSfZ_xearoDOSRXI3VjAbM4BJlObUdxSFO0SDwyZ8G6M2lapRQ/viewform" class="text-purple-600 hover:text-purple-700 underline">here</a>
+                  by midnight PST on Sunday, November 29.
+                </span>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  4
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  We’ll announce the winners on Tuesday, December 1 by email.
+                </span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative bg-gray-50 py-24">
+      <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-r from-purple-100 via-violet-50 to-teal-100 mask-[linear-gradient(to_top,black,transparent)] pointer-events-none">
+      </div>
+      <div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center mb-16">
+          <h2 class="font-heading text-3xl md:text-4xl text-navy">Prizes!</h2>
+        </div>
+        <div id="hacksgiving-prizes" class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div class="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+            <h3 class="font-heading text-2xl text-navy">The Grand Prize</h3>
+            <div class="flex h-24 items-center justify-center my-4">
+              <img src="/phx/ui/images/hacksgiving-grand-prize-9715fd2fa01c564816b0716f9b608b0c.webp?vsn=d" class="h-[82px] w-auto" alt="A purple trophy with a halo and little wings">
+            </div>
+            <div class="text-4xl font-bold text-purple-600">$2,500</div>
+            <p class="text-gray-700 mt-4">Winner winner turkey dinner!</p>
+          </div><div class="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+            <h3 class="font-heading text-2xl text-navy">Second Place</h3>
+            <div class="flex h-24 items-center justify-center my-4">
+              <img src="/phx/ui/images/hacksgiving-second-place-7611a0d6bb2d2ab531816b687fcec5c2.webp?vsn=d" class="h-[82px] w-auto" alt="A teal trophy wearing sunglasses">
+            </div>
+            <div class="text-4xl font-bold text-purple-600">$1,500</div>
+            <p class="text-gray-700 mt-4">You are superfly in our books.</p>
+          </div><div class="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+            <h3 class="font-heading text-2xl text-navy">The Weird Uncle Award</h3>
+            <div class="flex h-24 items-center justify-center my-4">
+              <img src="/phx/ui/images/hacksgiving-weird-uncle-3727b3bee24e2e38bce192c23e6fe7b5.webp?vsn=d" class="h-[82px] w-auto" alt="A pink bird with a monocle and a scruffy beard">
+            </div>
+            <div class="text-4xl font-bold text-purple-600">$1,000</div>
+            <p class="text-gray-700 mt-4">Goes to the strangest agent anyone builds. Wouldn’t be Thanksgiving without it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+          <div>
+            <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12">How to submit</h2>
+            <ol id="hacksgiving-submit" class="space-y-6">
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  1
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  <strong>Build.</strong>
+                  Build an agent on Sprites during Hacksgiving week, and make sure it uses at least one Sprites connector.
+                </span>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  2
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  <strong>Share.</strong>
+                  Post your agent on X, Bluesky, LinkedIn, or Reddit with a short demo, and tag us @flydotio. (Video demos always earn “bonus points,” but won’t actually affect your score.)
+                </span>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 font-semibold text-purple-700">
+                  3
+                </span>
+                <span class="pt-1 text-lg text-gray-700">
+                  <strong><a id="hacksgiving-submit-link-how" href="https://docs.google.com/forms/d/e/1FAIpQLSfZ_xearoDOSRXI3VjAbM4BJlObUdxSFO0SDwyZ8G6M2lapRQ/viewform" class="text-purple-600 hover:text-purple-700 underline">Submit.</a></strong>
+                  Send us a link to your code and your demo, along with a sentence or two about what your agent does,
+                  before midnight PST
+                  on Sunday, November 29.
+                </span>
+              </li>
+            </ol>
+            <div class="mt-12">
+              <a href="/app/sign-up?s=hacksgiving" id="hacksgiving-enter-submit" class="gap-2 btn-xl btn-purple group/btn rounded-full">
+  
+
+    
+                Start Hacksgiving
+              
+  
+
+  <div class="flex items-center opacity-50 group-hover/btn:opacity-100 transition-opacity ">
+    <svg role="img" viewBox="0 0 16 16" width="0" height="10" fill="currentColor" class="w-0 group-hover/btn:w-2.5 h-3 translate-x-2.5 ease-out duration-200 transition-all transform-gpu">
+      <path d="M1 9h14a1 1 0 000-2H1a1 1 0 000 2z"></path>
+    </svg>
+    <svg role="img" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" class="size-[0.7em]">
+      <path d="M7.293 1.707L13.586 8l-6.293 6.293a1 1 0 001.414 1.414l7-7a.999.999 0 000-1.414l-7-7a1 1 0 00-1.414 1.414z"></path>
+    </svg>
+  </div>
+
+</a>
+
+
+            </div>
+          </div>
+
+          <div class="flex justify-center lg:justify-end">
+            <img id="hacksgiving-share" src="/phx/ui/images/hacksgiving-submit-3ad2e30037f9094c891cfd823c80e713.webp?vsn=d" width="672" height="480" loading="lazy" class="w-full max-w-lg h-auto" alt="A pie video, a mixing bowl and a cursor clicking a purple submit button">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative py-24 bg-[#9eaced]/15">
+      <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-r from-purple-100 via-violet-50 to-teal-100 mask-[linear-gradient(to_top,black,transparent)] pointer-events-none">
+      </div>
+      <div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center mb-14">
+          <h2 class="font-heading text-3xl md:text-4xl text-navy">Meet the Judges</h2>
+        </div>
+        <ul id="hacksgiving-judges" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <li class="flex flex-col items-center text-center px-4 py-4">
+            <img src="/phx/ui/images/hacksgiving-judge-daniel-gafni-0bb002250d99517079bf454aff3e8643.webp?vsn=d" width="384" height="384" loading="lazy" class="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow-sm" alt="Daniel Gafni">
+            <h3 class="mt-5 font-heading text-xl text-navy">Daniel Gafni</h3>
+            <a href="https://typesafe.ai/" class="mt-2 block">
+              <img src="/phx/ui/images/typesafe-lockup-cfa6b3a3bafd5d8ffcfb93347e53bc9d.svg?vsn=d" width="372" height="73" class="h-5 w-auto" alt="TypeSafe AI">
+            </a>
+          </li>
+          <li class="flex flex-col items-center text-center px-4 py-4">
+            <img src="/phx/ui/images/hacksgiving-judge-carter-rabasa-9c97babcf45f914571af4d068f4114c8.webp?vsn=d" width="384" height="384" loading="lazy" class="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow-sm" alt="Carter Rabasa">
+            <h3 class="mt-5 font-heading text-xl text-navy">Carter Rabasa</h3>
+            <a href="https://www.box.com/" class="mt-2 block">
+              <img src="/phx/ui/images/box-logo-d3d0b0e1ca162f7fc25552024b873771.webp?vsn=d" width="222" height="120" class="h-[18px] w-auto" alt="Box">
+            </a>
+          </li>
+          <li class="flex flex-col items-center text-center px-4 py-4">
+            <img src="/phx/ui/images/hacksgiving-judge-scott-johnston-d0bc7978e209e33f293a35826fdab04a.webp?vsn=d" width="384" height="384" loading="lazy" class="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow-sm" alt="Scott Johnston">
+            <h3 class="mt-5 font-heading text-xl text-navy">Scott Johnston</h3>
+            <a href="/" class="mt-2 block">
+              <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" width="259" height="84" class="h-6 w-auto" alt="Fly.io">
+            </a>
+          </li>
+          <li class="flex flex-col items-center text-center px-4 py-4">
+            <img src="/phx/ui/images/hacksgiving-judge-asaf-ashirov-8547fca53ac071072a09124e359825a5.webp?vsn=d" width="384" height="384" loading="lazy" class="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow-sm" alt="Asaf Ashirov">
+            <h3 class="mt-5 font-heading text-xl text-navy">Asaf Ashirov</h3>
+            <a id="hacksgiving-judge-pinecone-signup" href="https://app.pinecone.io/?sessionType=signup" class="mt-2 block">
+              <img src="/phx/ui/images/pinecone-lockup-a66d54025e68e99ed6090e888980a98b.svg?vsn=d" width="298" height="64" class="h-5 w-auto" alt="Sign up for Pinecone">
+            </a>
+          </li>
+          <li id="hacksgiving-judge-michael-chiang" class="flex flex-col items-center text-center px-4 py-4">
+            <img src="/phx/ui/images/hacksgiving-judge-michael-chiang-9015a211d74e8bd905b2fb20f1d68526.webp?vsn=d" width="384" height="384" loading="lazy" class="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow-sm" alt="Michael Chiang">
+            <h3 class="mt-5 font-heading text-xl text-navy">Michael Chiang</h3>
+            <a href="https://ollama.com/" class="mt-2 flex items-center gap-1.5 text-[17px] font-semibold leading-none tracking-tight text-black">
+              <img src="/phx/ui/images/ollama-logo-255a0192cc7bcb4cbcb9dfa667937675.png?vsn=d" width="181" height="256" class="h-[22px] w-auto" alt=""> Ollama
+            </a>
+          </li>
+          <li id="hacksgiving-judge-robert-george-crupa" class="flex flex-col items-center text-center px-4 py-4">
+            <img src="/phx/ui/images/hacksgiving-judge-robert-george-crupa-2be614a8a2990c9cd59e0ba81e807d27.webp?vsn=d" width="250" height="250" loading="lazy" class="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow-sm" alt="Robert-George Crupa">
+            <h3 class="mt-5 font-heading text-xl text-navy">Robert-George Crupa</h3>
+            <a href="https://apify.com/" class="mt-2 block">
+              <img src="/phx/ui/images/apify-logo-6518c0c9b026ff842f2bc4b088f8e7aa.svg?vsn=d" width="512" height="141" class="h-[22px] w-auto" alt="Apify">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="font-heading text-3xl md:text-4xl text-navy mb-12">Rules and guidelines</h2>
+          <ul id="hacksgiving-rules" class="space-y-3 text-gray-700">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+              <span>
+                Hacksgiving runs from Monday, November 23 through Sunday, November 29. Submissions close before midnight PST on November 29.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg><span>Your project must be built during Hacksgiving week.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+              <span>
+                Your project must be an agent that runs on Fly.io Sprites using at least one connector.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+              <span>
+                You need a Fly.io account to enter. Create it yourself or ask a coding agent to do it for you.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg><span>Use any AI tools you like to help you build.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+              <span>
+                Each
+                <a id="hacksgiving-submit-link-rules" href="https://docs.google.com/forms/d/e/1FAIpQLSfZ_xearoDOSRXI3VjAbM4BJlObUdxSFO0SDwyZ8G6M2lapRQ/viewform" class="text-purple-600 hover:text-purple-700 underline">submission</a>
+                needs a link to your code, a demo, and a short description of what your agent does.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg><span>Developers everywhere are welcome to submit 1 entry.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+              <span>
+                Projects have to follow the <a href="/legal/terms-of-service/" class="text-purple-600 hover:text-purple-700 underline">Fly.io terms of service</a>.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+              <span>
+                Our judges will pick the winners of all three prizes, and we will announce them on Tuesday, December 1st 2026.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="hacksgiving-questions" class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="font-heading text-3xl md:text-4xl text-navy mb-6">Questions?</h2>
+          <p class="text-lg text-gray-700">
+            If you have any questions, please
+            <a id="hacksgiving-questions-email" href="mailto:customer-success@email.fly.io" class="text-purple-600 hover:text-purple-700 underline">email</a>
+            us. We're happy to help (while we eat pie).
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section class="relative overflow-hidden bg-linear-to-br from-purple-700 via-violet-700 to-indigo-700">
+  <div class="absolute inset-0 opacity-30 bg-cover bg-center mix-blend-overlay" style="background-image: url(&#39;/phx/ui/images/hacksgiving-hero-1400-edf58f8af09baa0a0f018d6d0a16b7cb.webp?vsn=d&#39;);" aria-hidden="true">
+  </div>
+  <div class="pointer-events-none absolute -inset-x-12 -top-6 h-12 bg-linear-to-r from-sky-300 via-indigo-300 to-pink-300 blur-3xl rotate-3 opacity-50" aria-hidden="true">
+  </div>
+
+  <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex flex-col lg:flex-row items-center justify-between gap-10">
+    <div class="flex flex-col lg:flex-row items-center gap-6 lg:gap-10 text-center lg:text-left">
+      
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl text-white max-w-2xl">
+        
+      <span class="lg:whitespace-nowrap">Build an agent this Hacksgiving.</span>
+      <br class="hidden lg:inline">
+      <span class="text-emerald-300">Then go have pie.</span>
+    
+      </h2>
+    </div>
+    <a href="/app/sign-up?s=hacksgiving" class="gap-2 btn-xl btn-orange group/btn rounded-full shrink-0">
+  
+
+    
+      Start Hacksgiving
+    
+  
+
+  <div class="flex items-center opacity-50 group-hover/btn:opacity-100 transition-opacity ">
+    <svg role="img" viewBox="0 0 16 16" width="0" height="10" fill="currentColor" class="w-0 group-hover/btn:w-2.5 h-3 translate-x-2.5 ease-out duration-200 transition-all transform-gpu">
+      <path d="M1 9h14a1 1 0 000-2H1a1 1 0 000 2z"></path>
+    </svg>
+    <svg role="img" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" class="size-[0.7em]">
+      <path d="M7.293 1.707L13.586 8l-6.293 6.293a1 1 0 001.414 1.414l7-7a.999.999 0 000-1.414l-7-7a1 1 0 00-1.414 1.414z"></path>
+    </svg>
+  </div>
+
+</a>
+
+
+    
+  </div>
+</section>
+</main>
+  <div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div>
+</div>
+
+<footer class="relative text-sm text-navy-400 leading-6 pb-8 pt-12 lg:pt-20 text-medium bg-navy-950 bg-linear-to-br from-gray-900/50 via-navy-900/50 to-navy-950/50" role="contentinfo">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-20 grid md:grid-cols-auto-span items-start gap-10 md:gap-16">
+    <a href="/" class="justify-self-start" aria-label="Fly">
+      
+
+  <img src="/phx/images/icons/fly_logo_footer-655af29a7d7e6849e560c7edb711797b.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 36px; ">
+
+    </a>
+    <div class="grid grid-cols-fit-24 gap-10 items-start lg:justify-items-center">
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Company</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/about/" class="hover:text-violet-500 transition-colors">About</a>
+          <a href="/news/" class="hover:text-violet-500 transition-colors">News</a>
+          <a href="/pricing/" class="hover:text-violet-500 transition-colors">
+            Pricing
+          </a>
+          <a href="/jobs/" class="hover:text-violet-500 transition-colors">Jobs</a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Resources</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="https://docs.fly.io" class="hover:text-violet-500 transition-colors">Docs</a>
+          <a href="/blog/" class="hover:text-violet-500 transition-colors">Blog</a>
+          <a href="/infra-log/" class="hover:text-violet-500 transition-colors">Infra Log</a>
+          <a href="/changelog" class="hover:text-violet-500 transition-colors">Changelog</a>
+          <a href="/customer-stories/" class="hover:text-violet-500 transition-colors">Customers</a>
+          <a href="https://docs.fly.io/about/support" class="hover:text-violet-500 transition-colors">Support</a>
+          <a href="/support/" class="hover:text-violet-500 transition-colors">Support Metrics</a>
+          <a href="https://status.flyio.net/" class="hover:text-violet-500 transition-colors">
+            Status
+          </a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Contact</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/contact/" class="hover:text-violet-500 transition-colors">Contact us</a>
+          <a href="https://github.com/superfly/" class="hover:text-violet-500 transition-colors">
+            GitHub
+          </a>
+          <a href="https://twitter.com/flydotio" class="hover:text-violet-500 transition-colors">
+            Twitter
+          </a>
+          <a href="https://community.fly.io/" class="hover:text-violet-500 transition-colors">
+            Community
+          </a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Legal</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/security/" class="hover:text-violet-500 transition-colors">Security</a>
+          <a href="/legal/privacy-policy/" class="hover:text-violet-500 transition-colors">
+            Privacy policy
+          </a>
+          <a href="/legal/terms-of-service/" class="hover:text-violet-500 transition-colors">
+            Terms of service
+          </a>
+          <a href="/legal/acceptable-use-policy/" class="hover:text-violet-500 transition-colors">
+            Acceptable Use Policy
+          </a>
+
+          <button id="footer-cookie-prefs" type="button" hidden class="text-left hover:text-violet-500 transition-colors">
+            Cookie preferences
+          </button>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="border-navy-800 border-t pt-8 grid gap-6 md:grid-cols-2 md:items-center">
+      <div>
+        <p class="font-bold uppercase tracking-wider text-xs text-white mb-1">
+          Sign up to the Fly.io Newsletter
+        </p>
+        <p class="mb-0">
+          What we shipped, what we learned, like ... stuff you put in a newsletter.
+          Get it monthly.
+        </p>
+      </div>
+      <div data-email-capture-wrapper class="md:justify-self-end md:w-full md:max-w-md">
+  <form action="/email-signups" method="post" class="flex flex-col gap-3" data-email-capture>
+  
+  <input name="_csrf_token" type="hidden" hidden value="PRZbOR8FOGYmOAoiHCF7Im0UEQAxClgfkXmkgdJRkpKDpuVH8dUgcmlx">
+  
+    <input type="hidden" name="list" value="newsletter">
+    <input type="hidden" name="source" value="footer">
+    <input type="hidden" name="return_to" value="/">
+
+    
+    <div class="hidden" aria-hidden="true">
+      <label>
+        Company <input type="text" name="company" tabindex="-1" autocomplete="off">
+      </label>
+    </div>
+
+    
+
+    
+    <div class="flex gap-3 flex-col sm:flex-row sm:items-center">
+      <label class="block sm:w-40">
+        <span class="sr-only">Your name</span>
+        <input type="text" name="name" class="block w-full rounded-lg border border-navy-700 bg-navy-900 px-3 py-2 text-sm text-white placeholder:text-navy-400 focus:border-violet-400 focus:outline-hidden focus:ring-2 focus:ring-violet-500/30" placeholder="Your name" required autocomplete="name">
+      </label>
+      <label class="block sm:flex-1">
+        <span class="sr-only">Email address</span>
+        <input type="email" name="email" class="block w-full rounded-lg border border-navy-700 bg-navy-900 px-3 py-2 text-sm text-white placeholder:text-navy-400 focus:border-violet-400 focus:outline-hidden focus:ring-2 focus:ring-violet-500/30" placeholder="you@example.com" required autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </label>
+      <button type="submit" class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 font-medium text-sm text-white transition-colors hover:bg-violet-500">
+        Subscribe
+      </button>
+    </div>
+  
+</form>
+
+  <p data-email-capture-success class="hidden font-medium text-violet-300">
+    You&#39;re subscribed. Look out for the next issue.
+  </p>
+</div>
+    </div>
+  </div>
+
+  <p class="text-xs text-center mb-0">
+    Copyright &copy;&nbsp;2026&nbsp;Fly.io
+  </p>
+</footer>
+    <dialog id="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-message" class="m-auto w-[calc(100%-2rem)] max-w-lg p-0 bg-transparent rounded-3xl backdrop:bg-navy-950/50 backdrop:backdrop-blur-xs">
+  <form method="dialog" class="sm:p-2.5 bg-white/20 rounded-3xl shadow-2xl shadow-navy-700/20 ring-1 ring-inset ring-white/10">
+    <div class="rounded-2xl bg-white p-5 sm:p-8 shadow-lg shadow-navy-700/20 ring-1 ring-black/5">
+      <h2 id="confirm-dialog-title" class="font-medium text-navy-900 text-[1.0625rem] " data-confirm-dialog="title">
+  
+</h2>
+      <p id="confirm-dialog-message" data-confirm-dialog="message" class="mt-2.5 text-[0.9375rem] leading-relaxed text-navy-700 wrap-break-word whitespace-pre-line">
+      </p>
+      <div class="mt-6 flex flex-wrap justify-end gap-2">
+        
+
+<button type="submit" class="gap-2 btn btn-secondary gap-2 btn btn-secondary" id="confirm-dialog-cancel" value="cancel" autofocus>
+  
+
+    
+          <span data-confirm-dialog="cancel-label"></span>
+        
+  
+
+</button>
+        
+
+<button type="submit" class="gap-2 btn btn-primary gap-2 btn btn-primary" id="confirm-dialog-confirm" value="confirm" data-confirm-dialog="confirm">
+  
+
+    
+          <span data-confirm-dialog="confirm-label"></span>
+        
+  
+
+</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+    
+  </body>
+</html>

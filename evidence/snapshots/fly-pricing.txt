@@ -1,0 +1,1450 @@
+SOURCE: https://fly.io/pricing/
+RETRIEVED: 2026-11-26 (UTC)
+----
+<!doctype html>
+<html lang="en-US" class="no-js h-full " data-menu-state="off" data-motion="off">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="ADgjHFlaUTAjfwVJCQladTcvKFBsFw0mt_Tto9ivm6K3b942bdQ2YYbB">
+
+    <title data-suffix=" · Fly">Pricing · Fly</title>
+
+    <script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#organization","@type":"Organization","address":{"@type":"PostalAddress","addressCountry":"US","addressLocality":"San Francisco","addressRegion":"CA","postalCode":"94114","streetAddress":"2261 Market Street #4990"},"contactPoint":{"@type":"ContactPoint","availableLanguage":["English"],"contactType":"customer support","email":"support@fly.io","url":"https:\/\/fly.io\/support\/"},"description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","foundingDate":"2017","legalName":"Fly.io, Inc.","logo":"https:\/\/fly.io\/phx\/images\/fly-balloon-icon-417a0f1be37234f7d3aca46fb6ebbe08.svg?vsn=d","name":"Fly.io","sameAs":["https:\/\/www.wikidata.org\/wiki\/Q133943318","https:\/\/github.com\/superfly","https:\/\/www.linkedin.com\/company\/flydotio","https:\/\/x.com\/flydotio","https:\/\/twitter.com\/flydotio","https:\/\/bsky.app\/profile\/fly.io","https:\/\/hachyderm.io\/@flydotio","https:\/\/www.youtube.com\/@flydotio","https:\/\/community.fly.io\/"],"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#website","@type":"WebSite","name":"Fly.io","publisher":{"@id":"https:\/\/fly.io\/#organization"},"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#software-application","@type":"SoftwareApplication","applicationCategory":"DeveloperApplication","description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","featureList":"Machines, Sprites, Managed Postgres, Private Networking, Autoscaling, Zero Downtime Deploys, Granular Routing, Monitoring","isPartOf":{"@id":"https:\/\/fly.io\/#website"},"name":"Fly.io","operatingSystem":"Web","provider":{"@id":"https:\/\/fly.io\/#organization"},"url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/#service","@type":"Service","areaServed":"Worldwide","description":"Fly.io is a global public cloud for running full-stack and AI applications. Customer workloads on Fly.io are hardware-isolated for security, and can scale horizontally and vertically.","hasOfferCatalog":{"@type":"OfferCatalog","itemListElement":[{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/machines\/#service","@type":"Service","name":"Fly Machines"}},{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/sprites\/#service","@type":"Service","name":"Sprites"}},{"@type":"Offer","itemOffered":{"@id":"https:\/\/fly.io\/mpg\/#service","@type":"Service","name":"Managed Postgres"}}],"name":"Fly.io products"},"name":"Fly.io","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Public cloud platform","url":"https:\/\/fly.io\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/machines\/#service","@type":"Service","areaServed":"Worldwide","description":"Lightweight, fast-booting virtual machines for running any code.","name":"Fly Machines","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Cloud compute","url":"https:\/\/fly.io\/machines\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/sprites\/#service","@type":"Service","areaServed":"Worldwide","description":"Full Linux computers designed for agents instead of people. As persistent or disposable as you want, with full environment checkpointing and restore.","name":"Sprites","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Agent sandboxes","url":"https:\/\/fly.io\/sprites\/"}
+</script><script type="application/ld+json">
+  
+  {"@context":"https:\/\/schema.org","@id":"https:\/\/fly.io\/mpg\/#service","@type":"Service","areaServed":"Worldwide","description":"Fully-managed production PostgreSQL with automatic backups, high availability with automatic failover, connection pooling and encryption at rest and in transit.","name":"Managed Postgres","provider":{"@id":"https:\/\/fly.io\/#organization"},"serviceType":"Managed database","url":"https:\/\/fly.io\/mpg\/"}
+</script>
+
+    <meta name="description" content="What Fly.io costs: per-second Machines pricing, metered Sprites usage, Managed Postgres cluster plans, support tiers and compliance.">
+
+    <meta property="og:type" content="website">
+    
+    
+    <meta property="og:site_name" content="Fly.io">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://fly.io/pricing/">
+    <meta property="og:title" content="Pricing">
+    <meta property="og:description" content="What Fly.io costs: per-second Machines pricing, metered Sprites usage, Managed Postgres cluster plans, support tiers and compliance.">
+
+    <meta property="og:image" content="https://fly.io/phx/images/og/pricing-cc668f9365333b0fe2e91342d451101f.jpg?vsn=d">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Pricing, over rockets and balloons lifting off a planet toward the moon, with a Sign up button">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@flydotio">
+    <meta name="twitter:title" content="Pricing">
+    <meta name="twitter:description" content="What Fly.io costs: per-second Machines pricing, metered Sprites usage, Managed Postgres cluster plans, support tiers and compliance.">
+    <meta name="twitter:image" content="https://fly.io/phx/images/og/pricing-cc668f9365333b0fe2e91342d451101f.jpg?vsn=d">
+    <meta name="twitter:image:alt" content="Pricing, over rockets and balloons lifting off a planet toward the moon, with a Sign up button">
+
+    <link rel="canonical" href="https://fly.io/pricing/">
+
+    
+
+    <link rel="alternate" type="text/markdown" href="https://fly.io/pricing.md">
+
+    <meta content="origin" name="referrer">
+    <meta content="True" name="HandheldFriendly">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script defer data-domain="fly.io" src="/js/events.js">
+    </script>
+
+    <link href="/phx/ui/images/favicon/favicon-595d1312b35dfe32838befdf8505515e.ico?vsn=d" rel="shortcut icon" type="image/x-icon">
+<link href="/phx/ui/images/favicon/apple-touch-icon-3e4c9ce127b5cd6f5516638d4bbf1dd5.png?vsn=d" rel="apple-touch-icon" sizes="180x180">
+<link href="/phx/ui/images/favicon/favicon-32x32-803ad2058b86df3f8a9f8af1505a59d2.png?vsn=d" rel="icon" sizes="32x32" type="image/png">
+<link href="/phx/ui/images/favicon/favicon-16x16-6963a8113fc4dc87910c17c4279a9bd4.png?vsn=d" rel="icon" sizes="16x16" type="image/png">
+<link href="/phx/ui/images/favicon/site-4ed2b515513825854b905e85931b4a55.webmanifest?vsn=d" rel="manifest">
+<link href="/phx/ui/images/favicon/safari-pinned-tab-987c7fc8f545337872c691fbc736e9c4.svg?vsn=d" rel="mask-icon" color="#4d7cfe">
+<meta content="#4d7cfe" name="msapplication-TileColor">
+<meta content="#ffffff" name="theme-color">
+    <style>
+  html:not(.motion-on) * { 
+    transition: none !important; 
+    animation: none !important;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.documentElement.classList.add('motion-on')
+  })
+</script>
+    <style>
+  
+  @font-face {
+    font-family: 'Fricolage Grotesque';
+    src: url("/phx/ui/fonts/fricolage-grotesque.var-c4e68eb9708a077874be07be1d9f2ab9.woff2?vsn=d") format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-medium-72452da8f9470257c609f26a1349f0d2.woff2?vsn=d") format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-medium-italic-adb66b2b22d7a691a214ab0e7971264f.woff2?vsn=d") format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: block;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-bold-6a92de456437e3636084b0b8203e4af6.woff2?vsn=d") format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Mackinac';
+    src: url("/phx/ui/fonts/mackinac-bold-italic-04208325eb2543e41f5d70c7e281309a.woff2?vsn=d") format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Fragment Mono';
+    src: url("/phx/ui/fonts/fragment-mono-regular-e6a1881f8b2d71568ae7935d098c7590.woff2?vsn=d") format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+  }
+  
+  @font-face {
+    font-family: 'Fragment Mono';
+    src: url("/phx/ui/fonts/fragment-mono-italic-a01dfaeb25824e4279013d8497b0d7f6.woff2?vsn=d") format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: fallback;
+  }
+  
+</style>
+<link rel="preload" href="/phx/ui/fonts/fricolage-grotesque.var-c4e68eb9708a077874be07be1d9f2ab9.woff2?vsn=d" as="font" type="font/woff2" crossorigin><link rel="preload" href="/phx/ui/fonts/mackinac-medium-72452da8f9470257c609f26a1349f0d2.woff2?vsn=d" as="font" type="font/woff2" crossorigin><link rel="preload" href="/phx/ui/fonts/mackinac-medium-italic-adb66b2b22d7a691a214ab0e7971264f.woff2?vsn=d" as="font" type="font/woff2" crossorigin>
+
+    <link phx-track-static rel="stylesheet" href="/phx/assets/app-1459de2617b70f731a2077fc798d638d.css?vsn=d">
+
+    <script>
+      document.documentElement.classList.remove("no-js")
+    </script>
+    <style>
+      .no-js [data-src] {
+        display: none;
+      }
+    </style>
+    <script defer phx-track-static type="text/javascript" src="/phx/assets/js/app-133f20dec1b535adf846754674aa10de.js?vsn=d">
+    </script>
+    <script defer phx-track-static type="text/javascript" src="/phx/assets/js/webmcp-f7cb6010ac5e3b5c83dd66a2537d801a.js?vsn=d">
+</script>
+    
+
+    <link rel="me" href="https://hachyderm.io/@flydotio">
+
+    <script id="google-tag-sdk" async src="https://analytics.fly.io/gtag/js?id=G-EX6DMZ1DZV">
+</script>
+<script id="google-tag-trigger">
+  const tagId = 'G-EX6DMZ1DZV'
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  gtag('config', tagId, {
+    'transport_url': 'https://analytics.fly.io',
+    'first_party_collection': true
+  });
+
+  // client_id / session_id reach the server via the _ga / _ga_<id> cookies
+  // gtag writes (FlyWeb.Plugs.GoogleAnalyticsCookies) — no JS handoff needed.
+  // Conversions are never sent from here: "User Signed Up" goes server-side
+  // through the sGTM container (FlyWeb.Sgtm) with this visitor's cookies,
+  // so it lands on the same GA4 user and session as these page views.
+</script>
+    <script type="application/json" id="posthog-config">
+  {"api_key":"phc_nuaUijb3iLWut9Kbr56bSHSP4MYdeb8CFd9BgPm3LAVY","eu_scope":false,"api_host":"https://posthog.fly.io"}
+</script>
+<script defer type="text/javascript" src="/phx/assets/js/posthog-11f6f160a07792a1a08cd0da8f8800da.js?vsn=d">
+</script>
+  </head>
+
+  <body class="my-app-sandbox w-full min-h-full">
+    
+    <header class="navbar relative z-500 container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-24 text-navy font-medium text-sm" data-menu-container>
+  <nav aria-label="Logo menu" class="relative z-60 flex">
+    <a href="/" aria-label="Fly.io home" class="block h-8 sm:h-10">
+
+
+        
+
+  <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 100%; ">
+
+
+    </a>
+  </nav>
+
+  <button data-menu-toggle aria-expanded="false" class="ml-auto menu-toggle lg:hidden relative z-60 flex-none flex items-center justify-center w-6 h-6 text-navy">
+    <span class="sr-only">Open main menu</span>
+    <svg width="22" height="18" viewBox="0 0 22 18" fill="none" aria-hidden="true">
+      <path d="M1 1H21M1 9H21M1 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <nav aria-label="Main menu" class="pointer-events-auto hidden lg:flex lg:w-full items-center justify-end">
+    <div class="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2 rounded-full bg-white/75 bg-linear-to-r from-pink-200/40 via-violet-200/40 to-indigo-200/40 border border-white/50 px-3 text-sm font-medium text-gray-800 shadow-lg shadow-gray-800/5 ring-1 ring-gray-800/7.5 backdrop-blur-xl">
+
+      <div class="flex-none hidden shrink-0 lg:flex group static">
+        <button id="nav-products" type="button" aria-haspopup="true" class="relative flex items-center whitespace-nowrap px-3 py-2.5 cursor-pointer transition-colors group-hover:text-violet-600 group-focus-within:text-violet-600">
+          Products
+          <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+          <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+            <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+          </span>
+        </button>
+        <div id="nav-products-panel" class="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[min(72rem,calc(100vw-4rem))] invisible opacity-0 translate-y-1 transition-[opacity,translate,visibility] duration-200 motion-reduce:transition-none group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+          <div class="rounded-2xl border border-[#e4def7] bg-white p-7 text-navy shadow-[0_24px_60px_rgb(40_25_80/.14)]">
+            <div class="grid grid-cols-[repeat(3,minmax(0,1fr))_auto] gap-7">
+              <div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Compute
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/machines/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        App VMs
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Fly Machines: fast-booting VMs for production apps, in 18 regions.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/sprites/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Agent sandboxes
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Fly Sprites: fast-starting, hardware-isolated sandboxes. Always on, scaling to zero when idle.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div><div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Storage
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/mpg/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Managed Postgres
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Backups and failover built in.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/object-storage/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Object storage
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Global, S3-compatible.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/volumes/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Volumes
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Local NVMe disks for your VMs.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/redis/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Redis
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Caching and queues.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/vector-database/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Vector database
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Embeddings next to your compute.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div><div>
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Networking
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/networking/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Private networking
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Every workload on a private network by default.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/granular-routing/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Global routing
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Requests land on the closest healthy instance.
+                      </span>
+                    </a>
+                  </li><li>
+                    <a href="/connectors/" class="group/link block rounded-[10px] px-2.5 py-2 transition-colors duration-150 hover:bg-violet-50 focus-visible:bg-violet-50">
+                      <span class="block text-[15px] font-semibold text-navy transition-colors group-hover/link:text-violet-700 group-focus-visible/link:text-violet-700">
+                        Connectors
+                      </span>
+                      <span class="block text-sm font-normal text-[#5b4f78]">
+                        Pre-built connections to the services agents use, like GitHub and Slack. Credentials never enter the computer.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="border-l border-[#eee9fd] pl-5">
+                <p class="px-2.5 pb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#6d5f8f]">
+                  Features
+                </p>
+                <ul class="flex flex-col gap-1">
+                  <li>
+                    <a href="/sprites/ecosystem/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Integrations
+                    </a>
+                  </li><li>
+                    <a href="/autoscaling/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Autoscaling
+                    </a>
+                  </li><li>
+                    <a href="/zero-downtime-deploys/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Zero-downtime deploys
+                    </a>
+                  </li><li>
+                    <a href="/monitoring/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      Monitoring
+                    </a>
+                  </li><li>
+                    <a href="/mcp/" class="block whitespace-nowrap rounded-[10px] px-2.5 py-2 text-sm font-medium text-[#5b4f78] transition-colors duration-150 hover:bg-violet-50 hover:text-violet-700 focus-visible:bg-violet-50 focus-visible:text-violet-700">
+                      MCP server
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="https://docs.fly.io">
+        Docs
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="/customer-stories/">
+        Customers
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="/pricing/">
+        Pricing
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+      <dl class="flex-none bubble-wrap hidden shrink-0 lg:flex group relative px-3 py-2.5 cursor-pointer">
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+        <dt class="flex items-center justify-items-center whitespace-nowrap transition-colors group-hover:text-violet-600 group-focus-within-text-violet-400">
+          Resources
+        </dt>
+        <dd class="bubble-b tail text-sm text-navy flex flex-col w-44 rounded-2xl p-2">
+          <div class="rounded-tl w-3 h-3 absolute top-0 left-1/2 z-[-1] -ml-2 rotate-45 bg-white -mt-1.5">
+          </div>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/blog/">
+            Blog
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/infra-log/">
+            Infra Log
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="/changelog">
+            Changelog
+          </a>
+          <a class="relative whitespace-nowrap px-3 py-2.5 before:content-[''] before:absolute before:inset-0 before:z-[-1] before:scale-90 before:rounded-lg hocus:before:scale-100 hocus:before:bg-violet-100 before:transition-all hocus:text-violet-600 transition-colors" href="https://status.flyio.net">
+            Status
+          </a>
+        </dd>
+      </dl>
+      <a class="flex-none group relative block transition duration-300 px-3 py-2.5 hover:text-violet-600" href="https://community.fly.io">
+        Community
+        <span class="absolute inset-x-1 h-px bg-linear-to-r from-violet-500/0 from-10% via-violet-400 to-violet-500/0 to-90% transition duration-300 -bottom-0.5 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+        <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+          <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+        </span>
+      </a>
+    </div>
+    <div id="nav-auth-buttons" class="ml-5 flex-none flex items-center rounded-full bg-white/75 bg-linear-to-r from-pink-200/40 via-violet-200/40 to-indigo-200/40 border border-white/50 px-3 text-sm font-medium text-gray-800 shadow-lg shadow-gray-800/5 ring-1 ring-gray-800/7.5 backdrop-blur-xl">
+
+        <a href="/app/sign-in" class="flex-none group relative text-base sm:text-sm -ml-2 my-1 inline-flex items-center bg-clip-padding rounded-l-[20px] rounded-r-[8px] border h-8 pl-3 pr-[10px] bg-white/40 border-white/90 shadow-sm hover:text-violet-600 hover:bg-violet-50/40 transition-colors duration-300">
+          Log In
+          <span class="absolute left-4 right-1 -bottom-2px h-px bg-linear-to-r from-violet-500/0 via-violet-400 to-violet-500/0 transition duration-300 opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"></span>
+          <span class="overflow-hidden absolute inset-0 transition origin-bottom duration-300 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100">
+            <span class="absolute inset-x-4 -bottom-2 h-full bg-linear-to-t from-violet-500/20 to-transparent blur-sm rounded-t-full"></span>
+          </span>
+        </a>
+        <a href="/app/sign-up" class="flex-none group relative text-base sm:text-sm ml-5px -mr-2 my-1 h-8 pr-3 btn-xs btn-orange border-none rounded-r-[20px] rounded-l-[8px] ">
+          Sign Up
+        </a>
+
+    </div>
+  </nav>
+
+  <nav data-menu aria-label="Main menu" class="lg:hidden fixed inset-0 z-600 text-navy overflow-y-auto overscroll-contain bg-white invisible opacity-0 transition-[opacity,visibility] duration-200 motion-reduce:transition-none in-data-[menu-state=on]:visible in-data-[menu-state=on]:opacity-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-24 border-b border-[#e6e0fe]">
+      <a href="/" aria-label="Fly.io home" class="block h-8 sm:h-10">
+        
+
+  <img src="/phx/images/icons/fly_logo-71111ce5a640c41c308406fd688222e1.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 100%; ">
+
+      </a>
+      <button type="button" data-menu-toggle class="ml-auto flex-none flex items-center justify-center w-6 h-6 text-[#2e2e2e]">
+        <span class="sr-only">Close main menu</span>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M1 1L17 17M1 17L17 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="container mx-auto flex max-w-md flex-col gap-8 px-6 py-12 text-[#2e2e2e] sm:mx-0 sm:px-6 lg:px-8">
+      <details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Products
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/machines/" class="transition-colors hover:text-[#7c3aed]">
+            App VMs
+          </a><a href="/sprites/" class="transition-colors hover:text-[#7c3aed]">
+            Agent sandboxes
+          </a><a href="/mpg/" class="transition-colors hover:text-[#7c3aed]">
+            Managed Postgres
+          </a><a href="/object-storage/" class="transition-colors hover:text-[#7c3aed]">
+            Object storage
+          </a><a href="/volumes/" class="transition-colors hover:text-[#7c3aed]">
+            Volumes
+          </a><a href="/redis/" class="transition-colors hover:text-[#7c3aed]">
+            Redis
+          </a><a href="/vector-database/" class="transition-colors hover:text-[#7c3aed]">
+            Vector database
+          </a><a href="/networking/" class="transition-colors hover:text-[#7c3aed]">
+            Private networking
+          </a><a href="/granular-routing/" class="transition-colors hover:text-[#7c3aed]">
+            Global routing
+          </a><a href="/connectors/" class="transition-colors hover:text-[#7c3aed]">
+            Connectors
+          </a>
+        </div>
+      </details><details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Features
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/sprites/ecosystem/" class="transition-colors hover:text-[#7c3aed]">
+            Integrations
+          </a><a href="/autoscaling/" class="transition-colors hover:text-[#7c3aed]">
+            Autoscaling
+          </a><a href="/zero-downtime-deploys/" class="transition-colors hover:text-[#7c3aed]">
+            Zero-downtime deploys
+          </a><a href="/monitoring/" class="transition-colors hover:text-[#7c3aed]">
+            Monitoring
+          </a><a href="/mcp/" class="transition-colors hover:text-[#7c3aed]">
+            MCP server
+          </a>
+        </div>
+      </details><details name="mobile-nav" class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-[20px] font-semibold leading-normal transition-colors group-open:text-[#7c3aed] [&::-webkit-details-marker]:hidden">
+          Resources
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.334 8H14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path class="group-open:hidden" d="M8 1.333V14.667" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4 px-4 text-[18px] font-normal leading-[1.4]">
+          <a href="/blog/" class="transition-colors hover:text-[#7c3aed]">
+            Blog
+          </a><a href="/infra-log/" class="transition-colors hover:text-[#7c3aed]">
+            Infra Log
+          </a><a href="/changelog" class="transition-colors hover:text-[#7c3aed]">
+            Changelog
+          </a><a href="https://docs.fly.io" class="transition-colors hover:text-[#7c3aed]">
+            Docs
+          </a><a href="/customer-stories/" class="transition-colors hover:text-[#7c3aed]">
+            Customers
+          </a><a href="https://community.fly.io/" class="transition-colors hover:text-[#7c3aed]">
+            Community
+          </a><a href="https://status.flyio.net/" class="transition-colors hover:text-[#7c3aed]">
+            Status
+          </a>
+        </div>
+      </details>
+      <a href="/pricing/" class="text-[20px] font-semibold leading-normal transition-colors hover:text-[#7c3aed]">
+        Pricing
+      </a>
+      <div class="flex flex-col gap-3 py-4 text-sm font-normal">
+
+          <a href="/app/sign-in" class="flex h-10 items-center justify-center rounded-md border border-[#d4c4fd] bg-[#e6e0fe] px-3 text-[#7c3aed] transition-colors hover:bg-[#d4c4fd]">
+            Log In
+          </a>
+          <a href="/app/sign-up" class="flex h-10 items-center justify-center rounded-md bg-[#f86d60] px-3 text-white ring-[1.5px] ring-inset ring-[#fcb9b2] transition-colors hover:bg-[#ec5a4c]">
+            Sign Up
+          </a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="relative w-full h-full overflow-hidden -mt-24 pt-24">
+  <div class="hidden" aria-hidden="true" data-agent-instructions="true">
+  AI agents: refetch this URL with an Accept: text/markdown header. For broader Fly.io reference material, fetch https://fly.io/llms.txt.
+</div>
+<main class="bg-white">
+
+  <header class="relative overflow-hidden -mt-24 pt-24">
+    <img src="/phx/ui/images/pricing/hero-a3d2884f1982ccecc5f2ab8a8c5c90e0.jpg?vsn=d" class="absolute inset-0 h-full w-full max-w-none object-cover object-center lg:object-[70%_center]" alt="" aria-hidden="true">
+    <div class="relative mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
+      <div class="max-w-xl">
+        <h1 class="font-serif text-4xl leading-none text-navy-900 sm:text-5xl xl:text-6xl">
+          Start for free,<br>pay as you grow.
+        </h1>
+        <p class="mt-5 text-lg leading-snug text-navy-700">
+          Compute bills by the second, storage on what you provision.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="/app/sign-up/" class="gap-2 btn-xl btn-purple rounded-lg bg-none">
+  
+
+    
+            Get Started
+          
+  
+
+</a>
+
+
+          <a id="pricing-hero-calculator" href="/calculator/" class="inline-flex items-center gap-2 rounded-md px-3 py-1 text-[15px] font-medium text-[#686082] transition-colors hover:text-violet-600">
+            <span class="hero-calculator size-4 shrink-0"></span> Calculate your cost
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="pricing-plans" class="mx-auto max-w-6xl px-6 pt-16 md:pt-24">
+    <h2 class="font-serif text-2xl leading-none text-navy-900 md:text-4xl">Pick a plan</h2>
+    <p class="mt-4 max-w-2xl text-base text-navy-600">
+      Both plans run the same platform. Free covers small projects every month; Pay As You Go has no caps. Switch whenever you like.
+    </p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+      <article id="pricing-plan-free" data-pricing-plan="free" class="group relative flex flex-col rounded-lg border bg-white p-8 transition-shadow duration-200 hover:shadow-[0_8px_30px_rgba(139,92,246,0.12)] border-violet-300">
+        <span class="absolute -top-3 left-8 rounded-full bg-violet-600 px-3 py-0.5 text-xs font-semibold text-white">
+          New
+        </span>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 class="text-lg font-bold text-navy-900">Free</h3>
+          <p class="text-navy-900">
+            <span class="font-serif text-3xl">$0</span>
+            <span class="text-sm text-navy-500">/ mo</span>
+          </p>
+        </div>
+        <p class="mt-2 text-sm leading-[1.4] text-navy-600">Small projects, free every month.</p>
+        <ul class="mt-5 space-y-2 border-t border-navy-200 pt-5 text-sm text-navy-700">
+          <li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>$5 of usage, every month</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>Up to 3 Machines and 3 Sprites</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>1 user</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>A Developer Managed Postgres database, paid from the $5</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>At $5, you move to Pay As You Go and keep running</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>Community support</span>
+          </li>
+        </ul>
+        <p class="mt-auto pt-5 text-xs leading-normal text-navy-500">Credit card required. The $5 covers Machines, Sprites, volumes, bandwidth and networking, and a Developer Managed Postgres database. Partner databases and extensions aren&#39;t available on Free.</p>
+        <a href="/app/sign-up/?plan=free" id="pricing-plan-free-cta" class="gap-2 btn-lg btn-purple mt-6 w-full rounded-lg bg-none">
+  
+
+    
+          Start for free
+        
+  
+
+</a>
+
+
+      </article><article id="pricing-plan-payg" data-pricing-plan="payg" class="group relative flex flex-col rounded-lg border bg-white p-8 transition-shadow duration-200 hover:shadow-[0_8px_30px_rgba(139,92,246,0.12)] border-navy-200">
+        
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 class="text-lg font-bold text-navy-900">Pay As You Go</h3>
+          <p class="text-navy-900">
+            <span class="font-serif text-3xl">$0</span>
+            <span class="text-sm text-navy-500">/ mo + usage</span>
+          </p>
+        </div>
+        <p class="mt-2 text-sm leading-[1.4] text-navy-600">From first sandbox to production, on one plan.</p>
+        <ul class="mt-5 space-y-2 border-t border-navy-200 pt-5 text-sm text-navy-700">
+          <li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>Everything in Free, with no caps on compute or spend</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>Invite your whole team</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>Partner databases and extensions</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>Email support, additional support available for purchase</span>
+          </li><li class="flex gap-2 leading-[1.4]">
+            <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+            <span>No minimum spend</span>
+          </li>
+        </ul>
+        <p class="mt-auto pt-5 text-xs leading-normal text-navy-500">Usage is billed monthly. Cancel anytime.</p>
+        <a href="/app/sign-up/?plan=payg" id="pricing-plan-payg-cta" class="gap-2 btn-lg btn-border-dark mt-6 w-full rounded-lg bg-none">
+  
+
+    
+          Start with Pay As You Go
+        
+  
+
+</a>
+
+
+      </article>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+    <h2 class="font-serif text-2xl leading-none text-navy-900 md:text-4xl">
+      Here's what it costs
+    </h2>
+
+    <div role="tablist" class="mt-4 flex flex-wrap items-end gap-8 sm:gap-12">
+
+      <button type="button" role="tab" id="pricing-tab-machines" aria-controls="pricing-panel-machines" aria-selected="true" data-pricing-tab="machines" data-active="true" phx-click="[[&quot;hide&quot;,{&quot;to&quot;:&quot;[data-pricing-panel]&quot;}],[&quot;show&quot;,{&quot;to&quot;:&quot;[data-pricing-panel=machines]&quot;}],[&quot;remove_attr&quot;,{&quot;attr&quot;:&quot;data-active&quot;,&quot;to&quot;:&quot;[data-pricing-tab]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;data-active&quot;,&quot;true&quot;],&quot;to&quot;:&quot;[data-pricing-tab=machines]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;aria-selected&quot;,&quot;false&quot;],&quot;to&quot;:&quot;[data-pricing-tab]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;aria-selected&quot;,&quot;true&quot;],&quot;to&quot;:&quot;[data-pricing-tab=machines]&quot;}]]" class="group shrink-0 cursor-pointer pt-4 font-serif text-lg text-navy-900 transition-colors hover:text-violet-600 data-active:text-violet-600">
+        <span class="inline-block border-b-2 border-transparent pb-1.5 group-data-active:border-violet-600">
+          Machines
+        </span>
+      </button><button type="button" role="tab" id="pricing-tab-sprites" aria-controls="pricing-panel-sprites" aria-selected="false" data-pricing-tab="sprites" phx-click="[[&quot;hide&quot;,{&quot;to&quot;:&quot;[data-pricing-panel]&quot;}],[&quot;show&quot;,{&quot;to&quot;:&quot;[data-pricing-panel=sprites]&quot;}],[&quot;remove_attr&quot;,{&quot;attr&quot;:&quot;data-active&quot;,&quot;to&quot;:&quot;[data-pricing-tab]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;data-active&quot;,&quot;true&quot;],&quot;to&quot;:&quot;[data-pricing-tab=sprites]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;aria-selected&quot;,&quot;false&quot;],&quot;to&quot;:&quot;[data-pricing-tab]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;aria-selected&quot;,&quot;true&quot;],&quot;to&quot;:&quot;[data-pricing-tab=sprites]&quot;}]]" class="group shrink-0 cursor-pointer pt-4 font-serif text-lg text-navy-900 transition-colors hover:text-[#4A90F1] data-active:text-[#4A90F1]">
+        <span class="inline-block border-b-2 border-transparent pb-1.5 group-data-active:border-[#4A90F1]">
+          Sprites
+        </span>
+      </button><button type="button" role="tab" id="pricing-tab-mpg" aria-controls="pricing-panel-mpg" aria-selected="false" data-pricing-tab="mpg" phx-click="[[&quot;hide&quot;,{&quot;to&quot;:&quot;[data-pricing-panel]&quot;}],[&quot;show&quot;,{&quot;to&quot;:&quot;[data-pricing-panel=mpg]&quot;}],[&quot;remove_attr&quot;,{&quot;attr&quot;:&quot;data-active&quot;,&quot;to&quot;:&quot;[data-pricing-tab]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;data-active&quot;,&quot;true&quot;],&quot;to&quot;:&quot;[data-pricing-tab=mpg]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;aria-selected&quot;,&quot;false&quot;],&quot;to&quot;:&quot;[data-pricing-tab]&quot;}],[&quot;set_attr&quot;,{&quot;attr&quot;:[&quot;aria-selected&quot;,&quot;true&quot;],&quot;to&quot;:&quot;[data-pricing-tab=mpg]&quot;}]]" class="group shrink-0 cursor-pointer pt-4 font-serif text-lg text-navy-900 transition-colors hover:text-[#55C5CF] data-active:text-[#55C5CF]">
+        <span class="inline-block border-b-2 border-transparent pb-1.5 group-data-active:border-[#55C5CF]">
+          Managed Postgres
+        </span>
+      </button>
+    </div>
+
+    <div data-pricing-panel="machines" id="pricing-panel-machines" role="tabpanel" aria-labelledby="pricing-tab-machines" tabindex="0" class="pt-8">
+      <h3 class="sr-only">Machines pricing</h3>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-lg border border-navy-200 p-8">
+          <img src="/phx/ui/images/pricing/compute-purple-ce8dd2403e7f95a8f037b86919e29064.png?vsn=d" class="h-[127px] w-[121px]" alt="" aria-hidden="true">
+          <h4 class="mt-6 text-lg font-bold text-navy-900">
+            <span class="sr-only">Machines </span>Compute
+          </h4>
+          <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+            Billed by the second while a Machine runs. Prices for
+            <label for="pricing-region" class="sr-only">Region for compute prices</label><select id="pricing-region" data-region-select class="w-32 cursor-pointer rounded-sm border-0 bg-violet-100/60 py-0 pl-1.5 pr-[1.45rem] align-baseline text-sm font-medium text-violet-700 transition-colors hover:bg-violet-100 focus:outline-hidden focus:ring-2 focus:ring-violet-400"><optgroup label="North America"><option value="1">Secaucus</option><option value="1" selected>Ashburn</option><option value="1.115384615">Toronto</option><option value="1.192307692">San Jose</option><option value="1.199519231">Los Angeles</option><option value="1.25">Dallas</option><option value="1.25">Chicago</option></optgroup><optgroup label="Europe"><option value="1.038461538">Amsterdam</option><option value="1.038461538">Stockholm</option><option value="1.134615385">Paris</option><option value="1.134615385">London</option><option value="1.153846154">Frankfurt</option></optgroup><optgroup label="Asia Pacific"><option value="1.269230769">Singapore</option><option value="1.307692308">Tokyo</option></optgroup><optgroup label="Oceania"><option value="1.269230769">Sydney</option></optgroup><optgroup label="Africa"><option value="1.302884615">Johannesburg</option></optgroup><optgroup label="South America"><option value="1.615384615">São Paulo</option></optgroup></select>. Storage and egress are priced separately.
+          </p>
+
+          <table class="mt-8 w-full text-sm">
+            <thead>
+              <tr class="border-b border-navy-200 text-xs uppercase tracking-wide text-navy-500">
+                <th scope="col" class="pb-3 text-left font-normal">Preset</th>
+                <th scope="col" class="pb-3 text-right font-normal">Per hour</th>
+                <th scope="col" class="pb-3 text-right font-normal">Per month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">shared-cpu-1x · 256MB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0030474" data-region-places="4">
+                  $0.0030
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="2.194128" data-region-places="2">
+                  $2.19
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">shared-cpu-2x · 512MB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0060948" data-region-places="4">
+                  $0.0061
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="4.388256" data-region-places="2">
+                  $4.39
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">shared-cpu-4x · 1GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0121896" data-region-places="4">
+                  $0.0122
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="8.776512" data-region-places="2">
+                  $8.78
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">shared-cpu-6x · 1.5GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0182844" data-region-places="4">
+                  $0.0183
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="13.164767999999999" data-region-places="2">
+                  $13.16
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">shared-cpu-8x · 2GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0243792" data-region-places="4">
+                  $0.0244
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="17.553024" data-region-places="2">
+                  $17.55
+                </td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-1x · 2GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0458352" data-region-places="4">
+                  $0.0458
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="33.001344" data-region-places="2">
+                  $33.00
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-2x · 4GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.0916704" data-region-places="4">
+                  $0.0917
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="66.002688" data-region-places="2">
+                  $66.00
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-4x · 8GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.1833408" data-region-places="4">
+                  $0.1833
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="132.005376" data-region-places="2">
+                  $132.01
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-6x · 12GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.2750112" data-region-places="4">
+                  $0.2750
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="198.00806400000002" data-region-places="2">
+                  $198.01
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-8x · 16GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.3666816" data-region-places="4">
+                  $0.3667
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="264.010752" data-region-places="2">
+                  $264.01
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-10x · 20GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.458352" data-region-places="4">
+                  $0.4584
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="330.01344" data-region-places="2">
+                  $330.01
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-12x · 24GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.5500224" data-region-places="4">
+                  $0.5500
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="396.01612800000004" data-region-places="2">
+                  $396.02
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-14x · 28GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.6416928" data-region-places="4">
+                  $0.6417
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="462.01881599999996" data-region-places="2">
+                  $462.02
+                </td>
+              </tr><tr data-preset-extra="true" hidden class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">performance-16x · 32GB</td>
+                <td class="py-3 text-right text-navy-900" data-region-price="0.7333632" data-region-places="4">
+                  $0.7334
+                </td>
+                <td class="py-3 text-right text-navy-900" data-region-price="528.021504" data-region-places="2">
+                  $528.02
+                </td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Stopped Machine, per GB rootfs</td>
+                <td class="py-3 text-right text-navy-900">—</td>
+                <td class="py-3 text-right text-navy-900">$0.15</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button type="button" phx-click="[[&quot;toggle&quot;,{&quot;display&quot;:&quot;table-row&quot;,&quot;to&quot;:&quot;[data-preset-extra]&quot;}],[&quot;toggle&quot;,{&quot;to&quot;:&quot;[data-preset-more]&quot;}],[&quot;toggle&quot;,{&quot;to&quot;:&quot;[data-preset-less]&quot;}]]" class="mt-5 cursor-pointer text-sm font-medium text-violet-600 hover:text-violet-700">
+            <span data-preset-more>Show all 14 presets</span>
+            <span data-preset-less hidden>Show fewer</span>
+          </button>
+          <p class="mt-2 text-xs leading-[1.4] text-navy-500">
+            Presets run from shared-cpu-1x to performance-16x, and every one takes more RAM at
+            <span data-region-price="6.003072" data-region-places="2">
+              $6.00
+            </span>
+            per GB per month, up to 128GB.
+          </p>
+        </div>
+
+        <div class="rounded-lg border border-navy-200 p-8">
+          <img src="/phx/ui/images/pricing/storage-purple-d6a1932cf2985d7e8f046806247bdae6.png?vsn=d" class="size-[122px]" alt="" aria-hidden="true">
+          <h4 class="mt-6 text-lg font-bold text-navy-900">
+            <span class="sr-only">Machines </span>Storage and network
+          </h4>
+          <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+            Volumes bill on provisioned capacity, not usage.
+          </p>
+
+          <table class="mt-8 w-full text-sm">
+            <thead>
+              <tr class="border-b border-navy-200 text-xs uppercase tracking-wide text-navy-500">
+                <th scope="col" class="pb-3 text-left font-normal">Item</th>
+                <th scope="col" class="pb-3 text-right font-normal">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Volumes, per GB / month</td>
+                <td class="py-3 text-right text-navy-900">$0.15</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Snapshots, per GB / month</td>
+                <td class="py-3 text-right text-navy-900">$0.08</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Egress, North America and Europe</td>
+                <td class="py-3 text-right text-navy-900">$0.02 / GB</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Egress, Asia Pacific, Oceania and South America</td>
+                <td class="py-3 text-right text-navy-900">$0.04 / GB</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Egress, Africa and India</td>
+                <td class="py-3 text-right text-navy-900">$0.12 / GB</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Dedicated IPv4</td>
+                <td class="py-3 text-right text-navy-900">$2.00 / mo</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="mt-5 text-xs leading-[1.4] text-navy-500">
+            First 10GB of snapshots free each month. Every app gets a shared IPv4 and unlimited Anycast IPv6.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div data-pricing-panel="sprites" id="pricing-panel-sprites" role="tabpanel" aria-labelledby="pricing-tab-sprites" tabindex="0" class="pt-8" hidden>
+      <h3 class="sr-only">Sprites pricing</h3>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-lg border border-navy-200 p-8">
+          <img src="/phx/ui/images/pricing/compute-blue-62a80cd6eec870426a4baa184e066f5e.png?vsn=d" class="h-[127px] w-[121px]" alt="" aria-hidden="true">
+          <h4 class="mt-6 text-lg font-bold text-navy-900">
+            <span class="sr-only">Sprites </span>Compute
+          </h4>
+          <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+            Metered per hour of active use.
+          </p>
+
+          <table class="mt-8 w-full text-sm">
+            <thead>
+              <tr class="border-b border-navy-200 text-xs uppercase tracking-wide text-navy-500">
+                <th scope="col" class="pb-3 text-left font-normal">Resource</th>
+                <th scope="col" class="pb-3 text-right font-normal">Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-navy-200">
+                <td class="py-3">
+                  <span class="text-navy-900">CPU time</span>
+                  <span class="block text-xs text-navy-500">Cumulative CPU usage measured by cpu.stat</span>
+                </td>
+                <td class="py-3 text-right align-top text-navy-900">$0.0385 / CPU-hour</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3">
+                  <span class="text-navy-900">Memory time</span>
+                  <span class="block text-xs text-navy-500">Actual memory usage</span>
+                </td>
+                <td class="py-3 text-right align-top text-navy-900">$0.021875 / GB-hour</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rounded-lg border border-navy-200 p-8">
+          <img src="/phx/ui/images/pricing/storage-blue-e1f3d5f7a05e80c5baef3067a5893610.png?vsn=d" class="size-[122px]" alt="" aria-hidden="true">
+          <h4 class="mt-6 text-lg font-bold text-navy-900">
+            <span class="sr-only">Sprites </span>Storage
+          </h4>
+          <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+            Billed in GB-hours at two rates, which differ in when they stop.
+          </p>
+
+          <table class="mt-8 w-full text-sm">
+            <thead>
+              <tr class="border-b border-navy-200 text-xs uppercase tracking-wide text-navy-500">
+                <th scope="col" class="pb-3 text-left font-normal">Tier</th>
+                <th scope="col" class="pb-3 text-right font-normal">Rate</th>
+                <th scope="col" class="pb-3 text-right font-normal">Per GB-month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-navy-200">
+                <td class="py-3">
+                  <span class="text-navy-900">Hot</span>
+                  <span class="block text-xs text-navy-500">Bills while the Sprite is awake</span>
+                </td>
+                <td class="py-3 text-right align-top text-navy-900">$0.000683 / GB-hour</td>
+                <td class="py-3 text-right align-top text-navy-900">$0.50</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3">
+                  <span class="text-navy-900">Cold</span>
+                  <span class="block text-xs text-navy-500">Bills for as long as you keep it</span>
+                </td>
+                <td class="py-3 text-right align-top text-navy-900">$0.000027 / GB-hour</td>
+                <td class="py-3 text-right align-top text-navy-900">$0.02</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="mt-5 text-xs leading-[1.4] text-navy-500">
+            Per-month figures are the hourly rate over a 730-hour month.
+          </p>
+          <p id="pricing-sprite-asleep" class="mt-2 text-xs leading-[1.4] text-navy-500">
+            Example: a Sprite with 5GB stored, asleep for a whole month, bills only cold storage: 5GB × $0.02 = $0.10 for the month.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-col items-center gap-6 rounded-lg border border-violet-200 bg-violet-100/40 p-8 sm:flex-row sm:justify-between">
+        <div>
+          <p class="text-sm font-bold text-navy-900">
+            Billed hourly, with nothing to pick up front
+          </p>
+          <p class="mt-1 text-sm text-navy-600">
+            CPU, memory and hot storage bill while a Sprite is awake. Cold storage bills until you delete the data.
+          </p>
+        </div>
+        <a href="/calculator/" class="gap-2 btn-sm btn-purple shrink-0">
+  
+
+    
+          Estimate your usage
+        
+  
+
+</a>
+
+
+      </div>
+    </div>
+
+    <div data-pricing-panel="mpg" id="pricing-panel-mpg" role="tabpanel" aria-labelledby="pricing-tab-mpg" tabindex="0" class="pt-8" hidden>
+      <h3 class="sr-only">Managed Postgres pricing</h3>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-lg border border-navy-200 p-8">
+          <img src="/phx/ui/images/pricing/compute-teal-f601d826c458992be4863ecb69cd5dd7.png?vsn=d" class="h-[127px] w-[121px]" alt="" aria-hidden="true">
+          <h4 class="mt-6 text-lg font-bold text-navy-900">
+            <span class="sr-only">Managed Postgres </span>Cluster plans
+          </h4>
+          <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+            Every plan includes high availability and automated backups. Basic and up add connection pooling and point-in-time restore. Developer includes its storage, up to 5GB, and pauses after 15 minutes without a client.
+          </p>
+
+          <table class="mt-8 w-full text-sm">
+            <thead>
+              <tr class="border-b border-navy-200 text-xs uppercase tracking-wide text-navy-500">
+                <th scope="col" class="pb-3 text-left font-normal">Plan</th>
+                <th scope="col" class="pb-3 text-left font-normal">CPU and RAM</th>
+                <th scope="col" class="pb-3 text-right font-normal">Per month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Developer</td>
+                <td class="py-3 text-navy-600">shared-1x · 256MB</td>
+                <td class="py-3 text-right text-navy-900">$4</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Basic</td>
+                <td class="py-3 text-navy-600">shared-2x · 1GB</td>
+                <td class="py-3 text-right text-navy-900">$38</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Starter</td>
+                <td class="py-3 text-navy-600">shared-2x · 2GB</td>
+                <td class="py-3 text-right text-navy-900">$72</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Launch</td>
+                <td class="py-3 text-navy-600">performance-2x · 8GB</td>
+                <td class="py-3 text-right text-navy-900">$282</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Scale</td>
+                <td class="py-3 text-navy-600">performance-4x · 32GB</td>
+                <td class="py-3 text-right text-navy-900">$962</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Performance</td>
+                <td class="py-3 text-navy-600">performance-8x · 64GB</td>
+                <td class="py-3 text-right text-navy-900">$1,922</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rounded-lg border border-navy-200 p-8">
+          <img src="/phx/ui/images/pricing/storage-teal-2fafa2a37492d494b22dad64b0ecfd8a.png?vsn=d" class="size-[122px]" alt="" aria-hidden="true">
+          <h4 class="mt-6 text-lg font-bold text-navy-900">
+            <span class="sr-only">Managed Postgres </span>Storage
+          </h4>
+          <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+            Billed on the storage your databases use, for a 30-day month.
+          </p>
+
+          <table class="mt-8 w-full text-sm">
+            <thead>
+              <tr class="border-b border-navy-200 text-xs uppercase tracking-wide text-navy-500">
+                <th scope="col" class="pb-3 text-left font-normal">Item</th>
+                <th scope="col" class="pb-3 text-right font-normal">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Database storage, per GB</td>
+                <td class="py-3 text-right text-navy-900">$0.28</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Example: 10GB used</td>
+                <td class="py-3 text-right text-navy-900">$2.80 / mo</td>
+              </tr><tr class="border-b border-navy-200">
+                <td class="py-3 text-navy-900">Maximum per cluster</td>
+                <td class="py-3 text-right text-navy-900">1,000 GB</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="mt-5 text-xs leading-[1.4] text-navy-500">
+            Creating or deleting a cluster mid-month is prorated. Same-region transfer is free.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside id="pricing-calculator" class="mt-4 flex flex-col items-center gap-6 rounded-lg border border-violet-200 bg-violet-100/40 p-8 sm:flex-row sm:justify-between">
+      <img src="/phx/ui/images/scary-bill-97527c64837d428fa0cba0b35080d18a.png?vsn=d" class="h-[103px] w-auto shrink-0" alt="" aria-hidden="true">
+      <div class="max-w-xl text-center">
+        <p class="font-serif text-xl leading-tight text-navy-900">
+          Know your bill before it arrives
+        </p>
+        <p class="mt-1 text-sm text-navy-600">
+          Tell the calculator what you plan to run and get a monthly estimate across Machines, Sprites, Postgres, storage and bandwidth.
+        </p>
+      </div>
+      <a href="/calculator/" class="gap-2 btn-sm btn-purple shrink-0">
+  
+
+    
+        Calculate your cost
+      
+  
+
+</a>
+
+
+    </aside>
+
+    <div class="mt-10 flex flex-col items-center gap-3 text-center">
+      <p class="text-sm text-navy-600">Found the plan you need?</p>
+      <a href="/app/sign-up/" class="gap-2 btn-lg btn-purple w-[200px]">
+  
+
+    
+        Get Started
+      
+  
+
+</a>
+
+
+    </div>
+  </section>
+
+  <section class="border-y border-navy-200 bg-violet-50 px-6 py-16 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-serif text-2xl leading-none text-navy-900 md:text-4xl">Support</h2>
+      <p class="mt-4 text-base text-navy-600">
+        Community support is free and always has been. The paid plans add an easily nerd-sniped support team that feels like an extension of your own.
+      </p>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        <div class="flex flex-col rounded-lg border border-navy-200 bg-white p-8">
+          <img src="/phx/ui/images/pricing/support-standard-0cdf1837b52c13b693360a74f61f4509.png?vsn=d" class="size-28" alt="" aria-hidden="true">
+          <h3 class="mt-6 text-lg font-bold text-navy-900">Standard</h3>
+          <p class="mt-3 font-serif text-2xl text-navy-900">$29 / mo</p>
+          <p class="mt-3 text-sm leading-[1.4] text-navy-600">Basic support for single developers and small teams. Great for personal projects and startups.</p>
+          <ul class="mt-5 space-y-2 border-t border-navy-200 pt-5 text-sm text-navy-700">
+            <li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>36-hour first response time</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>Technical architecture support</span>
+            </li>
+          </ul>
+        </div><div class="flex flex-col rounded-lg border border-navy-200 bg-white p-8">
+          <img src="/phx/ui/images/pricing/support-premium-9eafe970b77b1b97747c050639d60489.png?vsn=d" class="size-28" alt="" aria-hidden="true">
+          <h3 class="mt-6 text-lg font-bold text-navy-900">Premium</h3>
+          <p class="mt-3 font-serif text-2xl text-navy-900">$199 / mo</p>
+          <p class="mt-3 text-sm leading-[1.4] text-navy-600">Enhanced support for growing businesses. Ideal for scaling applications and teams.</p>
+          <ul class="mt-5 space-y-2 border-t border-navy-200 pt-5 text-sm text-navy-700">
+            <li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>24-hour first response time</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>1-hour first response for urgent issues</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>Dedicated Slack support channel</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>Quarterly Solutions Architecture sessions</span>
+            </li>
+          </ul>
+        </div><div class="flex flex-col rounded-lg border border-navy-200 bg-white p-8">
+          <img src="/phx/ui/images/pricing/support-enterprise-40c3c3445f029ff492ec242256a243c6.png?vsn=d" class="size-28" alt="" aria-hidden="true">
+          <h3 class="mt-6 text-lg font-bold text-navy-900">Enterprise</h3>
+          <p class="mt-3 font-serif text-2xl text-navy-900">From $2,500 / mo</p>
+          <p class="mt-3 text-sm leading-[1.4] text-navy-600">Top-tier support for large-scale operations. Perfect for mission-critical apps and enterprise deployments.</p>
+          <ul class="mt-5 space-y-2 border-t border-navy-200 pt-5 text-sm text-navy-700">
+            <li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>4-hour first response time, 24x7</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>15-minute emergency first response, 24x7</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>Dedicated Slack support channel</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>Quarterly Solutions Architecture sessions</span>
+            </li><li class="flex gap-2 leading-[1.4]">
+              <span class="hero-check mt-0.5 size-4 shrink-0 text-violet-600"></span>
+              <span>99.9% uptime SLA</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 pt-16 text-center md:pt-20">
+    <div class="mx-auto max-w-3xl">
+      <img src="/phx/ui/images/pricing/compliance-cbcdfffd144e923847660e5f07baa254.png?vsn=d" class="mx-auto h-[156px] w-[196px]" alt="" aria-hidden="true">
+      <h2 class="mt-8 font-serif text-2xl leading-none text-navy-900 md:text-4xl">Compliance</h2>
+      <p class="mt-4 text-base text-navy-600">
+        HIPAA at <strong class="font-bold text-navy-900">no extra cost</strong>, with the BAA pre-signed so you are not waiting on legal to start building.
+      </p>
+      <div class="mt-4 flex flex-wrap justify-center gap-2">
+        <span class="rounded-full border border-navy-200 px-4 py-1.5 text-sm text-navy-700">
+          SOC 2 Type II
+        </span><span class="rounded-full border border-navy-200 px-4 py-1.5 text-sm text-navy-700">
+          DPA available
+        </span><span class="rounded-full border border-navy-200 px-4 py-1.5 text-sm text-navy-700">
+          BAA pre-signed
+        </span>
+      </div>
+      <a href="/compliance/" class="gap-2 btn-lg btn-purple mt-8 w-[200px]">
+  
+
+    
+        Add compliance
+      
+  
+
+</a>
+
+
+      <p class="mt-3 text-xs text-navy-500">Available on any paid plan.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="rounded-lg border border-navy-200 p-8">
+        <img src="/phx/ui/images/pricing/startup-f4bafe6d903adb6b5a71da325819ee7e.png?vsn=d" class="size-20" alt="" aria-hidden="true">
+        <h3 class="mt-6 text-lg font-bold text-navy-900">Startup program</h3>
+        <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+          Up to <strong class="font-bold text-navy-900">$15,000 in credit</strong>
+          for eligible early-stage companies, plus a direct line to our team.
+        </p>
+        <a href="/startups/" class="mt-4 inline-block text-sm font-medium text-violet-600 hover:text-violet-700">
+          Apply for credit
+        </a>
+      </div>
+
+      <div class="rounded-lg border border-navy-200 p-8">
+        <img src="/phx/ui/images/pricing/custom-plan-56b522efa5c097fbd1b835a6938ffca1.png?vsn=d" class="size-20" alt="" aria-hidden="true">
+        <h3 class="mt-6 text-lg font-bold text-navy-900">Custom plan</h3>
+        <p class="mt-2 text-sm leading-[1.4] text-navy-600">
+          Committed spend, volume discounts, invoicing and dedicated capacity. Tell us what you are running.
+        </p>
+        <a href="https://fly.io/contact/" class="mt-4 inline-block text-sm font-medium text-violet-600 hover:text-violet-700">
+          Contact us
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+  <div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div><div role="alert" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-max max-w-[94%] sm:max-w-lg z-9999">
+  
+</div>
+</div>
+
+<footer class="relative text-sm text-navy-400 leading-6 pb-8 pt-12 lg:pt-20 text-medium bg-navy-950 bg-linear-to-br from-gray-900/50 via-navy-900/50 to-navy-950/50" role="contentinfo">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-20 grid md:grid-cols-auto-span items-start gap-10 md:gap-16">
+    <a href="/" class="justify-self-start" aria-label="Fly">
+      
+
+  <img src="/phx/images/icons/fly_logo_footer-655af29a7d7e6849e560c7edb711797b.svg?vsn=d" alt="" class=" max-w-none" style="width: auto; height: 36px; ">
+
+    </a>
+    <div class="grid grid-cols-fit-24 gap-10 items-start lg:justify-items-center">
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Company</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/about/" class="hover:text-violet-500 transition-colors">About</a>
+          <a href="/news/" class="hover:text-violet-500 transition-colors">News</a>
+          <a href="/pricing/" class="hover:text-violet-500 transition-colors">
+            Pricing
+          </a>
+          <a href="/jobs/" class="hover:text-violet-500 transition-colors">Jobs</a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Resources</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="https://docs.fly.io" class="hover:text-violet-500 transition-colors">Docs</a>
+          <a href="/blog/" class="hover:text-violet-500 transition-colors">Blog</a>
+          <a href="/infra-log/" class="hover:text-violet-500 transition-colors">Infra Log</a>
+          <a href="/changelog" class="hover:text-violet-500 transition-colors">Changelog</a>
+          <a href="/customer-stories/" class="hover:text-violet-500 transition-colors">Customers</a>
+          <a href="https://docs.fly.io/about/support" class="hover:text-violet-500 transition-colors">Support</a>
+          <a href="/support/" class="hover:text-violet-500 transition-colors">Support Metrics</a>
+          <a href="https://status.flyio.net/" class="hover:text-violet-500 transition-colors">
+            Status
+          </a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Contact</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/contact/" class="hover:text-violet-500 transition-colors">Contact us</a>
+          <a href="https://github.com/superfly/" class="hover:text-violet-500 transition-colors">
+            GitHub
+          </a>
+          <a href="https://twitter.com/flydotio" class="hover:text-violet-500 transition-colors">
+            Twitter
+          </a>
+          <a href="https://community.fly.io/" class="hover:text-violet-500 transition-colors">
+            Community
+          </a>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="font-bold uppercase tracking-wider text-xs text-white mb-3">Legal</dt>
+        <dd class="font-medium flex flex-col items-start">
+          <a href="/security/" class="hover:text-violet-500 transition-colors">Security</a>
+          <a href="/legal/privacy-policy/" class="hover:text-violet-500 transition-colors">
+            Privacy policy
+          </a>
+          <a href="/legal/terms-of-service/" class="hover:text-violet-500 transition-colors">
+            Terms of service
+          </a>
+          <a href="/legal/acceptable-use-policy/" class="hover:text-violet-500 transition-colors">
+            Acceptable Use Policy
+          </a>
+
+          <button id="footer-cookie-prefs" type="button" hidden class="text-left hover:text-violet-500 transition-colors">
+            Cookie preferences
+          </button>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="border-navy-800 border-t pt-8 grid gap-6 md:grid-cols-2 md:items-center">
+      <div>
+        <p class="font-bold uppercase tracking-wider text-xs text-white mb-1">
+          Sign up to the Fly.io Newsletter
+        </p>
+        <p class="mb-0">
+          What we shipped, what we learned, like ... stuff you put in a newsletter.
+          Get it monthly.
+        </p>
+      </div>
+      <div data-email-capture-wrapper class="md:justify-self-end md:w-full md:max-w-md">
+  <form action="/email-signups" method="post" class="flex flex-col gap-3" data-email-capture>
+  
+  <input name="_csrf_token" type="hidden" hidden value="ADgjHFlaUTAjfwVJCQladTcvKFBsFw0mt_Tto9ivm6K3b942bdQ2YYbB">
+  
+    <input type="hidden" name="list" value="newsletter">
+    <input type="hidden" name="source" value="footer">
+    <input type="hidden" name="return_to" value="/">
+
+    
+    <div class="hidden" aria-hidden="true">
+      <label>
+        Company <input type="text" name="company" tabindex="-1" autocomplete="off">
+      </label>
+    </div>
+
+    
+
+    
+    <div class="flex gap-3 flex-col sm:flex-row sm:items-center">
+      <label class="block sm:w-40">
+        <span class="sr-only">Your name</span>
+        <input type="text" name="name" class="block w-full rounded-lg border border-navy-700 bg-navy-900 px-3 py-2 text-sm text-white placeholder:text-navy-400 focus:border-violet-400 focus:outline-hidden focus:ring-2 focus:ring-violet-500/30" placeholder="Your name" required autocomplete="name">
+      </label>
+      <label class="block sm:flex-1">
+        <span class="sr-only">Email address</span>
+        <input type="email" name="email" class="block w-full rounded-lg border border-navy-700 bg-navy-900 px-3 py-2 text-sm text-white placeholder:text-navy-400 focus:border-violet-400 focus:outline-hidden focus:ring-2 focus:ring-violet-500/30" placeholder="you@example.com" required autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </label>
+      <button type="submit" class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 font-medium text-sm text-white transition-colors hover:bg-violet-500">
+        Subscribe
+      </button>
+    </div>
+  
+</form>
+
+  <p data-email-capture-success class="hidden font-medium text-violet-300">
+    You&#39;re subscribed. Look out for the next issue.
+  </p>
+</div>
+    </div>
+  </div>
+
+  <p class="text-xs text-center mb-0">
+    Copyright &copy;&nbsp;2026&nbsp;Fly.io
+  </p>
+</footer>
+    <dialog id="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-message" class="m-auto w-[calc(100%-2rem)] max-w-lg p-0 bg-transparent rounded-3xl backdrop:bg-navy-950/50 backdrop:backdrop-blur-xs">
+  <form method="dialog" class="sm:p-2.5 bg-white/20 rounded-3xl shadow-2xl shadow-navy-700/20 ring-1 ring-inset ring-white/10">
+    <div class="rounded-2xl bg-white p-5 sm:p-8 shadow-lg shadow-navy-700/20 ring-1 ring-black/5">
+      <h2 id="confirm-dialog-title" class="font-medium text-navy-900 text-[1.0625rem] " data-confirm-dialog="title">
+  
+</h2>
+      <p id="confirm-dialog-message" data-confirm-dialog="message" class="mt-2.5 text-[0.9375rem] leading-relaxed text-navy-700 wrap-break-word whitespace-pre-line">
+      </p>
+      <div class="mt-6 flex flex-wrap justify-end gap-2">
+        
+
+<button type="submit" class="gap-2 btn btn-secondary gap-2 btn btn-secondary" id="confirm-dialog-cancel" value="cancel" autofocus>
+  
+
+    
+          <span data-confirm-dialog="cancel-label"></span>
+        
+  
+
+</button>
+        
+
+<button type="submit" class="gap-2 btn btn-primary gap-2 btn btn-primary" id="confirm-dialog-confirm" value="confirm" data-confirm-dialog="confirm">
+  
+
+    
+          <span data-confirm-dialog="confirm-label"></span>
+        
+  
+
+</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+    
+  </body>
+</html>
