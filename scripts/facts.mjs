@@ -67,6 +67,26 @@ facts.share_cheaper = facts.p1.share_cheaper;
 facts.cost_per_receipt_usd = facts.p4.per_receipt_usd;
 facts.wrong_claim_rate = facts.p3?.curated?.jev?.wrong_claim_rate ?? null;
 
+// The README's "Measured" block is generated from FACTS between two markers, so no number is typed there.
+function injectReadme(f) {
+  if (!existsSync("README.md")) return;
+  const d = (c) => (c === null || c === undefined ? "n/a" : `$${(c / 100).toFixed(2)}`);
+  const p = (v) => (v === null || v === undefined ? "n/a" : `${(v * 100).toFixed(1)}%`);
+  const u = (v) => (v === null || v === undefined ? "n/a" : `$${v.toFixed(4)}`);
+  const block = f.empty
+    ? "_No run files exist yet, so there are no measured numbers. This block fills from `docs/FACTS.json` the moment they do._"
+    : [
+        `- **Study (real public data):** ${f.p1.n_items} usable items of ${f.p1.n_listed} listed; ${p(f.p1.share_cheaper)} cheaper now; ${d(f.p1.owed_total_cents)} owed in total, median ${d(f.p1.median_owed_cents)}; ${f.p1.misses.length} misses listed by id.`,
+        `- **Unattended watch:** ${f.p2.runs_completed} runs, ${f.p2.drops_seen} price drops seen.`,
+        `- **Decision quality at tau ${f.p3?.tau ?? "n/a"}:** wrong-claim rate ${p(f.p3?.curated?.jev?.wrong_claim_rate)} on the curated test split and ${p(f.p3?.wild?.jev?.wrong_claim_rate)} on wild data; missed-claim rate ${p(f.p3?.curated?.jev?.missed_claim_rate)} and ${p(f.p3?.wild?.jev?.missed_claim_rate)}.`,
+        `- **Cost per receipt (Fly usage meter):** ${u(f.p4.per_receipt_usd)} per receipt, ${u(f.p4.per_receipt_per_day_usd)} per receipt per day, ${f.p4.receipts_metered} metered.`,
+        `- **Break campaign:** ${f.p5.filter((c) => c.pass).length} of ${f.p5.length} cases passed; failures are listed on /proof.`,
+      ].join("\n");
+  const r = readFileSync("README.md", "utf8");
+  const next = r.replace(/<!-- FACTS:START -->[\s\S]*?<!-- FACTS:END -->/, `<!-- FACTS:START -->\n${block}\n<!-- FACTS:END -->`);
+  if (next !== r) writeFileSync("README.md", next);
+}
+
 const strip = (o) => JSON.stringify({ ...o, generated_at: undefined }, null, 2);
 if (process.argv.includes("--check")) {
   const cur = existsSync("docs/FACTS.json") ? JSON.parse(readFileSync("docs/FACTS.json", "utf8")) : null;
@@ -75,5 +95,6 @@ if (process.argv.includes("--check")) {
 } else {
   facts.generated_at = new Date().toISOString();
   writeFileSync("docs/FACTS.json", JSON.stringify(facts, null, 2) + "\n");
+  injectReadme(facts);
   console.log(`docs/FACTS.json written from ${files.length} run file(s), ${rows.length} record(s)`);
 }
