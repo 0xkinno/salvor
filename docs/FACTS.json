@@ -23,6 +23,73 @@
     "hours_watched": 14
   },
   "p3": {
+    "hard": {
+      "asked": 100,
+      "ranked": 61,
+      "candidates": 137,
+      "set_sha256": "6dd0a998e3e28398a7371a201238e35fad7946bc09c1ec229f7ad5f8cd56d44e",
+      "not_ranked": [
+        "H059",
+        "H063",
+        "H077",
+        "H080",
+        "H090",
+        "H093",
+        "H096",
+        "H097",
+        "H098",
+        "H099",
+        "H100",
+        "H102",
+        "H103",
+        "H104",
+        "H106",
+        "H107",
+        "H108",
+        "H110",
+        "H113",
+        "H114",
+        "H116",
+        "H117",
+        "H118",
+        "H120",
+        "H121",
+        "H122",
+        "H123",
+        "H124",
+        "H126",
+        "H127",
+        "H128",
+        "H129",
+        "H130",
+        "H131",
+        "H132",
+        "H133",
+        "H134",
+        "H135",
+        "H137"
+      ],
+      "not_ranked_reason": "Pinecone's monthly rerank limit of 500 requests for the free plan was reached part-way through the run (HTTP 429, RESOURCE_EXHAUSTED)",
+      "pinecone_top1": 0.9180327868852459,
+      "pinecone_top3": 0.9672131147540983,
+      "lexical_top1": 0.9016393442622951,
+      "lexical_top3": 0.9672131147540983,
+      "pinecone_missed_top1": [
+        "H010",
+        "H014",
+        "H019",
+        "H085",
+        "H086"
+      ],
+      "lexical_missed_top1": [
+        "H014",
+        "H019",
+        "H026",
+        "H074",
+        "H085",
+        "H086"
+      ]
+    },
     "rank": {
       "n": 24,
       "candidates": 24,
@@ -141,6 +208,7 @@
     "p2.jsonl": "b4a653fae03480f7594ba9ce263fd78716bd1335c5a29d5462f84dd4cc4b5de2",
     "p3.jsonl": "e8546638db520d5ae3f4b6433716cda41326ff695be3de6362a6a9454cf83ed3",
     "p3b.jsonl": "6e61d50ecc46c47905e7a6e685baa9a00f03733780a9932e1bd4fb3d5b83fa75",
+    "p3c.jsonl": "7b79a911fd39a270cb2fb736de4c6ee3e52eefbebc695640d2efb314fccd616b",
     "p5.jsonl": "611323a89503afc213d6a8f17706915e5836fed2865f0c29284271d10f87beb7",
     "watch.jsonl": "2be76df65f132ee3e4f678c4eb9e239f0db8ebdf5cad156cc81dd7a06d8fc07d"
   },
@@ -149,5 +217,5 @@
   "share_cheaper": 0,
   "cost_per_receipt_usd": null,
   "wrong_claim_rate": 0,
-  "generated_at": "2026-11-27T12:25:56.252Z"
+  "generated_at": "2026-11-27T12:44:00.872Z"
 }

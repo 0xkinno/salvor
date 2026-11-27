@@ -1,0 +1,406 @@
+{
+ "pool": 137,
+ "left_out_ambiguous": 21,
+ "lines": [
+  {
+   "id": "H001",
+   "line": "BODUM 27OZ MELIOR GOOSE"
+  },
+  {
+   "id": "H003",
+   "line": "CUISINART CLEAR 1.5L"
+  },
+  {
+   "id": "H004",
+   "line": "HAMILTON BEACH 1.2L"
+  },
+  {
+   "id": "H005",
+   "line": "BREVILLE TEMP SELECT"
+  },
+  {
+   "id": "H006",
+   "line": "HADEN 1.7L ELECTRIC"
+  },
+  {
+   "id": "H007",
+   "line": "FELLOW STAGG EKG PRO"
+  },
+  {
+   "id": "H008",
+   "line": "CHEFMAN CUSTOM TEMP"
+  },
+  {
+   "id": "H010",
+   "line": "CHEFMAN FAST BOIL 1.8L"
+  },
+  {
+   "id": "H011",
+   "line": "AROMA 1.7L ELECTRIC"
+  },
+  {
+   "id": "H012",
+   "line": "HAMILTON BEACH 1L"
+  },
+  {
+   "id": "H013",
+   "line": "CHEFMAN 1L RAPID BOIL"
+  },
+  {
+   "id": "H014",
+   "line": "CHEFMAN FAST BOIL"
+  },
+  {
+   "id": "H015",
+   "line": "CHEFMAN 1.8L LIGHTNING"
+  },
+  {
+   "id": "H016",
+   "line": "KITCHENAID ULTRA POWER"
+  },
+  {
+   "id": "H017",
+   "line": "CUISINART PRECISION"
+  },
+  {
+   "id": "H019",
+   "line": "HAMILTON BEACH 6 SPEED"
+  },
+  {
+   "id": "H021",
+   "line": "KITCHENAID 5.5 QUART"
+  },
+  {
+   "id": "H022",
+   "line": "MARTHA STEWART 5.3QT"
+  },
+  {
+   "id": "H024",
+   "line": "HAMILTON BEACH POWER"
+  },
+  {
+   "id": "H025",
+   "line": "KITCHENAID 5QT 10 SPEED"
+  },
+  {
+   "id": "H026",
+   "line": "KITCHENAID ARTISAN"
+  },
+  {
+   "id": "H029",
+   "line": "KITCHENAID ARTISAN PLUS"
+  },
+  {
+   "id": "H030",
+   "line": "BELLA 5.3QT TILT HEAD"
+  },
+  {
+   "id": "H031",
+   "line": "35PCS UNICORN TEA PARTY"
+  },
+  {
+   "id": "H032",
+   "line": "MONSTER JAM GRAVE"
+  },
+  {
+   "id": "H034",
+   "line": "LEGO CITY RIDES"
+  },
+  {
+   "id": "H035",
+   "line": "LEGO CLASSIC MEDIUM"
+  },
+  {
+   "id": "H037",
+   "line": "LEGO BOTANICALS DAISIES"
+  },
+  {
+   "id": "H038",
+   "line": "TERRA BY BATTAT REMOTE"
+  },
+  {
+   "id": "H040",
+   "line": "JOYFY PLAY FOOD SET FOR"
+  },
+  {
+   "id": "H041",
+   "line": "CRAYOLA COLOR WONDER"
+  },
+  {
+   "id": "H042",
+   "line": "JOYFY 137PCS KIDS"
+  },
+  {
+   "id": "H043",
+   "line": "LEGO FRIENDS AXOLOTL"
+  },
+  {
+   "id": "H044",
+   "line": "JOYFY KIDS ARCHERY BOW"
+  },
+  {
+   "id": "H046",
+   "line": "APPLE EARPODS USB C"
+  },
+  {
+   "id": "H047",
+   "line": "APPLE AIRPODS MAX 2"
+  },
+  {
+   "id": "H048",
+   "line": "JLAB GO AIR POP TRUE"
+  },
+  {
+   "id": "H049",
+   "line": "SONY WH CH530 BLUETOOTH"
+  },
+  {
+   "id": "H050",
+   "line": "SONY WH CH730N"
+  },
+  {
+   "id": "H051",
+   "line": "JBL TUNE 530BT"
+  },
+  {
+   "id": "H053",
+   "line": "BEATS STUDIO PRO"
+  },
+  {
+   "id": "H054",
+   "line": "BEATS SOLO BUDS TRUE"
+  },
+  {
+   "id": "H059",
+   "line": "BEATS SOLO 4 BLUETOOTH"
+  },
+  {
+   "id": "H060",
+   "line": "BEATS 360 OVER EAR"
+  },
+  {
+   "id": "H061",
+   "line": "CUISINART COFFEE CENTER"
+  },
+  {
+   "id": "H062",
+   "line": "BELLA 12 CUP"
+  },
+  {
+   "id": "H063",
+   "line": "KEURIG K DUO HOT ICED"
+  },
+  {
+   "id": "H066",
+   "line": "CUISINART 14 CUP"
+  },
+  {
+   "id": "H067",
+   "line": "KEURIG K MINI GO"
+  },
+  {
+   "id": "H068",
+   "line": "HAMILTON BEACH 12 CUP"
+  },
+  {
+   "id": "H069",
+   "line": "DELONGHI ALL IN ONE"
+  },
+  {
+   "id": "H072",
+   "line": "CHEFMAN CAFFEINATOR"
+  },
+  {
+   "id": "H074",
+   "line": "MR. COFFEE 5 CUP SWITCH"
+  },
+  {
+   "id": "H077",
+   "line": "NINJA CRUSHBOSS 72OZ"
+  },
+  {
+   "id": "H079",
+   "line": "KITCHEN COLLECTION BY"
+  },
+  {
+   "id": "H080",
+   "line": "NINJA 72 OZ"
+  },
+  {
+   "id": "H081",
+   "line": "MAGIC BULLET PERSONAL"
+  },
+  {
+   "id": "H082",
+   "line": "NINJA BLAST 18OZ"
+  },
+  {
+   "id": "H083",
+   "line": "OSTER 800 WATT VORTEX"
+  },
+  {
+   "id": "H084",
+   "line": "NINJA 72 OZ ULTRACRUSH"
+  },
+  {
+   "id": "H085",
+   "line": "HAMILTON BEACH"
+  },
+  {
+   "id": "H086",
+   "line": "HAMILTON BEACH KITCHEN"
+  },
+  {
+   "id": "H087",
+   "line": "NINJA TWISTI HIGH SPEED"
+  },
+  {
+   "id": "H088",
+   "line": "VITAMIX VX3 BLENDER"
+  },
+  {
+   "id": "H089",
+   "line": "OSTER TURBO 5 SPEED"
+  },
+  {
+   "id": "H090",
+   "line": "NUTRIBULLET POWER CORE"
+  },
+  {
+   "id": "H093",
+   "line": "LEGO CREATOR CHRISTMAS"
+  },
+  {
+   "id": "H096",
+   "line": "LEGO CREATOR ORANGE CAT"
+  },
+  {
+   "id": "H097",
+   "line": "LEGO CREATOR CATACLAWS"
+  },
+  {
+   "id": "H098",
+   "line": "LEGO ARCHITECTURE"
+  },
+  {
+   "id": "H099",
+   "line": "LEGO SNOWMAN ORNAMENTS"
+  },
+  {
+   "id": "H100",
+   "line": "LEGO ICONS POINSETTIA"
+  },
+  {
+   "id": "H102",
+   "line": "LEGO FESTIVE"
+  },
+  {
+   "id": "H103",
+   "line": "LEGO BOTANICALS ROCKING"
+  },
+  {
+   "id": "H104",
+   "line": "LEGO STAR WARS THE"
+  },
+  {
+   "id": "H106",
+   "line": "TINECO GO PURECYCLONE"
+  },
+  {
+   "id": "H107",
+   "line": "TINECO GO PET PLUS"
+  },
+  {
+   "id": "H108",
+   "line": "TEENDOW VACUUM CLEANER"
+  },
+  {
+   "id": "H110",
+   "line": "LEVOIT VORTEXIQ PRO"
+  },
+  {
+   "id": "H113",
+   "line": "DYSON V9 MOTORBAR"
+  },
+  {
+   "id": "H114",
+   "line": "SHARK POWERDETECT"
+  },
+  {
+   "id": "H116",
+   "line": "BISSELL FEATHERWEIGHT"
+  },
+  {
+   "id": "H117",
+   "line": "TEENDOW CORDLESS VACUUM"
+  },
+  {
+   "id": "H118",
+   "line": "SHARPER IMAGE CORDLESS"
+  },
+  {
+   "id": "H120",
+   "line": "SHARPER IMAGE DUAL AIR"
+  },
+  {
+   "id": "H121",
+   "line": "CUISINART FRENCH DOOR"
+  },
+  {
+   "id": "H122",
+   "line": "GOURMIA 6QT DIGITAL"
+  },
+  {
+   "id": "H123",
+   "line": "CUISINART 4.5QT PLASTIC"
+  },
+  {
+   "id": "H124",
+   "line": "GOURMIA DIGITAL 3QT AIR"
+  },
+  {
+   "id": "H126",
+   "line": "NINJA PRO 4 IN 1 AIR"
+  },
+  {
+   "id": "H127",
+   "line": "FRIGIDAIRE INDOOR PIZZA"
+  },
+  {
+   "id": "H128",
+   "line": "BELLA 4QT SLIM AIR FRYER"
+  },
+  {
+   "id": "H129",
+   "line": "CHEFMAN TURBOFRY 2 QT."
+  },
+  {
+   "id": "H130",
+   "line": "NINJA CRISPI 4 IN 1"
+  },
+  {
+   "id": "H131",
+   "line": "NINJA 6.5 QT PRO XL 6"
+  },
+  {
+   "id": "H132",
+   "line": "NINJA FOODI 8QT"
+  },
+  {
+   "id": "H133",
+   "line": "GOURMIA 8QT DIGITAL AIR"
+  },
+  {
+   "id": "H134",
+   "line": "BELLA 6QT SLIM AIR FRYER"
+  },
+  {
+   "id": "H135",
+   "line": "CUISINART AIR FRYER"
+  },
+  {
+   "id": "H137",
+   "line": "NINJA 6QT AND 2.5QT"
+  }
+ ]
+}

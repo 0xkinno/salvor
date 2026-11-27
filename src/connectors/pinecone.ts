@@ -28,7 +28,8 @@ export async function embed(conn: string, texts: string[], inputType: "passage" 
   return (j.data as { values: number[] }[]).map((d) => d.values);
 }
 
-export async function rerank(query: string, docs: { id: string; text: string }[], topN = docs.length): Promise<{ id: string; score: number }[]> {
+const RERANK_MAX_DOCS = 90;   // the rerank model accepts a limited number of documents per request (HTTP 400 above it)
+async function rerankOnce(query: string, docs: { id: string; text: string }[], topN: number) {
   const r = await withRetry(() => call(READ, "POST", "/rerank", {
     model: RERANK_MODEL, query, documents: docs, top_n: topN, return_documents: false, rank_fields: ["text"],
   }, { headers: hdr }));
@@ -36,6 +37,18 @@ export async function rerank(query: string, docs: { id: string; text: string }[]
   if (!r.ok) throw new Error(`pinecone rerank HTTP ${r.status}: ${t.slice(0, 200)}`);
   const j = JSON.parse(t);
   return (j.data as { index: number; score: number }[]).map((d) => ({ id: docs[d.index].id, score: d.score }));
+}
+
+// A larger pool is scored in slices with the same model and query, then merged by score. The model scores each
+// document against the query alone, so scores from different slices are on one scale.
+export async function rerank(query: string, docs: { id: string; text: string }[], topN = docs.length): Promise<{ id: string; score: number }[]> {
+  if (docs.length <= RERANK_MAX_DOCS) return rerankOnce(query, docs, topN);
+  const all: { id: string; score: number }[] = [];
+  for (let i = 0; i < docs.length; i += RERANK_MAX_DOCS) {
+    const slice = docs.slice(i, i + RERANK_MAX_DOCS);
+    all.push(...await rerankOnce(query, slice, slice.length));
+  }
+  return all.sort((a, b) => b.score - a.score).slice(0, topN);
 }
 
 export function cosine(a: number[], b: number[]): number {

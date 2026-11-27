@@ -46,6 +46,14 @@ function rates(origin, who) {
   return { n: set.length, claims: claims.length, wrong_claims: wrong, wrong_claim_rate: claims.length ? wrong / claims.length : null, truth: truth.length, missed, missed_claim_rate: truth.length ? missed / truth.length : null, ask_rate: asked / set.length };
 }
 const ranks = of("p3_rank").filter((r) => !r.failed);
+const hardAll = of("p3_hard"), hard = hardAll.filter((r) => !r.failed);
+const hardRate = (k) => (hard.length ? hard.filter((r) => r[k]).length / hard.length : null);
+const hardSummary = hardAll.length ? {
+  asked: hardAll.length, ranked: hard.length, candidates: hard[0]?.candidates ?? null, set_sha256: hardAll[0].set_sha256,
+  not_ranked: hardAll.filter((r) => r.failed).map((r) => r.id), not_ranked_reason: "Pinecone's monthly rerank limit of 500 requests for the free plan was reached part-way through the run (HTTP 429, RESOURCE_EXHAUSTED)",
+  pinecone_top1: hardRate("pinecone_top1"), pinecone_top3: hardRate("pinecone_top3"), lexical_top1: hardRate("lexical_top1"), lexical_top3: hardRate("lexical_top3"),
+  pinecone_missed_top1: hard.filter((r) => !r.pinecone_top1).map((r) => r.id), lexical_missed_top1: hard.filter((r) => !r.lexical_top1).map((r) => r.id),
+} : null;
 const rankRate = (k) => (ranks.length ? ranks.filter((r) => r[k]).length / ranks.length : null);
 const costs = of("p4_cost");
 const costTotal = costs.reduce((s, r) => s + r.total_usd, 0);
@@ -63,7 +71,7 @@ const facts = {
   empty: rows.length === 0,
   p1: { n_listed: p1.length, n_items: usable.length, share_cheaper: usable.length ? cheaper.length / usable.length : null, owed_total_cents: owed.reduce((a, b) => a + b, 0), median_owed_cents: median(owed), misses },
   p2: { runs_completed: runs.length, runs_total: allRuns.length, items_watched: p2items.length, items_changed: changedItems.length, items_cheaper_now: cheaperItems.length, owed_total_cents: owedP2.reduce((a, b) => a + b, 0), median_owed_cents: median(owedP2), largest_drop: biggest ? { id: biggest.id, from_cents: biggest.first_cents, to_cents: biggest.last_cents, drop_cents: biggest.first_cents - biggest.last_cents } : null, drops_seen: runs.reduce((s, r) => s + (r.drops ?? 0), 0), first_run_at: allRuns[0]?.at ?? null, last_run_at: allRuns.at(-1)?.at ?? null, hours_watched: allRuns.length > 1 ? Math.round((new Date(allRuns.at(-1).at) - new Date(allRuns[0].at)) / 3600000) : 0 },
-  p3: pick ? { rank: ranks.length ? { n: ranks.length, candidates: ranks[0].candidates, failed: of("p3_rank").length - ranks.length, pinecone_top1: rankRate("pinecone_top1"), pinecone_top3: rankRate("pinecone_top3"), lexical_top1: rankRate("lexical_top1"), lexical_top3: rankRate("lexical_top3") } : null, failed_pairs: of("p3_fail").length, tau: pick.tau, tau_owed: pick.tau_owed, chosen_on: pick.chosen_on, tune_n: pick.tune_n, curated: { full: rates("curated", "full"), rules: rates("curated", "rules") }, wild: { full: rates("wild", "full"), rules: rates("wild", "rules") } } : null,
+  p3: pick ? { hard: hardSummary, rank: ranks.length ? { n: ranks.length, candidates: ranks[0].candidates, failed: of("p3_rank").length - ranks.length, pinecone_top1: rankRate("pinecone_top1"), pinecone_top3: rankRate("pinecone_top3"), lexical_top1: rankRate("lexical_top1"), lexical_top3: rankRate("lexical_top3") } : null, failed_pairs: of("p3_fail").length, tau: pick.tau, tau_owed: pick.tau_owed, chosen_on: pick.chosen_on, tune_n: pick.tune_n, curated: { full: rates("curated", "full"), rules: rates("curated", "rules") }, wild: { full: rates("wild", "full"), rules: rates("wild", "rules") } } : null,
   p4: { receipts_metered: costs.length, per_receipt_usd: costs.length ? costTotal / costs.length : null, per_receipt_per_day_usd: costDays ? costTotal / costDays : null, partial_rows: costs.filter((c) => c.partial).length },
   p5: of("p5_case").map((c) => ({ id: c.id, name: c.name, expected: c.expected, observed: c.observed, pass: c.pass })),
   hero: of("hero").at(-1) ?? null,
