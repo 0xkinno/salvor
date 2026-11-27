@@ -36,7 +36,7 @@ export async function birth(receiptId: string, lineId: string): Promise<Birth> {
   if (!open) throw new Error("no verified clause covers this receipt, so no Sprite is born for it");
   await sprites.create(name);
   const labels = await sprites.setLabels(name, [EYES_LABEL]);
-  // The clause text Jev sees comes from the policy file, never from a page.
+  // The clause text the policy uses comes from the policy file, never from a page.
   const job: Job = {
     id: lineId, sprite: name, listing_url: line.listing_url ?? "", retailer: line.retailer,
     line: { raw_text: line.raw_text, paid_cents: line.paid_cents, qty: line.qty },

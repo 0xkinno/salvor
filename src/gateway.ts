@@ -51,7 +51,7 @@ function idFor(name: string): string | null {
 
 // Dedicated connectors show up in the gateway list by provider display name ("Apify"), not by our
 // name, so each of our names maps to its provider. Custom connectors carry our name directly.
-const PROVIDER_OF: Record<string, string> = { "apify-eyes": "apify", "jev-eyes": "typesafe", "ollama-hands": "ollama", "mail-hands": "agentmail", "box-hands": "box" };
+const PROVIDER_OF: Record<string, string> = { "apify-eyes": "apify", "ollama-hands": "ollama", "mail-hands": "agentmail", "box-hands": "box" };
 
 // Never fall back silently: a name that matches nothing throws.
 export async function base(name: string): Promise<string> {

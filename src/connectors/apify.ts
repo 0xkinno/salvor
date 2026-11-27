@@ -13,7 +13,7 @@ export type RawItem = Record<string, any>;
 // Run an actor and get the items back in one request (used by the study and by /try).
 export async function runSync(actor: string, input: unknown, timeoutSecs = 120): Promise<{ items: RawItem[]; runId: string | null }> {
   const id = actor.replace("/", "~");
-  const r = await call(CONN, "POST", `/v2/acts/${id}/run-sync-get-dataset-items?timeout=${timeoutSecs}&clean=true`, input, {
+  const r = await call("apify-run", "POST", `/v2/acts/${id}/run-sync-get-dataset-items?timeout=${timeoutSecs}&clean=true`, input, {
     signal: AbortSignal.timeout((timeoutSecs + 30) * 1000),
   });
   const text = await r.text();

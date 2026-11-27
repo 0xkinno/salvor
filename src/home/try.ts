@@ -13,7 +13,16 @@ import type { Report } from "../receipt/observe.ts";
 // The "newborn" checkpoint id is read from the platform when the pool is made (Fly takes an automatic v1 at
 // creation, so newborn is usually v2). It is kept in the ledger so a restart does not lose it.
 const newbornCache = new Map<string, string>();
-export function newbornId(name: string): string { return newbornCache.get(name) ?? kvGet(`newborn:${name}`) ?? "v1"; }
+export function newbornId(name: string): string | null { return newbornCache.get(name) ?? kvGet(`newborn:${name}`) ?? null; }
+// The checkpoint to restore to: the one recorded when the pool was made, else the platform's own list, found by its comment.
+async function resolveNewborn(name: string): Promise<string> {
+  const known = newbornId(name); if (known) return known;
+  const cps = await sprites.listCheckpoints(name);
+  const hit = cps.find((c: any) => c.comment === "newborn");
+  if (!hit) throw new Error("no checkpoint named newborn on this Sprite");
+  newbornCache.set(name, hit.id); kvSet(`newborn:${name}`, hit.id);
+  return hit.id;
+}
 
 // The no-card Fly trial allows 3 Sprites in total, so the pool size is a setting (SALVOR_POOL, default 3).
 export const POOL_NAMES = ["slv-r-try-1", "slv-r-try-2", "slv-r-try-3"].slice(0, Math.max(1, Number(process.env.SALVOR_POOL ?? 3)));
@@ -77,11 +86,12 @@ export async function runTry(input: TryInput, visitor: string, paidCents: number
     event("try", { sprite: name, decision: g.decision, ms: Date.now() - t0 });
     return { ok: true, sprite: name, seconds: (Date.now() - t0) / 1000, steps, decision: g.decision, why: g.why, owed_cents: verdict.owed_cents, paid_cents: paidCents, now_cents: l.price_cents, title: l.title, deadline: verdict.deadline, checkpoint: report.checkpoint ?? null, sha256: report.sha256 ?? null, read: report.read ?? null };
   } catch (e) {
+    db().prepare("DELETE FROM kv WHERE k=?").run(`try:${hourKey()}:${visitor}`);   // a reading that failed does not use up the visitor's hour
     return { ok: false, status: 502, error: `The live reading failed: ${String((e as Error).message).slice(0, 200)}` };
   } finally {
     // The visitor's data does not stay: restore the pool Sprite to its newborn checkpoint.
     setTimeout(() => {
-      sprites.restore(name, newbornId(name)).catch((e) => event("try_restore_failed", { sprite: name, error: String(e.message).slice(0, 120) })).finally(() => busy.delete(name));
+      resolveNewborn(name).then((id) => sprites.restore(name, id)).catch((e) => event("try_restore_failed", { sprite: name, error: String(e.message).slice(0, 120) })).finally(() => busy.delete(name));
     }, process.env.SALVOR_TRY_RESTORE_MS ? Number(process.env.SALVOR_TRY_RESTORE_MS) : 60_000);
   }
 }

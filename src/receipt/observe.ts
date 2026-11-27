@@ -1,5 +1,5 @@
 // Runs inside slv-r-<id>. One job, one URL. Reads typed fields from the Apify dataset, scores the
-// match with Pinecone, asks Jev, writes the evidence, checkpoints, reports typed fields only.
+// match with Pinecone, reads the match, writes the evidence, checkpoints, reports typed fields only.
 // Untrusted page text is read here and never leaves this Sprite.
 import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { datasetItemsFor, normalizeListing, type ListingFields } from "../connectors/apify.ts";
