@@ -11,6 +11,7 @@ import { rememberConfirmed } from "./memory.ts";
 import { answerAsk, headline, packetOf, lineRow, ingestReport } from "./ledger.ts";
 import { consumeApproval, renderHtml, renderPdf, chatScript } from "./claims.ts";
 import { sendClaim, sweepNotifications } from "./deliver.ts";
+import { sweepMemory } from "./memory.ts";
 import { verifyEvidence } from "./notary.ts";
 import { costSummary, RATES } from "./cost.ts";
 import { wakeAll, wakeLatestAll, advanceLifecycle, SPRITE_CAP } from "./fleet.ts";
@@ -388,7 +389,7 @@ export function startBackground() {
   const inbox = process.env.SALVOR_INBOX;
   setTimeout(guard("watch", () => syncWatch()), 20_000);
   setInterval(guard("watch", () => syncWatch()), 60 * 60_000);
-  if (inbox) setInterval(guard("mail", async () => { await pollMail(inbox); await sweepNotifications(); }), 2 * 60_000);
+  if (inbox) setInterval(guard("mail", async () => { await pollMail(inbox); await sweepNotifications(); await sweepMemory(); }), 2 * 60_000);
   // Retire Sprites whose window has closed: read the meter, book the cost, delete.
   setInterval(guard("retire", async () => {
     const due = db().prepare("SELECT id, sprite, created_at FROM receipts WHERE sprite IS NOT NULL AND status NOT IN ('retired') AND window_ends_at < ? AND NOT EXISTS (SELECT 1 FROM claims c JOIN lines l ON l.id=c.line_id WHERE l.receipt_id=receipts.id AND c.approved_at IS NULL)").all(new Date().toISOString()) as any[];

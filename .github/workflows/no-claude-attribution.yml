@@ -22,7 +22,9 @@ jobs:
           import os, re, subprocess, sys
           base = os.environ.get("BASE_SHA") or ""
           head = os.environ["HEAD_SHA"]
-          if not base or set(base) == {"0"}:
+          # After a force push the previous head no longer exists, so fall back to checking the new head alone.
+          known = bool(base) and subprocess.run(["git", "cat-file", "-e", base + "^{commit}"], capture_output=True).returncode == 0
+          if not base or set(base) == {"0"} or not known:
               rng = [head]
           else:
               rng = [f"{base}..{head}"]
