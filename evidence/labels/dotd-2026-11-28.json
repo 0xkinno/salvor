@@ -1,0 +1,119 @@
+{
+ "deal_date": "2026-11-28",
+ "deal": "Picasso Tiles magnetic tiles",
+ "source": "Target's own search page, read through Apify before the deal went live",
+ "frozen_at": "2026-11-27T19:03:06.141Z",
+ "apify_credit_before": {
+  "at": "2026-11-27T19:03:06.141Z",
+  "apify_monthly_limit_usd": 5,
+  "apify_used_usd": 3.3637798969499384
+ },
+ "run_id": "rWYv7oG3lnNG81ULR",
+ "items": [
+  {
+   "id": "1012299950",
+   "title": "PICASSO-TILES Magnetic Tiles for Kids – STEM Building Blocks Set, Educational Construction Toy, Creative Learning Kit",
+   "url": "https://www.target.com/p/picasso-tiles-magnetic-tiles-for-kids-stem-building-blocks-set-educational-construction-toy-creative-learning-kit/-/A-1012299950",
+   "price_cents_before": 2699,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1010857111",
+   "title": "PICASSO-TILES 101PCS Magnetic Tiles for Kids - STEM Building Blocks, Construction Toy, Educational Creative Play Set Toddlers Preschool Boys & Girls",
+   "url": "https://www.target.com/p/picasso-tiles-101pcs-magnetic-tiles-for-kids-stem-building-blocks-construction-toy-educational-creative-play-set-toddlers-preschool-boys-girls/-/A-1010857111",
+   "price_cents_before": 2810,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1010857135",
+   "title": "PICASSO-TILES Mini Magnetic Race Track Tiles for Kids – 60PCS STEM Construction Building Blocks Toy Set with Racing Car, Travel Size",
+   "url": "https://www.target.com/p/picasso-tiles-mini-magnetic-race-track-tiles-for-kids-60pcs-stem-construction-building-blocks-toy-set-with-racing-car-travel-size/-/A-1010857135",
+   "price_cents_before": 3499,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1010857063",
+   "title": "PICASSO-TILES Magnetic Tiles for Kids with Tote Bag – 101PCS STEM Construction Building Blocks Educational Toy Set",
+   "url": "https://www.target.com/p/picasso-tiles-magnetic-tiles-for-kids-with-tote-bag-101pcs-stem-construction-building-blocks-educational-toy-set/-/A-1010857063",
+   "price_cents_before": 2464,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1012163740",
+   "title": "PICASSO-TILES Marble Run Magnetic Tiles for Kids – STEM Building Blocks Set, Educational Construction Toy, Creative Race Track Learning Kit",
+   "url": "https://www.target.com/p/picasso-tiles-marble-run-magnetic-tiles-for-kids-stem-building-blocks-set-educational-construction-toy-creative-race-track-learning-kit/-/A-1012163740",
+   "price_cents_before": 2939,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1012079482",
+   "title": "PICASSO-TILES Mangetic Cube Puzzle Set, STEM Educational Building Blocks Toy for Kids",
+   "url": "https://www.target.com/p/picasso-tiles-mangetic-cube-puzzle-set-stem-educational-building-blocks-toy-for-kids/-/A-1012079482",
+   "price_cents_before": 2200,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1012299951",
+   "title": "PICASSO-TILES Race Track Magnetic Tiles for Kids – STEM Building Blocks Set with 2 Racing Cars, Educational Construction Toy, Creative Play Kit",
+   "url": "https://www.target.com/p/picasso-tiles-race-track-magnetic-tiles-for-kids-stem-building-blocks-set-with-2-racing-cars-educational-construction-toy-creative-play-kit/-/A-1012299951",
+   "price_cents_before": 1504,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1011489802",
+   "title": "PICASSO-TILES Marble Run Magnetic Tiles for Kids - STEM Building Blocks Educational Toy",
+   "url": "https://www.target.com/p/picasso-tiles-marble-run-magnetic-tiles-for-kids-stem-building-blocks-educational-toy/-/A-1011489802",
+   "price_cents_before": 1665,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1012079648",
+   "title": "PICASSO-TILES Magnetic Cubes Building Blocks Set, 1.2\" Magnet Toy, Educational Construction & Sensory STEM Playset for Kids",
+   "url": "https://www.target.com/p/picasso-tiles-magnetic-cubes-building-blocks-set-1-2-magnet-toy-educational-construction-sensory-stem-playset-for-kids/-/A-1012079648",
+   "price_cents_before": 1786,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1010726180",
+   "title": "PICASSO-TILES Pete the Cat Magnetic Tiles Toy Set for Kids – 6PCS Educational STEM Building Blocks",
+   "url": "https://www.target.com/p/picasso-tiles-pete-the-cat-magnetic-tiles-toy-set-for-kids-6pcs-educational-stem-building-blocks/-/A-1010726180",
+   "price_cents_before": 1889,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1011037066",
+   "title": "PICASSO-TILES 80PCS Magnetic Tiles Diamond Series for Kids – STEM Construction Building Blocks Toy, Educational Creative Learning Play Set",
+   "url": "https://www.target.com/p/picasso-tiles-80pcs-magnetic-tiles-diamond-series-for-kids-stem-construction-building-blocks-toy-educational-creative-learning-play-set/-/A-1011037066",
+   "price_cents_before": 2527,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1010726169",
+   "title": "PICASSO-TILES Kids Fairytale Royal Princess Dress Up Toy Set with Tiara, Jewelry, Shoes & Fashion Accessories for Girls",
+   "url": "https://www.target.com/p/picasso-tiles-kids-fairytale-royal-princess-dress-up-toy-set-with-tiara-jewelry-shoes-fashion-accessories-for-girls/-/A-1010726169",
+   "price_cents_before": 2564,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1012079995",
+   "title": "PICASSO-TILES Magnetic Tiles Race Track for Kids – STEM Building Blocks Set with 2 Racing Cars, Educational Construction Toy, Creative Play Kit",
+   "url": "https://www.target.com/p/picasso-tiles-magnetic-tiles-race-track-for-kids-stem-building-blocks-set-with-2-racing-cars-educational-construction-toy-creative-play-kit/-/A-1012079995",
+   "price_cents_before": 2665,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1011621132",
+   "title": "PICASSO-TILES Magnetic Tiles for Kids – STEM Building Blocks Set, Educational Construction Toy, Creative Learning Magnet Kit for Toddlers",
+   "url": "https://www.target.com/p/picasso-tiles-magnetic-tiles-for-kids-stem-building-blocks-set-educational-construction-toy-creative-learning-magnet-kit-for-toddlers/-/A-1011621132",
+   "price_cents_before": 1649,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  },
+  {
+   "id": "1010857109",
+   "title": "PICASSO-TILES Magnetic Tile Building Blocks Ferris Wheel Rotating Playset, Multi-Structure 3D Construction STEM Learning Toy for Kids Ages 3+",
+   "url": "https://www.target.com/p/picasso-tiles-magnetic-tile-building-blocks-ferris-wheel-rotating-playset-multi-structure-3d-construction-stem-learning-toy-for-kids-ages-3/-/A-1010857109",
+   "price_cents_before": 2999,
+   "read_at": "2026-11-27T19:03:06.141Z"
+  }
+ ]
+}

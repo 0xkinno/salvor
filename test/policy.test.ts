@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { parseCents, fmt, diffCents, MoneyError } from "../src/policy/money.ts";
 import { endOfDay, addDays, zonedInstant, localDate } from "../src/policy/time.ts";
 import { evaluate, applicableClauses, PolicyError, type Line, type TypedListing } from "../src/policy/engine.ts";
+import { CLAUSES } from "../src/policy/clauses.ts";
 import { gate } from "../src/policy/gate.ts";
 
 const line = (o: Partial<Line> = {}): Line => ({ paid_cents: 12999, qty: 1, purchased_date: "2026-11-09", retailer: "target", ...o });
@@ -137,10 +138,11 @@ test("out of stock is noted but not blocked", () => {
   assert.equal(v.status, "owed");
   assert.match(v.reasons.join(" "), /out of stock/);
 });
-test("best buy is held while its clause is unverified", () => {
+test("best buy claims carry the secondary source label and still need a person", () => {
   const v = evaluate(line({ retailer: "bestbuy" }), listing({ seller: "Best Buy" }), at);
-  assert.equal(v.status, "hold");
-  assert.match(v.reasons.join(" "), /No verified bestbuy/);
+  assert.notEqual(v.status, "hold");
+  assert.match(CLAUSES["bestbuy-price-match"].title, /secondary source/);
+  assert.match(CLAUSES["bestbuy-price-match"].window_note, /secondary source/);
 });
 
 // engine: must raise

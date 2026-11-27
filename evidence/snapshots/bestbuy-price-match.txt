@@ -1,0 +1,61 @@
+SOURCE: https://www.bestbuy.com/site/price-match-guarantee/best-buy-price-match-guarantee/pcmcat297300050000.c
+READ: 2026-11-27T19:11:27.808Z through Apify website-content-crawler
+
+Learn about Best Buy Price Match Guarantee
+Does Best Buy price match Marketplace Product prices?
+No. The Best Buy Price Match Guarantee does not apply to Marketplace Product prices on BestBuy.com and all other websites. 
+I’m about to make a purchase from a Marketplace Seller on BestBuy.com. Will Best Buy price match the price prior to purchase if Best Buy, a Qualified Competitor, or a Marketplace Seller is selling it for a lower price?
+No. The Best Buy Price Match Guarantee does not apply to Marketplace Product prices on BestBuy.com and all other websites. 
+I made a purchase from a Marketplace Seller on BestBuy.com. Will Best Buy price match the price post purchase if Best Buy, a Qualified Competitor, or a Marketplace Seller is selling it for a lower price?
+No. The Best Buy Price Match Guarantee does not apply to Marketplace Product prices on BestBuy.com and all other websites. 
+How do I request a price match from BestBuy.com?
+When making a purchase, or during the return and exchange period, price match requests from BestBuy.com are handled via online chat or phone. Tell us about the lower price that is still in effect that you want us to price match. We will then review and verify the price match request. By phone, call 1-888-BEST BUY (1-888-237-8289) for a BestBuy.com price match request. Online chat price match requests must be made by the product purchaser. We reserve the right to limit price match online chat requests. BestBuy.com price match requests cannot be completed in our stores or via email. Shipping/delivery charges will not be included in the price comparison. Purchases from a smartphone application/website, BestBuy.com orders with Store Pickup, and orders from the kiosk outside a Best Buy store are considered BestBuy.com purchases for purposes of the Price Match Guarantee. A price match request after a purchase for items shipped to the customer can be requested only by the purchaser (the person who was listed in the “Bill To” section of the order). If you have already received or picked up your order, you can check price match availability on your Order Details page by clicking the See details link. 
+How do I request a price match from a Best Buy or Pacific Sales retail store?
+When making a purchase, or during the return and exchange period, talk to a Customer Specialist or go to the Customer Service desk for help with your price match request. Tell us about the lower price that is still in effect that you want our retail store to price match. We will then review and verify the price match request. A price match request after a purchase at a store for items shipped to the customer can only be requested by the purchaser (the person who was listed in the “Bill To” section of the order). 
+Do you match the prices of a Warehouse club?
+Yes. We do match the prices of Warehouse clubs as long as the Warehouse club is a Qualfied Competitor, has an identical product that’s immediately available, and all other price match criteria are met. If the Qualfied Competitor Warehouse club website price requires a membership ID or log in to view, price match is available only in our store (not via phone or chat) and must be a live offer (not a screenshot). 
+Do you match the price if it results in a price being below your cost on a product?
+Yes. So long as the price match requested is on an identical product that’s immediately available and all other price match criteria are met. 
+After my purchase can I price match more than once during my return and exchange period?
+Yes. If all other price match criteria are met, you can price match multiple times during the return and exchange period. 
+Will you price match with the Best Buy mobile app?
+Yes, so long as the price on the mobile app is available to all customers. 
+Are Qualified Competitors’ services eligible for price matching?
+No. Due to the differences in services being performed, we do not match Qualified Competitors’ service prices. This includes, but is not limited to, services such as delivery, installation and computer services. 
+How does your price match policy apply to purchases made using Store Pickup?
+If you purchase a new item at BestBuy.com (which includes a purchase from a smartphone app/website, BestBuy.com orders with Store Pickup, and orders from the kiosk outside a Best Buy store) and if the item is offered at a lower price in the store or at BestBuy.com when you pick it up, you may request a price match. Some exclusions apply. 
+How does your price match policy cover an item scheduled for delivery?
+If we drop the price of a Best Buy item we sold you at any time before its scheduled delivery date, we will refund 100% of the difference, including tax. To receive the lower price, you must call 1-888-BEST BUY (1-888-237-8289). Price matching cannot be processed in our stores or via email. If you see a lower price on our website or at our store near you, all conditions apply from our standard Price Match Guarantee. 
+What if the Qualified Competitor does not have the item in stock or has limited quantities of the product?
+Sometimes a Qualified Competitor will advertise a product in ads and on its website as having limited quantities in stock. If the item is out of stock or the Qualified Competitor has advertised limited quantities of an item, it is not eligible for price matching. Likewise, if we have a product that is advertised as being limited in quantity it will not be eligible for price matching. 
+Does adding My Best Buy Plus™ or My Best Buy Total™ to my product purchase make my purchase a bundle purchase?
+No. The addition of My Best Buy Plus or My Best Buy Total to your product purchase does not make the purchase a bundle purchase. 
+Does Best Buy match a My Best Buy™, My Best Buy Plus or My Best Buy Total (“Membership Program”) price for someone who is not a My Best Buy, My Best Buy Plus or My Best Buy Total member?
+No. We do not price match Membership Program prices for non-members. 
+Is the price match policy different in Puerto Rico?
+Yes. Best Buy Puerto Rico stores have their own Price Match Guarantee. The Best Buy Puerto Rico Price Match Guarantee terms are posted in Puerto Rico stores. 
+Is the Price Match Guarantee the same for purchases in Best Buy from stores within a store (Best Buy Mobile, Pacific Kitchen and Home, Magnolia Design Center and Magnolia Home Theater)?
+Yes. The Price Match Guarantee terms apply to a purchase from any of our stores within a store. The Price Match Guarantee applies to BestBuy.com purchase but may vary from other Best Buy owned or branded websites. Please see each specific individual website for their terms and conditions. 
+Do you price match “free gift with purchase” offers?
+No. We do not price match “free gift with purchase” offers. This includes free gift card with purchase offers. 
+Do you price match offers with financing?
+No. We do not match Qualified Competitors’ financing offers, or financing offers that differ between our stores and BestBuy.com. But you can buy a product, get a price match, and still use our low or no interest financing plans on your original purchase. We also do not price match to a Qualified Competitors’ price that can be received only when using the Qualified Competitor’s credit card. 
+Do you match Qualified Competitors’ trade-in value and offers on trade-in products?
+No. We do not match our Qualified Competitors’ trade-in value and offers on trade-in products. 
+How does the Price Match Guarantee apply to coupons?
+We do not match Qualified Competitors’ coupons. Also, customers can either use a coupon or price match to a lower price, but not both. We do not allow a coupon to be used on a product that has a price match. 
+How does the Price Match Guarantee apply to sales tax?
+We match the pre-tax price. We do not take sales tax into consideration for price match purposes. We will not override sales tax to match a Qualified Competitor’s price. 
+How does your price match policy apply to pre-orders?
+If the price of a pre-order item drops at the time of shipment, you will automatically be charged the lower price. 
+How do I show “proof” of price?
+The best way to show proof of price is to bring in the Qualified Competitor’s current ad or their website address. We may call the Qualified Competitor’s retail store or check their website address to verify the lower price and availability of the item. 
+How does your price match policy apply to a cell phone purchased with an installment billing plan?
+If you have purchased a cell phone on an installment billing plan from Best Buy and we lower our installment billing price during the return and exchange window, you have some options. You may bring your phone to a Best Buy store, and we will research the pricing history on your purchased phone to see if you qualify for a price match. If you qualify, you have two options for a price match. The first option is to receive a Best Buy Gift Card for the difference between the overall installment billing price you agreed to pay for the phone and the current installment billing price on the phone. For example, if your installment billing plan calls for you to pay $600 and the phone is now available for $500, we will provide you with a $100 Best Buy Gift Card. The second option is that you may return your purchased phone along with the contract and purchase a new phone with a new contract at the discounted price. Please note that a return, even with a repurchase, requires the deletion of all data on the phone, and you are responsible for all fees associated with a return. When calculating the original purchase price of the phone, all offers, including two-for-one and gift card offers, are considered. There is a limit of one price match per phone. 
+If Best Buy Business or Best Buy Education has a lower price, will you match it?
+No. Whether due to a bulk purchase order or a specific promotion, Best Buy Business or Best Buy Education may have a lower price on a product. We do not match the price offered to Best Buy Business or to Best Buy Education customers. 
+Do you match prices for liquidation or going out of business sales?
+No. Items in a liquidation or going out of business sale are clearance items. Clearance items are excluded from the Price Match Guarantee. 
+Do you price match if my state has a sales tax holiday and I made a purchase prior to the tax holiday?
+No. We would not price match during a tax holiday event if the pre-tax price during the event is the same, or higher, than the pre-tax purchase price. If you want to take advantage of a sales tax holiday, please wait and make your purchase during the sales tax holiday. 
+We may run tests of the Price Match Guarantee in select locations and may amend these terms at any time. Puerto Rico stores have their own Price Match Guarantee posted inside the stores and are excluded from matching online and app prices. Effective date: October 30, 2026

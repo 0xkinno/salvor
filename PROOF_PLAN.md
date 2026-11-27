@@ -42,3 +42,16 @@ The matcher was revised twice after measurements, and each earlier run is kept i
 ## Amendment 3 (2026-11-27 12:03 UTC, before any new reading was looked at)
 
 Black Friday is today, so the watch cadence changes from every 6 hours to every 4 hours on Friday and Saturday, then every 6 hours on Sunday, and midnight and 06:00 UTC on Monday, after which the watch stops. Reason: the price drops this study looks for are most likely on these days. Cost: a 24-item run is $0.18. The upgrade plan suggested 4 hours until Monday, which would leave $0.79 of the free $5 credit; the mixed cadence is about 14 more runs (about $2.50) and leaves enough for the ranking study and the live try page. The first four readings (three unattended, one manual baseline; 24 items, no price changes) were ingested before this change and are unaffected.
+
+
+## Amendment 4 (Nov 27, 2026, 19:5x UTC, before any result below was read)
+
+Why: the 24-item watch began on Nov 26, after Target's Black Friday prices went live on Nov 22, so it cannot show a drop. Target also runs a Deal of the Day (Nov 1 to Dec 24, previewed a day ahead). A price drop Target chooses is observable on schedule and was not chosen by us.
+
+Method: for each previewed deal day, the matching items are read from Target's own search page through Apify before the deal goes live, and the list (item ids, titles, urls, prices before) is frozen with its sha256 in `evidence/labels/dotd-<date>.json` and `.sha256`. A daily Apify task (`salvor-dotd`, 12:00 UTC, after the deal begins at midnight Central) re-reads exactly those product pages. `scripts/ingest-dotd.mjs` pairs before and after; `scripts/facts.mjs` reports items read before and after, items that went lower, the owed amount per unit to a buyer at the before price under the holiday clause, the median, and the largest single drop with its item id. A frozen list is never edited.
+
+Frozen so far: Nov 28 (Picasso Tiles, 15 items) and Nov 29 (Disney toys, 12 items). The Nov 30 and Cyber Monday previews are added the same way if posted before Monday 08:00 UTC.
+
+Budget (Apify free plan, $5 a month): used $3.48 at freeze time, so about $1.5 remains. One deal read of 27 pages is about $0.2, once a day for three days. The original 24-item watch drops to every 12 hours on Friday to Sunday and one Monday run. This is a measured limit, stated here so no reading is silently dropped.
+
+Reporting rules: a drop counts only if the after reading is lower than the frozen before price for the same item id. Zero drops is reported as zero. The 24-item watch stays as its own line: no change since Nov 26, because Black Friday prices went live on Nov 22, before the watch began.

@@ -29,10 +29,11 @@ These lines are generated from `docs/FACTS.json`, which is generated from run fi
 - **End to end, on the real platform:** an Apify schedule knocked the home Sprite, which woke a receipt Sprite; it read a live Target price, matched the listing with Pinecone, wrote a checkpointed evidence file, and AgentMail delivered the claim to the owner's inbox. A settled receipt's Sprite was then retired with its bill recorded, and the next receipt was born.
 
 <!-- FACTS:START -->
-- **Black Friday watch:** 4 runs over 20 hours across 24 items; 0 changed price so far (0 cheaper than at first sight). The schedule keeps running through Monday.
+- **Original 24-item watch:** 4 runs over 20 hours across 24 items; 0 changed price since Nov 26, because Black Friday prices went live on Nov 22, before the watch began. It keeps running through Monday.
 - **Early study (real public data):** 24 items read, 0.0% cheaper than the listed price at the time.
 - **Same-item decision at tau 0.9:** 0 wrong claims of 7 on the curated test split (0.0%), 46.2% missed, asked a person on 53.3% of lines.
 - **Hard ranking set:** 61 receipt lines, each against 137 real listings; Pinecone rerank first place 91.8% (top three 96.7%), word overlap 90.2% (96.7%). 39 more lines were not ranked because Pinecone's monthly free rerank limit ran out; they are listed by id on /proof.
+- **Cost per receipt:** $0.000005 for 1 retired Sprite, measured by the Sprite itself because the platform usage meter returned no records on the free credit (labelled as such).
 - **Break campaign:** 9 of 9 cases passed, including a poisoned page and a swapped listing; failures are listed on /proof.
 <!-- FACTS:END -->
 

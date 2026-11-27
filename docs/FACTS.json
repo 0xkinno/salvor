@@ -8,6 +8,7 @@
     "median_owed_cents": null,
     "misses": []
   },
+  "dotd": null,
   "p2": {
     "runs_completed": 4,
     "runs_total": 5,
@@ -132,9 +133,9 @@
     }
   },
   "p4": {
-    "receipts_metered": 0,
-    "per_receipt_usd": null,
-    "per_receipt_per_day_usd": null,
+    "receipts_metered": 1,
+    "per_receipt_usd": 0.000004990337431990071,
+    "per_receipt_per_day_usd": 0.000006154573970624866,
     "partial_rows": 0
   },
   "p5": [
@@ -204,19 +205,22 @@
   ],
   "hero": null,
   "sources": {
+    "dotd.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "memory.jsonl": "b84132e8ec3451a4742ef22b69cf48b5179812e797300a4c13e518a622e5278a",
     "ollama.jsonl": "8111ee9699d4d147664dbace68da8369ce7270a51235c0f16e1e0bf3ef4d74e0",
     "p1.jsonl": "762385787495b87d25ecf11e76ceb058cc2a7c9299400ff8842258afd7d5a50f",
     "p2.jsonl": "b77c7fe6f0b8295688bbd9d386b05aa1d1a93f4e30dc8d8a016961aaa431afde",
     "p3.jsonl": "e8546638db520d5ae3f4b6433716cda41326ff695be3de6362a6a9454cf83ed3",
     "p3b.jsonl": "6e61d50ecc46c47905e7a6e685baa9a00f03733780a9932e1bd4fb3d5b83fa75",
     "p3c.jsonl": "7b79a911fd39a270cb2fb736de4c6ee3e52eefbebc695640d2efb314fccd616b",
+    "p4.jsonl": "5b68ebba46e24f8479e77837a9f4ab560af64f7fc33b4a2d47fe7c2fc43c5ef9",
     "p5.jsonl": "611323a89503afc213d6a8f17706915e5836fed2865f0c29284271d10f87beb7",
     "watch.jsonl": "8c71278822ebc4bca59ef9115e8d53511e9ea4d571c201910667735ca7443fb4"
   },
   "n_items": 24,
   "owed_total_cents": 0,
   "share_cheaper": 0,
-  "cost_per_receipt_usd": null,
+  "cost_per_receipt_usd": 0.000004990337431990071,
   "wrong_claim_rate": 0,
-  "generated_at": "2026-11-27T15:26:42.794Z"
+  "generated_at": "2026-11-27T19:14:16.116Z"
 }

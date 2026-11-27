@@ -1,0 +1,98 @@
+{
+ "deal_date": "2026-11-29",
+ "deal": "Disney Mickey Mouse toys",
+ "source": "Target's own search page, read through Apify before the deal went live",
+ "frozen_at": "2026-11-27T19:06:41.260Z",
+ "apify_credit_before": {
+  "at": "2026-11-27T19:06:41.260Z",
+  "apify_monthly_limit_usd": 5,
+  "apify_used_usd": 3.4785128056530854
+ },
+ "run_id": "2fYkqEthd6owocw67",
+ "items": [
+  {
+   "id": "82609511",
+   "title": "Disney Mickey Mouse and Friends Bath Finger Puppets 5pk",
+   "url": "https://www.target.com/p/disney-mickey-mouse-and-friends-bath-finger-puppets-5pk/-/A-82609511",
+   "price_cents_before": 599,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "93615986",
+   "title": "Disney Junior Mickey Mouse Deluxe Clubhouse Doll Playset, 10pc Character Figures with Clubhouse Accessories for Pretend Play",
+   "url": "https://www.target.com/p/mickey-mouse-deluxe-clubhouse-doll-playset-10pk/-/A-93615986",
+   "price_cents_before": 4999,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "95009619",
+   "title": "Disney Mickey Mouse 10\" HugMees",
+   "url": "https://www.target.com/p/disney-mickey-mouse-10-34-hugmees/-/A-95009619",
+   "price_cents_before": 999,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "89959956",
+   "title": "Disney Jr. Minnie Mouse Ring Me Rotary Style Phone with Lights and Sounds Pink",
+   "url": "https://www.target.com/p/minnie-mouse-rotary-phone/-/A-89959956",
+   "price_cents_before": 1189,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "81967687",
+   "title": "Disney Princess Style Collection My Trendy Puppy & Tote",
+   "url": "https://www.target.com/p/disney-princess-style-collection-my-trendy-puppy-38-tote/-/A-81967687",
+   "price_cents_before": 1599,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "94987159",
+   "title": "Mickey Mouse Barnyard Playset",
+   "url": "https://www.target.com/p/mickey-mouse-barnyard-playset/-/A-94987159",
+   "price_cents_before": 3499,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "95293041",
+   "title": "Disney Stitch Holiday Medium Value Plush - Stitch",
+   "url": "https://www.target.com/p/disney-stitch-holiday-medium-value-plush-stitch/-/A-95293041",
+   "price_cents_before": 500,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "89959948",
+   "title": "Disney Junior Minnie Mouse Bowdazzling Yacht Playset: Plastic Boat Playset with Figures & Accessories",
+   "url": "https://www.target.com/p/minnie-mouse-bowdazzle-yacht/-/A-89959948",
+   "price_cents_before": 2999,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "95270901",
+   "title": "The Elf on the Shelf Disney Mickey Mouse Elf Travel Set",
+   "url": "https://www.target.com/p/the-elf-on-the-shelf-disney-mickey-mouse-elf-travel-set/-/A-95270901",
+   "price_cents_before": 1299,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "93615985",
+   "title": "Disney Jr. Oh Toodles! 11\" Mickey Mouse Interactive Plush Toy 3 Modes of Play Ages 3 and Up",
+   "url": "https://www.target.com/p/mickey-mouse-oh-toodles-feature-plush-stuffed-animal/-/A-93615985",
+   "price_cents_before": 2999,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "94987152",
+   "title": "Minnie Mouse Blind Capsules Mini Figures",
+   "url": "https://www.target.com/p/minnie-mouse-blind-capsules-mini-figures/-/A-94987152",
+   "price_cents_before": 499,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  },
+  {
+   "id": "93615995",
+   "title": "Minnie Mouse Deluxe Pampered Doll Pet Animal Figure: No Articulation Plastic Action Figures Set",
+   "url": "https://www.target.com/p/minnie-mouse-deluxe-pampered-doll-pet-animal-figure/-/A-93615995",
+   "price_cents_before": 2799,
+   "read_at": "2026-11-27T19:06:41.260Z"
+  }
+ ]
+}

@@ -45,6 +45,13 @@ function rates(origin, who) {
   const asked = set.filter((r) => !(conf(r) >= pick.tau)).length;
   return { n: set.length, claims: claims.length, wrong_claims: wrong, wrong_claim_rate: claims.length ? wrong / claims.length : null, truth: truth.length, missed, missed_claim_rate: truth.length ? missed / truth.length : null, ask_rate: asked / set.length };
 }
+const dotdAll = of("dotd_read");
+const dotdItems = [...new Map(dotdAll.map((r) => [r.item, r])).values()];   // latest per item is not needed: use the lowest after reading per item
+const dotdBest = new Map(); for (const r of dotdAll) { const c = dotdBest.get(r.item); if (!c || r.after_cents < c.after_cents) dotdBest.set(r.item, r); }
+const dotdRows = [...dotdBest.values()], dotdLower = dotdRows.filter((r) => r.after_cents < r.before_cents);
+const dotdDrops = dotdLower.map((r) => r.before_cents - r.after_cents).sort((a, b) => a - b);
+const dotdBig = dotdLower.sort((a, b) => (b.before_cents - b.after_cents) - (a.before_cents - a.after_cents))[0] ?? null;
+const dotd = dotdRows.length ? { items_read_before_and_after: dotdRows.length, items_lower: dotdLower.length, owed_per_unit_total_cents: dotdDrops.reduce((a, b) => a + b, 0), median_owed_cents: median(dotdDrops), largest_drop: dotdBig ? { id: dotdBig.item, title: dotdBig.title, before_cents: dotdBig.before_cents, after_cents: dotdBig.after_cents, drop_cents: dotdBig.before_cents - dotdBig.after_cents, deal_date: dotdBig.deal_date, run_id: dotdBig.run_id } : null, last_read_at: dotdAll.map((r) => r.after_run_at).sort().at(-1) } : null;
 const ranks = of("p3_rank").filter((r) => !r.failed);
 const hardAll = of("p3_hard"), hard = hardAll.filter((r) => !r.failed);
 const hardRate = (k) => (hard.length ? hard.filter((r) => r[k]).length / hard.length : null);
@@ -70,6 +77,7 @@ const biggest = cheaperItems.length ? cheaperItems.reduce((a, b) => (b.first_cen
 const facts = {
   empty: rows.length === 0,
   p1: { n_listed: p1.length, n_items: usable.length, share_cheaper: usable.length ? cheaper.length / usable.length : null, owed_total_cents: owed.reduce((a, b) => a + b, 0), median_owed_cents: median(owed), misses },
+  dotd,
   p2: { runs_completed: runs.length, runs_total: allRuns.length, items_watched: p2items.length, items_changed: changedItems.length, items_cheaper_now: cheaperItems.length, owed_total_cents: owedP2.reduce((a, b) => a + b, 0), median_owed_cents: median(owedP2), largest_drop: biggest ? { id: biggest.id, from_cents: biggest.first_cents, to_cents: biggest.last_cents, drop_cents: biggest.first_cents - biggest.last_cents } : null, drops_seen: runs.reduce((s, r) => s + (r.drops ?? 0), 0), first_run_at: allRuns[0]?.at ?? null, last_run_at: allRuns.at(-1)?.at ?? null, hours_watched: allRuns.length > 1 ? Math.round((new Date(allRuns.at(-1).at) - new Date(allRuns[0].at)) / 3600000) : 0 },
   p3: pick ? { hard: hardSummary, rank: ranks.length ? { n: ranks.length, candidates: ranks[0].candidates, failed: of("p3_rank").length - ranks.length, pinecone_top1: rankRate("pinecone_top1"), pinecone_top3: rankRate("pinecone_top3"), lexical_top1: rankRate("lexical_top1"), lexical_top3: rankRate("lexical_top3") } : null, failed_pairs: of("p3_fail").length, tau: pick.tau, tau_owed: pick.tau_owed, chosen_on: pick.chosen_on, tune_n: pick.tune_n, curated: { full: rates("curated", "full"), rules: rates("curated", "rules") }, wild: { full: rates("wild", "full"), rules: rates("wild", "rules") } } : null,
   p4: { receipts_metered: costs.length, per_receipt_usd: costs.length ? costTotal / costs.length : null, per_receipt_per_day_usd: costDays ? costTotal / costDays : null, partial_rows: costs.filter((c) => c.partial).length },
@@ -95,11 +103,12 @@ function injectReadme(f) {
   const h = f.p3?.hard;
   const lines = f.empty ? [] : [
     f.hero ? `- **End to end, on the real platform:** a webhook woke the home Sprite, which woke a receipt Sprite; it read a live Target price (${d(f.hero.now_cents)} against ${d(f.hero.paid_cents)} paid for ${f.hero.item}), matched the listing with Pinecone, checkpointed the evidence and AgentMail delivered the claim.` : null,
-    f.p2.runs_completed ? `- **Black Friday watch:** ${f.p2.runs_completed} runs over ${f.p2.hours_watched} hours across ${f.p2.items_watched} items; ${f.p2.items_changed} changed price so far (${f.p2.items_cheaper_now} cheaper than at first sight). The schedule keeps running through Monday.` : null,
+    f.dotd ? `- **Deal of the Day (Target's own price drops, not ours):** ${f.dotd.items_read_before_and_after} items read before and after their deal; ${f.dotd.items_lower} went lower, ${d(f.dotd.owed_per_unit_total_cents)} owed per unit in total to a buyer at the before price, median ${d(f.dotd.median_owed_cents)}${f.dotd.largest_drop ? `; the largest single drop is ${d(f.dotd.largest_drop.drop_cents)} on item ${f.dotd.largest_drop.id}` : ""}.` : null,
+    f.p2.runs_completed ? `- **Original 24-item watch:** ${f.p2.runs_completed} runs over ${f.p2.hours_watched} hours across ${f.p2.items_watched} items; ${f.p2.items_changed} changed price since Nov 26, because Black Friday prices went live on Nov 22, before the watch began. It keeps running through Monday.` : null,
     f.p1.n_items ? `- **Early study (real public data):** ${f.p1.n_items} items read, ${p(f.p1.share_cheaper)} cheaper than the listed price at the time.` : null,
     has(f.p3?.curated?.full?.wrong_claim_rate) ? `- **Same-item decision at tau ${f.p3.tau}:** ${f.p3.curated.full.wrong_claims} wrong claims of ${f.p3.curated.full.claims} on the curated test split (${p(f.p3.curated.full.wrong_claim_rate)}), ${p(f.p3.curated.full.missed_claim_rate)} missed, asked a person on ${p(f.p3.curated.full.ask_rate)} of lines.` : null,
     h ? `- **Hard ranking set:** ${h.ranked} receipt lines, each against ${h.candidates} real listings; Pinecone rerank first place ${p(h.pinecone_top1)} (top three ${p(h.pinecone_top3)}), word overlap ${p(h.lexical_top1)} (${p(h.lexical_top3)}). ${h.not_ranked.length} more lines were not ranked because Pinecone's monthly free rerank limit ran out; they are listed by id on /proof.` : null,
-    f.p4.receipts_metered ? `- **Cost per receipt:** ${u(f.p4.per_receipt_usd)} per receipt over ${f.p4.receipts_metered} retired Sprites.` : null,
+    f.p4.receipts_metered ? `- **Cost per receipt:** $${f.p4.per_receipt_usd.toFixed(6)} for ${f.p4.receipts_metered} retired Sprite, measured by the Sprite itself because the platform usage meter returned no records on the free credit (labelled as such).` : null,
     f.p5.length ? `- **Break campaign:** ${f.p5.filter((c) => c.pass).length} of ${f.p5.length} cases passed, including a poisoned page and a swapped listing; failures are listed on /proof.` : null,
   ].filter(Boolean);
   const block = lines.length ? lines.join("\n") : "_Numbers appear here as soon as the first run files exist._";

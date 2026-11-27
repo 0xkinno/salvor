@@ -59,3 +59,12 @@ README come from `docs/FACTS.json`.
 - [ ] `/try` live test on the pooled Sprite
 - [ ] Video from the tour render (`?tour=1&render=1`)
 - [ ] Posts and form: owner approval, then submit and tag
+
+
+## Upgrade V3
+- [x] A: Deal of the Day watch: `scripts/dotd.mjs`, frozen lists with hashes (`evidence/labels/dotd-*.json`), `scripts/ingest-dotd.mjs`, facts, PROOF_PLAN amendment 4, 24-item watch reduced to every 12 hours
+- [ ] A: first deal readings after the deal goes live (task `salvor-dotd`, first run Nov 28 12:00 UTC); then `node scripts/ingest-dotd.mjs && node scripts/facts.mjs`
+- [x] B: Best Buy clause from its page plus labelled secondary source; Best Buy deal items could not be read (FINDINGS Q12)
+- [x] D: P4 recorded from the retired Sprite (`evidence/runs/p4.jsonl`, labelled); `/try` live test done (ed46287 and later)
+- [ ] D: the 39 unranked hard-set lines: Pinecone's monthly rerank limit resets Dec 1, or a second free project key
+- [ ] C and F: the video is rendered (`reference/video/salvor_demo.mp4`); upload and approval are the owner's

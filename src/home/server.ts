@@ -171,7 +171,7 @@ async function statusView() {
       substitutes: [
         ...(gw.mode === "local-emulator" ? [{ what: "all partner and Sprites calls", why: "running against the local test emulator, not the platform" }] : []),
         ...(sprites.credentialOnBox() ? [{ what: "Sprites API access", why: "the connector route was not available, so a scoped token is held on slv-home" }] : []),
-        ...(!CLAUSES["bestbuy-price-match"].verified ? [{ what: "Best Buy claims", why: "the policy page was not verified, so Salvor holds those claims instead of estimating" }] : []),
+        { what: "Best Buy holiday dates", why: "Best Buy's page does not state them; they come from a secondary source and say so on every Best Buy claim" },
       ],
     },
   };
