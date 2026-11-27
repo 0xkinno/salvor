@@ -119,6 +119,10 @@ try {
   else if (cmd === "try") {
     const [url, paid, date, retailer] = args;
     out(await trynew(url, Number(paid), date, retailer === "bestbuy" ? "bestbuy" : "target"));
+  } else if (cmd === "recall") {
+    // Household memory: the closest human-confirmed item for a receipt line, from Pinecone (read connection).
+    const { recallItem } = await import("../connectors/pinecone.ts");
+    out({ recalled: await recallItem(args.join(" ")) });
   } else if (cmd === "selftest") out(await selftest());
   else if (cmd === "tamper") out(tamper());
   else if (cmd === "whoami") out(whoami());

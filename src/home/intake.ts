@@ -5,6 +5,7 @@
 import { db, event, kvGet, kvSet } from "./db.ts";
 import * as mail from "../connectors/mail.ts";
 import { addReceipt, answerAsk, type NewReceipt } from "./ledger.ts";
+import { rememberConfirmed } from "./memory.ts";
 import { parseCents } from "../policy/money.ts";
 
 const TARGET_URL = /https:\/\/www\.target\.com\/p\/[^\s"'<>)]*A-\d{6,10}[^\s"'<>)]*/gi;
@@ -89,7 +90,7 @@ export async function pollMail(inbox: string): Promise<PollResult> {
     const text = (full.text ?? full.html ?? "").slice(0, 20000);
     const reply = parseReply(full.subject ?? "", text);
     if (reply) {
-      try { answerAsk(reply.ask, reply.answer); out.answers.push(`${reply.ask}:${reply.answer}`); } catch (e) { out.skipped.push(String((e as Error).message)); }
+      try { const lid = answerAsk(reply.ask, reply.answer); if (reply.answer === "same") void rememberConfirmed(lid); out.answers.push(`${reply.ask}:${reply.answer}`); } catch (e) { out.skipped.push(String((e as Error).message)); }
       continue;
     }
     const rec = parseOrderEmail(text);

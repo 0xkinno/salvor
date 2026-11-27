@@ -1,0 +1,2 @@
+{"kind":"ollama_vision","model":"moondream","n_images":10,"valid_json":2,"store_correct":2,"date_correct":1,"prices_correct":0,"prices_total":18,"lines_correct":0,"lines_total":18,"seconds_per_image":31.8,"host":"slv-home, 8 CPU, 8 GB, no GPU","measured_at":"2026-11-27T14:02:27.966Z"}
+{"kind":"ollama_vision_attempt","model":"gemma3:4b","host":"slv-home, 8 CPU, 8 GB, no GPU","outcome":"slv-home restarted (uptime reset) while the model was loading, before any image was read","measured_at":"2026-11-27T14:06:00Z"}

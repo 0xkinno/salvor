@@ -6,6 +6,7 @@ import { closeDb } from "../src/home/db.ts";
 let base = "", srv: any;
 before(async () => {
   process.env.SALVOR_DB = ":memory:";
+  delete process.env.SALVOR_APIFY_TASK;   // the test must not depend on the deployment's environment
   process.env.SALVOR_HOUSEHOLD_TOKEN = "household-test-token";
   process.env.SALVOR_HOOK_SECRET = "hook-test-secret";
   process.env.SALVOR_TICK_SECRET = "tick-test-secret";

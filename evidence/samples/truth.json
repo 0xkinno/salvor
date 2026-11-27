@@ -1,0 +1,144 @@
+[
+ {
+  "file": "evidence/samples/receipt-01.png",
+  "store": "Target",
+  "date": "2026-11-12",
+  "items": [
+   {
+    "text": "GOURMIA DIGITAL 3QT AIR FRYER",
+    "price_cents": 4999
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-02.png",
+  "store": "Target",
+  "date": "2026-11-08",
+  "items": [
+   {
+    "text": "LEGO BOTANICALS ROCKING PLANTS",
+    "price_cents": 5999
+   },
+   {
+    "text": "NATURE VALLEY GRANOLA 12CT",
+    "price_cents": 549
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-03.png",
+  "store": "Best Buy",
+  "date": "2026-11-15",
+  "items": [
+   {
+    "text": "SONY WH-1000XM5 HEADPHONES",
+    "price_cents": 34999
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-04.png",
+  "store": "Target",
+  "date": "2026-11-19",
+  "items": [
+   {
+    "text": "LEVOIT VORTEXIQ PRO CORDLESS",
+    "price_cents": 19999
+   },
+   {
+    "text": "DAWN DISH SOAP 19OZ",
+    "price_cents": 379
+   },
+   {
+    "text": "SHARPIE 12PK",
+    "price_cents": 899
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-05.png",
+  "store": "Best Buy",
+  "date": "2026-11-03",
+  "items": [
+   {
+    "text": "APPLE AIRPODS PRO 2",
+    "price_cents": 22900
+   },
+   {
+    "text": "USB-C CABLE 6FT",
+    "price_cents": 1999
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-06.png",
+  "store": "Target",
+  "date": "2026-11-21",
+  "items": [
+   {
+    "text": "CUISINART FRENCH DOOR AIR FRYER",
+    "price_cents": 15999
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-07.png",
+  "store": "Target",
+  "date": "2026-11-10",
+  "items": [
+   {
+    "text": "KEURIG K-SUPREME PLUS",
+    "price_cents": 12999
+   },
+   {
+    "text": "FOLGERS COFFEE 30OZ",
+    "price_cents": 1299
+   },
+   {
+    "text": "COFFEE MATE 32OZ",
+    "price_cents": 429
+   },
+   {
+    "text": "PAPER TOWELS 6CT",
+    "price_cents": 1199
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-08.png",
+  "store": "Best Buy",
+  "date": "2026-11-17",
+  "items": [
+   {
+    "text": "SAMSUNG 55IN CLASS QLED TV",
+    "price_cents": 49999
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-09.png",
+  "store": "Target",
+  "date": "2026-11-14",
+  "items": [
+   {
+    "text": "INSTANT POT DUO 6QT",
+    "price_cents": 7999
+   },
+   {
+    "text": "OVEN MITT",
+    "price_cents": 1299
+   }
+  ]
+ },
+ {
+  "file": "evidence/samples/receipt-10.png",
+  "store": "Target",
+  "date": "2026-11-05",
+  "items": [
+   {
+    "text": "CHEFMAN 1.8L ELECTRIC KETTLE",
+    "price_cents": 3499
+   }
+  ]
+ }
+]

@@ -21,9 +21,9 @@ const WANT = [
   // The dedicated Apify connector supports only run details and dataset reads. Listing a task's runs (for the live watch
   // summary and the backup tick) needs a named custom connector, pinned to exactly those two paths.
   ...(process.env.SALVOR_APIFY_TASK ? [{ name: "apify-history", custom: { base: "https://api.apify.com", prefix: "Bearer", test: "https://api.apify.com/v2/users/me" }, key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: [`/v2/actor-tasks/${process.env.SALVOR_APIFY_TASK}/runs`, `/v2/actor-tasks/${process.env.SALVOR_APIFY_TASK}/runs/last`] } }] : []),
-  // Starting a run and reading its items in one request (the try-it page) is outside the dedicated connector too: a named
+  // Starting a run (the try-it page) is outside the dedicated connector too: a named
   // custom connector pinned to that one path of that one actor.
-  { name: "apify-run", custom: { base: "https://api.apify.com", prefix: "Bearer", test: "https://api.apify.com/v2/users/me" }, key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: ["/v2/acts/apify~e-commerce-scraping-tool/run-sync-get-dataset-items"] } },
+  { name: "apify-run", custom: { base: "https://api.apify.com", prefix: "Bearer", test: "https://api.apify.com/v2/users/me" }, key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: ["/v2/acts/apify~e-commerce-scraping-tool/runs"] } },
   // Fly allows one dedicated connector per provider, so eyes and hands each get a named custom connector.
   { name: "pinecone-read", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...EYES, allowed_endpoints: ["/embed", "/rerank"] } },
   { name: "pinecone-write", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/embed", "/rerank"] } },
@@ -46,6 +46,9 @@ for (const w of WANT) {
   appendLog(log, { step: `create ${w.name}`, route: "api_key", status: r.status, body: r.json ?? r.text.slice(0, 300) });
   const id = r.json?.connection?.id ?? r.json?.id;
   if (r.ok && id) {
+    // Creating a connection under an existing name keeps its old policy, so the wanted policy is applied explicitly.
+    const pol = await sp("PATCH", `/v1/oauth/connections/${id}`, { access_policy: w.policy });
+    appendLog(log, { step: `policy ${w.name}`, status: pol.status });
     // Try to give it a distinct display name so the app can find it by name.
     const rn = w.custom ? { ok: true, status: 0, json: null, text: "" } : await sp("PATCH", `/v1/oauth/connections/${id}`, { display_name: w.name });
     appendLog(log, { step: `rename ${w.name}`, status: rn.status, body: rn.json ?? rn.text.slice(0, 200) });

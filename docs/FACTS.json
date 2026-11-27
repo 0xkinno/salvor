@@ -9,8 +9,8 @@
     "misses": []
   },
   "p2": {
-    "runs_completed": 3,
-    "runs_total": 4,
+    "runs_completed": 4,
+    "runs_total": 5,
     "items_watched": 24,
     "items_changed": 0,
     "items_cheaper_now": 0,
@@ -19,8 +19,8 @@
     "largest_drop": null,
     "drops_seen": 0,
     "first_run_at": "2026-11-26T15:55:40.206Z",
-    "last_run_at": "2026-11-27T06:02:05.202Z",
-    "hours_watched": 14
+    "last_run_at": "2026-11-27T12:05:26.769Z",
+    "hours_watched": 20
   },
   "p3": {
     "hard": {
@@ -204,18 +204,18 @@
   ],
   "hero": null,
   "sources": {
-    "p1.jsonl": "e3b791a3a8c91cdeb502c8f699dc188f03f951c08d4894f45c918d1f79e7386d",
-    "p2.jsonl": "b4a653fae03480f7594ba9ce263fd78716bd1335c5a29d5462f84dd4cc4b5de2",
+    "p1.jsonl": "762385787495b87d25ecf11e76ceb058cc2a7c9299400ff8842258afd7d5a50f",
+    "p2.jsonl": "b77c7fe6f0b8295688bbd9d386b05aa1d1a93f4e30dc8d8a016961aaa431afde",
     "p3.jsonl": "e8546638db520d5ae3f4b6433716cda41326ff695be3de6362a6a9454cf83ed3",
     "p3b.jsonl": "6e61d50ecc46c47905e7a6e685baa9a00f03733780a9932e1bd4fb3d5b83fa75",
     "p3c.jsonl": "7b79a911fd39a270cb2fb736de4c6ee3e52eefbebc695640d2efb314fccd616b",
     "p5.jsonl": "611323a89503afc213d6a8f17706915e5836fed2865f0c29284271d10f87beb7",
-    "watch.jsonl": "2be76df65f132ee3e4f678c4eb9e239f0db8ebdf5cad156cc81dd7a06d8fc07d"
+    "watch.jsonl": "8c71278822ebc4bca59ef9115e8d53511e9ea4d571c201910667735ca7443fb4"
   },
   "n_items": 24,
   "owed_total_cents": 0,
   "share_cheaper": 0,
   "cost_per_receipt_usd": null,
   "wrong_claim_rate": 0,
-  "generated_at": "2026-11-27T12:44:00.872Z"
+  "generated_at": "2026-11-27T13:23:56.223Z"
 }

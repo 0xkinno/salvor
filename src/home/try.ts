@@ -87,7 +87,9 @@ export async function runTry(input: TryInput, visitor: string, paidCents: number
     return { ok: true, sprite: name, seconds: (Date.now() - t0) / 1000, steps, decision: g.decision, why: g.why, owed_cents: verdict.owed_cents, paid_cents: paidCents, now_cents: l.price_cents, title: l.title, deadline: verdict.deadline, checkpoint: report.checkpoint ?? null, sha256: report.sha256 ?? null, read: report.read ?? null };
   } catch (e) {
     db().prepare("DELETE FROM kv WHERE k=?").run(`try:${hourKey()}:${visitor}`);   // a reading that failed does not use up the visitor's hour
-    return { ok: false, status: 502, error: `The live reading failed: ${String((e as Error).message).slice(0, 200)}` };
+    const cause = (e as any)?.cause; const detail = cause ? ` (${cause.code ?? cause.message ?? cause})` : "";
+    event("try_failed", { sprite: name, error: String((e as Error).message).slice(0, 160) + detail, step: steps[steps.length - 1] });
+    return { ok: false, status: 502, error: `The live reading failed after "${steps[steps.length - 1]}": ${String((e as Error).message).slice(0, 160)}${detail}` };
   } finally {
     // The visitor's data does not stay: restore the pool Sprite to its newborn checkpoint.
     setTimeout(() => {

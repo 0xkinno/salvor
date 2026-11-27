@@ -7,6 +7,7 @@ import { db, event, kvGet, kvSet } from "./db.ts";
 import { discover, gatewayMode, killSwitch, probe, REAL_LIST, setRecorder } from "../gateway.ts";
 import { mode as sabotageMode } from "../sabotage.ts";
 import * as sprites from "../connectors/sprites.ts";
+import { rememberConfirmed } from "./memory.ts";
 import { answerAsk, headline, packetOf, lineRow, ingestReport } from "./ledger.ts";
 import { consumeApproval, renderHtml, renderPdf, chatScript } from "./claims.ts";
 import { sendClaim, sweepNotifications } from "./deliver.ts";
@@ -256,7 +257,7 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     if (!allowed) return send(res, 403, { error: "Answering needs the household token." });
     const b = await readBody(req);
     if (!["same", "different", "in_store"].includes(b.answer)) return send(res, 400, { error: "answer must be same, different or in_store" });
-    try { const lineId = answerAsk(askm[1], b.answer); return send(res, 200, { ok: true, line_id: lineId }); } catch (e) { return send(res, 409, { error: (e as Error).message }); }
+    try { const lineId = answerAsk(askm[1], b.answer); if (b.answer === "same") void rememberConfirmed(lineId); return send(res, 200, { ok: true, line_id: lineId }); } catch (e) { return send(res, 409, { error: (e as Error).message }); }
   }
   const vm = /^\/api\/verify\/(o-[a-z0-9]+)$/.exec(p);
   if (vm && m === "POST") {

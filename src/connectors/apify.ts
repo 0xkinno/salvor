@@ -10,15 +10,23 @@ const HISTORY = "apify-history";   // custom connector: the dedicated one refuse
 
 export type RawItem = Record<string, any>;
 
-// Run an actor and get the items back in one request (used by the study and by /try).
+// Run an actor and get its items. The gateway cuts a single request that waits about a minute, and a page read takes 35
+// to 60 seconds, so the run is started, then polled with short requests, then its dataset is read. Starting a run is
+// outside the dedicated connector's endpoints, so it goes through the named "apify-run" connector pinned to that one path.
 export async function runSync(actor: string, input: unknown, timeoutSecs = 120): Promise<{ items: RawItem[]; runId: string | null }> {
   const id = actor.replace("/", "~");
-  const r = await call("apify-run", "POST", `/v2/acts/${id}/run-sync-get-dataset-items?timeout=${timeoutSecs}&clean=true`, input, {
-    signal: AbortSignal.timeout((timeoutSecs + 30) * 1000),
-  });
+  const r = await call("apify-run", "POST", `/v2/acts/${id}/runs?timeout=${timeoutSecs}&memory=2048`, input);
   const text = await r.text();
-  if (!r.ok) throw new Error(`apify run-sync HTTP ${r.status}: ${text.slice(0, 240)}`);
-  return { items: JSON.parse(text), runId: r.headers.get("x-apify-run-id") };
+  if (!r.ok) throw new Error(`apify start HTTP ${r.status}: ${text.slice(0, 240)}`);
+  const run = JSON.parse(text).data as { id: string; defaultDatasetId: string };
+  const t0 = Date.now();
+  for (;;) {
+    await new Promise((res) => setTimeout(res, 3000));
+    const info = (await runInfo(run.id)).data;
+    if (info.status === "SUCCEEDED") return { items: await datasetItems(info.defaultDatasetId), runId: run.id };
+    if (["FAILED", "ABORTED", "TIMED-OUT"].includes(info.status)) throw new Error(`apify run ${info.status}`);
+    if (Date.now() - t0 > (timeoutSecs + 30) * 1000) throw new Error("apify run did not finish in time");
+  }
 }
 
 export async function datasetItems(datasetId: string, limit = 500): Promise<RawItem[]> {

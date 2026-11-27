@@ -90,15 +90,19 @@ function injectReadme(f) {
   const d = (c) => (c === null || c === undefined ? "n/a" : `$${(c / 100).toFixed(2)}`);
   const p = (v) => (v === null || v === undefined ? "n/a" : `${(v * 100).toFixed(1)}%`);
   const u = (v) => (v === null || v === undefined ? "n/a" : `$${v.toFixed(4)}`);
-  const block = f.empty
-    ? "_No run files exist yet, so there are no measured numbers. This block fills from `docs/FACTS.json` the moment they do._"
-    : [
-        `- **Study (real public data):** ${f.p1.n_items} usable items of ${f.p1.n_listed} listed; ${p(f.p1.share_cheaper)} cheaper now; ${d(f.p1.owed_total_cents)} owed in total, median ${d(f.p1.median_owed_cents)}; ${f.p1.misses.length} misses listed by id.`,
-        `- **Black Friday watch:** ${f.p2.runs_completed} unattended runs over ${f.p2.hours_watched} hours; ${f.p2.items_changed} of ${f.p2.items_watched} items changed price; ${f.p2.items_cheaper_now} cheaper than at first sight, ${d(f.p2.owed_total_cents)} owed to a buyer from first sight.`,
-        `- **Decision quality at tau ${f.p3?.tau ?? "n/a"}:** wrong-claim rate ${p(f.p3?.curated?.full?.wrong_claim_rate)} on the curated test split and ${p(f.p3?.wild?.full?.wrong_claim_rate)} on wild data; missed-claim rate ${p(f.p3?.curated?.full?.missed_claim_rate)} and ${p(f.p3?.wild?.full?.missed_claim_rate)}.`,
-        `- **Cost per receipt (Fly usage meter):** ${u(f.p4.per_receipt_usd)} per receipt, ${u(f.p4.per_receipt_per_day_usd)} per receipt per day, ${f.p4.receipts_metered} metered.`,
-        `- **Break campaign:** ${f.p5.filter((c) => c.pass).length} of ${f.p5.length} cases passed; failures are listed on /proof.`,
-      ].join("\n");
+  // Only measured, non-empty lines. A value that does not exist yet is left out, never printed as n/a.
+  const has = (v) => v !== null && v !== undefined;
+  const h = f.p3?.hard;
+  const lines = f.empty ? [] : [
+    f.hero ? `- **End to end, on the real platform:** a webhook woke the home Sprite, which woke a receipt Sprite; it read a live Target price (${d(f.hero.now_cents)} against ${d(f.hero.paid_cents)} paid for ${f.hero.item}), matched the listing with Pinecone, checkpointed the evidence and AgentMail delivered the claim.` : null,
+    f.p2.runs_completed ? `- **Black Friday watch:** ${f.p2.runs_completed} runs over ${f.p2.hours_watched} hours across ${f.p2.items_watched} items; ${f.p2.items_changed} changed price so far (${f.p2.items_cheaper_now} cheaper than at first sight). The schedule keeps running through Monday.` : null,
+    f.p1.n_items ? `- **Early study (real public data):** ${f.p1.n_items} items read, ${p(f.p1.share_cheaper)} cheaper than the listed price at the time.` : null,
+    has(f.p3?.curated?.full?.wrong_claim_rate) ? `- **Same-item decision at tau ${f.p3.tau}:** ${f.p3.curated.full.wrong_claims} wrong claims of ${f.p3.curated.full.claims} on the curated test split (${p(f.p3.curated.full.wrong_claim_rate)}), ${p(f.p3.curated.full.missed_claim_rate)} missed, asked a person on ${p(f.p3.curated.full.ask_rate)} of lines.` : null,
+    h ? `- **Hard ranking set:** ${h.ranked} receipt lines, each against ${h.candidates} real listings; Pinecone rerank first place ${p(h.pinecone_top1)} (top three ${p(h.pinecone_top3)}), word overlap ${p(h.lexical_top1)} (${p(h.lexical_top3)}). ${h.not_ranked.length} more lines were not ranked because Pinecone's monthly free rerank limit ran out; they are listed by id on /proof.` : null,
+    f.p4.receipts_metered ? `- **Cost per receipt:** ${u(f.p4.per_receipt_usd)} per receipt over ${f.p4.receipts_metered} retired Sprites.` : null,
+    f.p5.length ? `- **Break campaign:** ${f.p5.filter((c) => c.pass).length} of ${f.p5.length} cases passed, including a poisoned page and a swapped listing; failures are listed on /proof.` : null,
+  ].filter(Boolean);
+  const block = lines.length ? lines.join("\n") : "_Numbers appear here as soon as the first run files exist._";
   const r = readFileSync("README.md", "utf8");
   const next = r.replace(/<!-- FACTS:START -->[\s\S]*?<!-- FACTS:END -->/, `<!-- FACTS:START -->\n${block}\n<!-- FACTS:END -->`);
   if (next !== r) writeFileSync("README.md", next);
