@@ -9,7 +9,7 @@ import { setRecorder, call } from "../gateway.ts";
 import { observe, type Report } from "./observe.ts";
 import { DIR } from "./evidence.ts";
 import { resolve, trynew } from "./resolve.ts";
-import { lastRun } from "../connectors/apify.ts";
+import { lastRun, listRuns, runOrigin, datasetItems, normalizeListing, canonicalUrl } from "../connectors/apify.ts";
 import { matchListing, pickBest } from "../connectors/pinecone.ts";
 import { decide } from "../match.ts";
 
@@ -96,6 +96,25 @@ try {
       catch (e) { res.push({ id: l.id, error: String((e as Error).message).slice(0, 120) }); }
     }
     out(res);
+  } else if (cmd === "watch-sync") {
+    // Reads the scheduled task's whole run history through the gateway and returns per-item price series for the
+    // frozen watch list. Typed numbers only. The home Sprite stores the summary; nothing here is estimated.
+    const { task, items } = JSON.parse(readFileSync(0, "utf8")) as { task: string; items: { id: string; url: string }[] };
+    const idFor = (u: string) => items.find((i) => canonicalUrl(i.url) === canonicalUrl(u))?.id ?? null;
+    const series: Record<string, { at: string; cents: number; run: string }[]> = Object.fromEntries(items.map((i) => [i.id, []]));
+    const runs: { run_id: string; at: string; origin: string; items: number; cost_usd: number | null }[] = [];
+    for (const r of (await listRuns(task)).filter((x) => x.status === "SUCCEEDED")) {
+      const o = await runOrigin(r.id);
+      const at = r.finishedAt ?? r.startedAt;
+      let got = 0;
+      for (const it of await datasetItems(r.defaultDatasetId, 1000)) {
+        const id = idFor(String(it.url ?? it.inputUrl ?? ""));
+        if (!id) continue;
+        try { series[id].push({ at, cents: normalizeListing(it, at).price_cents, run: r.id }); got++; } catch { /* unreadable reading */ }
+      }
+      runs.push({ run_id: r.id, at, origin: o.origin, items: got, cost_usd: o.usd });
+    }
+    out({ synced_at: new Date().toISOString(), runs, series });
   } else if (cmd === "resolve") out(await resolve());
   else if (cmd === "try") {
     const [url, paid, date, retailer] = args;

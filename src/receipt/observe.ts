@@ -32,6 +32,7 @@ export type Report = {
   checkpoint?: string | null;
   checkpoint_ms?: number;
   sabotage: string;
+  usage?: { cpu_ms: number; wall_ms: number; rss_mb: number };
   calls: { provider: string; route: string; status: number; ms: number }[];
 };
 
@@ -51,8 +52,10 @@ export async function observe(runId: string, datasetId: string, observedAt: stri
   const prev = lastReport();
   if (prev && prev.run_id === runId) return prev;     // a repeated wake for the same run returns the same report
 
-  const finish = (r: Omit<Report, "job_id" | "run_id" | "sabotage" | "calls" | "observed_at">): Report => {
-    const full: Report = { job_id: job.id, run_id: runId, observed_at: observedAt, sabotage: mode(), calls, ...r };
+  const t0 = Date.now();
+  const finish = (r: Omit<Report, "job_id" | "run_id" | "sabotage" | "calls" | "observed_at" | "usage">): Report => {
+    const cpu = process.cpuUsage();
+    const full: Report = { job_id: job.id, run_id: runId, observed_at: observedAt, sabotage: mode(), calls, usage: { cpu_ms: Math.round((cpu.user + cpu.system) / 1000), wall_ms: Date.now() - t0, rss_mb: Math.round(process.memoryUsage().rss / 1048576) }, ...r };
     writeFileSync(reportPath(), JSON.stringify(full));
     return full;
   };
@@ -68,7 +71,7 @@ export async function observe(runId: string, datasetId: string, observedAt: stri
 // directly from an Apify run and never stores the result beyond an hour.
 export async function decideFromItems(
   job: Job, items: any[], runId: string, datasetId: string, observedAt: string,
-  finish: (r: Omit<Report, "job_id" | "run_id" | "sabotage" | "calls" | "observed_at">) => Report,
+  finish: (r: Omit<Report, "job_id" | "run_id" | "sabotage" | "calls" | "observed_at" | "usage">) => Report,
 ): Promise<Report> {
 
   let listing: ListingFields;

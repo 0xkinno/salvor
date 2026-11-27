@@ -82,6 +82,11 @@ export function StatusChip({ status }: { status: string }) {
   return <span className={cls}>{label}</span>;
 }
 
+const LIFE: Record<string, string> = { "Born": "chip chip-violet", "Asleep": "chip", "Awake": "chip chip-violet", "Owed": "chip chip-owed", "Asking you": "chip chip-ember", "Claimed": "chip chip-owed", "Retired": "chip chip-mute", "Waiting for a computer": "chip chip-gold" };
+export function LifeChip({ life }: { life: { label: string; reason: string } }) {
+  return <span className={LIFE[life.label] ?? "chip"} title={life.reason}>{life.label}</span>;
+}
+
 export function DaysRing({ days, total = 45 }: { days: number; total?: number }) {
   const pct = Math.max(0, Math.min(1, days / total));
   const r = 16, c = 2 * Math.PI * r;

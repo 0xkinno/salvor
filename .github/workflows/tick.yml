@@ -1,9 +1,10 @@
 name: Backup knock
-# The second wake source. The first is the Apify schedule webhook. If that webhook fails, this cron
-# asks slv-home to wake each receipt Sprite against the newest scheduled run. Both are idempotent by run id.
+# The second wake source. The first is the Apify schedule webhook. If that webhook ever fails, this cron asks
+# slv-home to wake each receipt Sprite against the newest finished run. Both are idempotent by run id, and the
+# endpoint is rate limited to one knock per 20 minutes, so it needs no secret.
 on:
   schedule:
-    - cron: "17 */6 * * *"
+    - cron: "17 */4 * * *"
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,11 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Knock slv-home
-        env:
-          SALVOR_URL: ${{ secrets.SALVOR_URL }}
-          SALVOR_TICK_SECRET: ${{ secrets.SALVOR_TICK_SECRET }}
         run: |
-          if [ -z "$SALVOR_URL" ] || [ -z "$SALVOR_TICK_SECRET" ]; then echo "tick secrets are not set"; exit 1; fi
-          code=$(curl -s -o /tmp/out -w "%{http_code}" -X POST -H "x-salvor-tick: $SALVOR_TICK_SECRET" "$SALVOR_URL/tick")
+          code=$(curl -s -o /tmp/out -w "%{http_code}" -X POST "https://slv-home-b6y6f.sprites.app/tick")
           echo "HTTP $code"; cat /tmp/out; echo
-          test "$code" = "202" || test "$code" = "200"
+          test "$code" = "202" || test "$code" = "429"

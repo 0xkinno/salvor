@@ -2,7 +2,7 @@ import { useGet, when, usd } from "../api";
 import { Banner } from "../ui/Art";
 import { GlowCard, Loading, ErrorBox, Empty, Eyebrow, StatusChip } from "../ui/bits";
 
-type F = { at: string; error: string | null; rung: string; sprites: any[] };
+type F = { at: string; error: string | null; rung: string; sprites: any[]; retired: any[]; cap: number };
 
 function Spark({ data }: { data: { h: string; c: number }[] }) {
   if (!data.length) return <span className="text-muted">no wakes</span>;
@@ -40,7 +40,13 @@ export default function Fleet() {
                   <td className="whitespace-nowrap text-[13px]">{when(s.last_wake)}{s.last_wake_ms ? ` · ${(s.last_wake_ms / 1000).toFixed(1)} s` : ""}</td>
                   <td><Spark data={s.wakes} /></td></tr>))}</tbody></table></div></GlowCard>
           )}
-          <p className="mt-4 text-[13px] text-muted">CPU time is the last 24 hours from Fly's usage meter, which updates with a delay. CPU cost uses Fly's published rate of {usd(0.0385, 4)} per CPU-hour; the per-receipt bill is on the proof page.</p>
+          {data.retired?.length > 0 && (
+            <div className="mt-8"><h2 className="h-display text-[30px]">Retired Sprites and their final bills</h2>
+              <GlowCard className="mt-3 overflow-hidden"><div tabIndex={0} role="region" aria-label="Retired Sprites, scrollable" className="scroll-x"><table className="t min-w-[760px]">
+                <thead><tr><th>Sprite</th><th>Born</th><th>Retired</th><th>Wakes</th><th>CPU time</th><th>Final bill</th><th>Source</th></tr></thead>
+                <tbody>{data.retired.map((r: any) => (<tr key={r.sprite}><td className="mono text-violet-ink">{r.sprite}</td><td className="whitespace-nowrap text-[13px]">{when(r.born_at)}</td><td className="whitespace-nowrap text-[13px]">{when(r.retired_at)}</td><td className="num">{r.wakes ?? 0}</td><td className="num">{(r.cpu_sec ?? 0).toFixed(2)} s</td><td className="num font-semibold">${Number(r.total_usd).toFixed(6)}</td><td className="text-[13px] text-muted">{r.source}</td></tr>))}</tbody></table></div></GlowCard></div>)}
+          <p className="mt-4 text-[13px] text-muted">A free Fly account without a card holds {data.cap} Sprites in total, shared by home, the try-it pool and the receipts. Settled receipts are retired to free a slot for the next one.</p>
+          <p className="mt-2 text-[13px] text-muted">CPU time is the last 24 hours from Fly's usage meter, which updates with a delay. CPU cost uses Fly's published rate of {usd(0.0385, 4)} per CPU-hour; the per-receipt bill is on the proof page.</p>
         </div>
       )}
     </div>

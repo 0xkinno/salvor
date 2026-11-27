@@ -52,11 +52,17 @@ const costTotal = costs.reduce((s, r) => s + r.total_usd, 0);
 const costDays = costs.reduce((s, r) => s + (r.days ?? 0), 0);
 // P2 counts only runs the schedule started. A manual baseline run is kept in the file but not counted as unattended.
 const runs = of("watch_run").filter((r) => r.origin === "SCHEDULER");
+const allRuns = of("watch_run");
+const p2items = of("p2_item");
+const changedItems = p2items.filter((x) => x.changes > 0);
+const cheaperItems = p2items.filter((x) => x.last_cents !== null && x.first_cents !== null && x.last_cents < x.first_cents);
+const owedP2 = cheaperItems.map((x) => x.first_cents - x.last_cents);
+const biggest = cheaperItems.length ? cheaperItems.reduce((a, b) => (b.first_cents - b.last_cents > a.first_cents - a.last_cents ? b : a)) : null;
 
 const facts = {
   empty: rows.length === 0,
   p1: { n_listed: p1.length, n_items: usable.length, share_cheaper: usable.length ? cheaper.length / usable.length : null, owed_total_cents: owed.reduce((a, b) => a + b, 0), median_owed_cents: median(owed), misses },
-  p2: { runs_completed: runs.length, drops_seen: runs.reduce((s, r) => s + (r.drops ?? 0), 0), first_run_at: runs[0]?.at ?? null, last_run_at: runs.at(-1)?.at ?? null },
+  p2: { runs_completed: runs.length, runs_total: allRuns.length, items_watched: p2items.length, items_changed: changedItems.length, items_cheaper_now: cheaperItems.length, owed_total_cents: owedP2.reduce((a, b) => a + b, 0), median_owed_cents: median(owedP2), largest_drop: biggest ? { id: biggest.id, from_cents: biggest.first_cents, to_cents: biggest.last_cents, drop_cents: biggest.first_cents - biggest.last_cents } : null, drops_seen: runs.reduce((s, r) => s + (r.drops ?? 0), 0), first_run_at: allRuns[0]?.at ?? null, last_run_at: allRuns.at(-1)?.at ?? null, hours_watched: allRuns.length > 1 ? Math.round((new Date(allRuns.at(-1).at) - new Date(allRuns[0].at)) / 3600000) : 0 },
   p3: pick ? { rank: ranks.length ? { n: ranks.length, candidates: ranks[0].candidates, failed: of("p3_rank").length - ranks.length, pinecone_top1: rankRate("pinecone_top1"), pinecone_top3: rankRate("pinecone_top3"), lexical_top1: rankRate("lexical_top1"), lexical_top3: rankRate("lexical_top3") } : null, failed_pairs: of("p3_fail").length, tau: pick.tau, tau_owed: pick.tau_owed, chosen_on: pick.chosen_on, tune_n: pick.tune_n, curated: { full: rates("curated", "full"), rules: rates("curated", "rules") }, wild: { full: rates("wild", "full"), rules: rates("wild", "rules") } } : null,
   p4: { receipts_metered: costs.length, per_receipt_usd: costs.length ? costTotal / costs.length : null, per_receipt_per_day_usd: costDays ? costTotal / costDays : null, partial_rows: costs.filter((c) => c.partial).length },
   p5: of("p5_case").map((c) => ({ id: c.id, name: c.name, expected: c.expected, observed: c.observed, pass: c.pass })),
@@ -80,7 +86,7 @@ function injectReadme(f) {
     ? "_No run files exist yet, so there are no measured numbers. This block fills from `docs/FACTS.json` the moment they do._"
     : [
         `- **Study (real public data):** ${f.p1.n_items} usable items of ${f.p1.n_listed} listed; ${p(f.p1.share_cheaper)} cheaper now; ${d(f.p1.owed_total_cents)} owed in total, median ${d(f.p1.median_owed_cents)}; ${f.p1.misses.length} misses listed by id.`,
-        `- **Unattended watch:** ${f.p2.runs_completed} runs, ${f.p2.drops_seen} price drops seen.`,
+        `- **Black Friday watch:** ${f.p2.runs_completed} unattended runs over ${f.p2.hours_watched} hours; ${f.p2.items_changed} of ${f.p2.items_watched} items changed price; ${f.p2.items_cheaper_now} cheaper than at first sight, ${d(f.p2.owed_total_cents)} owed to a buyer from first sight.`,
         `- **Decision quality at tau ${f.p3?.tau ?? "n/a"}:** wrong-claim rate ${p(f.p3?.curated?.full?.wrong_claim_rate)} on the curated test split and ${p(f.p3?.wild?.full?.wrong_claim_rate)} on wild data; missed-claim rate ${p(f.p3?.curated?.full?.missed_claim_rate)} and ${p(f.p3?.wild?.full?.missed_claim_rate)}.`,
         `- **Cost per receipt (Fly usage meter):** ${u(f.p4.per_receipt_usd)} per receipt, ${u(f.p4.per_receipt_per_day_usd)} per receipt per day, ${f.p4.receipts_metered} metered.`,
         `- **Break campaign:** ${f.p5.filter((c) => c.pass).length} of ${f.p5.length} cases passed; failures are listed on /proof.`,

@@ -42,7 +42,7 @@ const files = [
   ...walk("src"), "package.json", "dist/receipt-worker.mjs", ...walk("web/dist"),
   ...(existsSync("docs/FACTS.json") ? ["docs/FACTS.json"] : []), ...(existsSync("docs/hero-run.json") ? ["docs/hero-run.json"] : []),
   ...(existsSync("config/connections.json") ? ["config/connections.json"] : []),
-  ...(existsSync("evidence/runs") ? walk("evidence/runs") : []),
+  ...(existsSync("evidence/runs") ? walk("evidence/runs") : []), ...(existsSync("evidence/labels/p1-items.json") ? ["evidence/labels/p1-items.json"] : []),
   ...["target-price-match-help.txt", "target-holiday-fact-sheet.txt", "fly-pricing.txt"].map((f) => `evidence/snapshots/${f}`).filter(existsSync),
 ];
 let n = 0;
@@ -53,6 +53,17 @@ for (const f of files) {
   n++;
 }
 console.log(`uploaded ${n} files to ${ROOT}`);
+
+// ---- 2a. refresh the worker on every receipt Sprite that already exists, so none keeps an old bundle
+{
+  const list = await sp("GET", "/v1/sprites");
+  const names = (list.json?.sprites ?? []).map((x) => (typeof x === "string" ? x : x.name)).filter((n) => n.startsWith("slv-r-"));
+  const bundle = readFileSync("dist/receipt-worker.mjs");
+  for (const n of names) {
+    const w = await sp("PUT", `/v1/sprites/${n}/fs/write?path=${encodeURIComponent(`${ROOT}/receipt-worker.mjs`)}&mkdir=true&mode=0755`, new Uint8Array(bundle), { headers: { "content-type": "application/octet-stream" } });
+    console.log(`worker refreshed on ${n}: HTTP ${w.status}`);
+  }
+}
 
 // ---- 2b. Q1 answer: the platform refuses a connector that points at the Sprites API, so home holds
 // one Sprites token in a 0600 file (rung b). It is shown on /proof as the single credential on any Sprite.

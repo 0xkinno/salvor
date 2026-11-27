@@ -89,3 +89,14 @@ test("substitute decider: a second quantity of the same unit cannot hide a confl
 test("substitute decider: a line with no size or model number never auto-claims", () => {
   assert.ok(decideRules({ raw_text: "CUISINART AIR FRYER TOASTER OVEN" }, { title: "Cuisinart French Door Air Fryer Toaster Oven TOA-FD70" }, 0.99).sameConf < 0.9);
 });
+
+import { summarise } from "../src/home/watch.ts";
+test("watch summary: counts only real differences between readings", () => {
+  const s = summarise({
+    synced_at: "2026-11-27T12:00:00Z",
+    runs: [{ at: "2026-11-26T16:00:00Z", origin: "API", cost_usd: 0.18 }, { at: "2026-11-27T04:00:00Z", origin: "SCHEDULER", cost_usd: 0.18 }],
+    series: { W01: [{ at: "a", cents: 5000 }, { at: "b", cents: 4000 }], W02: [{ at: "a", cents: 3000 }, { at: "b", cents: 3000 }], W03: [{ at: "a", cents: 900 }], W04: [{ at: "a", cents: 100 }, { at: "b", cents: 300 }, { at: "c", cents: 100 }] },
+  });
+  assert.equal(s.items_watched, 4); assert.equal(s.items_changed, 2); assert.equal(s.items_cheaper_now, 1);
+  assert.equal(s.owed_total_cents, 1000); assert.equal(s.largest_drop?.id, "W01"); assert.equal(s.runs_unattended, 1); assert.equal(s.hours_watched, 12);
+});

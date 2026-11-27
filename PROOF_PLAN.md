@@ -38,3 +38,7 @@ The build is four partner products: Fly Sprites, Apify, Pinecone and AgentMail. 
 P3 uses curated pairs built by `scripts/build-pairs.mjs` from the real listings the watch read, with labels true by construction. They are reported as curated. Wild pairs come from live runs.
 
 The matcher was revised twice after measurements, and each earlier run is kept in `evidence/runs/archive/`: the first run showed the rules-only baseline had no stand-in for the rerank score and that a line with two quantities of one unit could hide a size conflict; the second showed lines with nothing specific to match on should never auto-claim. The tune rule never picks a threshold below 0.90.
+
+## Amendment 3 (2026-11-27 12:03 UTC, before any new reading was looked at)
+
+Black Friday is today, so the watch cadence changes from every 6 hours to every 4 hours on Friday and Saturday, then every 6 hours on Sunday, and midnight and 06:00 UTC on Monday, after which the watch stops. Reason: the price drops this study looks for are most likely on these days. Cost: a 24-item run is $0.18. The upgrade plan suggested 4 hours until Monday, which would leave $0.79 of the free $5 credit; the mixed cadence is about 14 more runs (about $2.50) and leaves enough for the ranking study and the live try page. The first four readings (three unattended, one manual baseline; 24 items, no price changes) were ingested before this change and are unaffected.

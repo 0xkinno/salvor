@@ -18,6 +18,9 @@ const HANDS = policyMode === "prefix" ? { name_prefix: "slv-home" } : { sprite_l
 // Path patterns are exact or a trailing * only (docs: connectors, "Endpoint allow- and block-lists").
 const WANT = [
   { name: "apify-eyes", provider: "apify", key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: ["/v2/acts/*", "/v2/datasets/*", "/v2/actor-runs/*", "/v2/actor-tasks/*"] } },
+  // The dedicated Apify connector supports only run details and dataset reads. Listing a task's runs (for the live watch
+  // summary and the backup tick) needs a named custom connector, pinned to exactly those two paths.
+  ...(process.env.SALVOR_APIFY_TASK ? [{ name: "apify-history", custom: { base: "https://api.apify.com", prefix: "Bearer", test: "https://api.apify.com/v2/users/me" }, key: "APIFY_TOKEN", policy: { ...EYES, allowed_endpoints: [`/v2/actor-tasks/${process.env.SALVOR_APIFY_TASK}/runs`, `/v2/actor-tasks/${process.env.SALVOR_APIFY_TASK}/runs/last`] } }] : []),
   // Fly allows one dedicated connector per provider, so eyes and hands each get a named custom connector.
   { name: "pinecone-read", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...EYES, allowed_endpoints: ["/embed", "/rerank"] } },
   { name: "pinecone-write", custom: { base: "https://api.pinecone.io", header: "Api-Key", test: "https://api.pinecone.io/indexes" }, key: "PINECONE_API_KEY", policy: { ...HANDS, allowed_endpoints: ["/embed", "/rerank"] } },

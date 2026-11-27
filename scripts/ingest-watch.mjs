@@ -18,7 +18,10 @@ if (createHash("sha256").update(listText).digest("hex") !== readFileSync("eviden
 const items = JSON.parse(listText);
 const idFor = (url) => { const c = canonicalUrl(url); return items.find((i) => canonicalUrl(i.url) === c)?.id ?? null; };
 
-const runs = (await get(`/actor-tasks/${process.env.SALVOR_APIFY_TASK}/runs?limit=200&desc=0`)).data.items.filter((r) => r.status === "SUCCEEDED");
+const listed = (await get(`/actor-tasks/${process.env.SALVOR_APIFY_TASK}/runs?limit=200&desc=0`)).data.items.filter((r) => r.status === "SUCCEEDED");
+// The list route omits each run's origin; the detail route has it ("SCHEDULER" for runs the schedule started).
+const runs = [];
+for (const r of listed) { const d = (await get(`/actor-runs/${r.id}`)).data; runs.push({ ...r, origin: d.meta?.origin ?? d.origin ?? "unknown", usageTotalUsd: d.usageTotalUsd ?? r.usageTotalUsd }); }
 const series = Object.fromEntries(items.map((i) => [i.id, []]));   // id -> [{at, cents, run}]
 const watch = [];
 for (const r of runs) {
@@ -46,5 +49,12 @@ const p1 = items.map((i) => {
 
 mkdirSync("evidence/runs", { recursive: true });
 writeFileSync("evidence/runs/watch.jsonl", watch.map((x) => JSON.stringify(x)).join("\n") + (watch.length ? "\n" : ""));
+// P2 per item: how many readings, how many times the price changed, first, latest, and the lowest seen.
+const p2 = items.map((i) => {
+  const s = series[i.id];
+  let changes = 0; for (let k = 1; k < s.length; k++) if (s[k].cents !== s[k - 1].cents) changes++;
+  return { kind: "p2_item", id: i.id, readings: s.length, changes, first_cents: s[0]?.cents ?? null, last_cents: s.at(-1)?.cents ?? null, min_cents: s.length ? Math.min(...s.map((x) => x.cents)) : null, first_at: s[0]?.at ?? null, last_at: s.at(-1)?.at ?? null };
+});
+writeFileSync("evidence/runs/p2.jsonl", p2.map((x) => JSON.stringify(x)).join("\n") + "\n");
 writeFileSync("evidence/runs/p1.jsonl", p1.map((x) => JSON.stringify(x)).join("\n") + "\n");
 console.log(`${watch.length} runs, ${p1.filter((x) => !x.reason).length} items with a first and a later reading, ${p1.filter((x) => x.reason).length} waiting or missed`);

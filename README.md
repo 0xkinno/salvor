@@ -29,8 +29,8 @@ Teresa is a night shift pharmacist. On November 9 she buys an air fryer at Targe
 Salvor does it with one idea: **give every receipt its own computer, and let it sleep.** A Sprite costs nothing asleep, wakes on a knock, keeps its disk, can be checkpointed, and reaches the world only through a gateway whose policy it cannot change. That is the shape of this problem: many small, long waits, each needing a clean wall between it and the others.
 
 <!-- FACTS:START -->
-- **Study (real public data):** 0 usable items of 24 listed; n/a cheaper now; $0.00 owed in total, median n/a; 24 misses listed by id.
-- **Unattended watch:** 0 runs, 0 price drops seen.
+- **Study (real public data):** 24 usable items of 24 listed; 0.0% cheaper now; $0.00 owed in total, median n/a; 0 misses listed by id.
+- **Black Friday watch:** 3 unattended runs over 14 hours; 0 of 24 items changed price; 0 cheaper than at first sight, $0.00 owed to a buyer from first sight.
 - **Decision quality at tau 0.9:** wrong-claim rate 0.0% on the curated test split and n/a on wild data; missed-claim rate 46.2% and n/a.
 - **Cost per receipt (Fly usage meter):** n/a per receipt, n/a per receipt per day, 0 metered.
 - **Break campaign:** 9 of 9 cases passed; failures are listed on /proof.

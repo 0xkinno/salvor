@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useGet, money, when, type Receipt } from "../api";
 import { Banner } from "../ui/Art";
-import { GlowCard, StatusChip, DaysRing, Loading, ErrorBox, Empty, Eyebrow, CountUp } from "../ui/bits";
+import { GlowCard, LifeChip, DaysRing, Loading, ErrorBox, Empty, Eyebrow, CountUp } from "../ui/bits";
 
 type Resp = { receipts: Receipt[]; next_wake: string; headline: { receipts: number; owed_cents: number; claims: number; observations: number; asks_open: number } };
 
@@ -37,10 +37,11 @@ export default function Household() {
                         <div className="min-w-0"><p className="mono truncate text-violet-ink">{r.sprite ?? "no Sprite yet"}</p><h2 className="mt-1 text-[18px] font-semibold leading-snug">{r.title}</h2></div>
                         <DaysRing days={r.days_left} />
                       </div>
-                      <div className="mt-4 flex flex-wrap items-center gap-2"><StatusChip status={r.status} /><span className="chip chip-mute">{r.retailer === "target" ? "Target" : "Best Buy"}</span></div>
+                      <div className="mt-4 flex flex-wrap items-center gap-2"><LifeChip life={r.life} /><span className="chip chip-mute">{r.retailer === "target" ? "Target" : "Best Buy"}</span></div>
                       <p className="mt-4 num flex items-baseline justify-between text-[15px]"><span className="text-muted">Paid {money(r.paid_cents)}</span><span>{r.last?.price_cents != null ? `now ${money(r.last.price_cents)}` : "not read yet"}</span></p>
+                      {r.life.label === "Retired" && r.life.cost_usd != null && <p className="mt-2 text-[13px] text-muted">Final bill ${r.life.cost_usd.toFixed(6)}, {r.life.source}</p>}
                       {r.last && (r.last.owed_cents ?? 0) > 0 && <p className="num mt-2 font-display text-[28px] text-owed-ink">Owed {money(r.last.owed_cents)}</p>}
-                      <p className="mt-3 text-[12px] text-muted">Last wake {when(r.last_wake)}. Next {r.next_wake ? when(r.next_wake) : "none"}.</p>
+                      <p className="mt-3 text-[12px] text-muted">{r.life.label === "Waiting for a computer" ? r.life.reason : r.life.label === "Retired" ? "Its computer was deleted after the claim was settled." : `Last wake ${when(r.last_wake)}. Next ${r.next_wake ? when(r.next_wake) : "none"}.`}</p>
                     </GlowCard>
                   </Link>
                 </li>

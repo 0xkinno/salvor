@@ -9,10 +9,10 @@ import { mode as sabotageMode } from "../sabotage.ts";
 import * as sprites from "../connectors/sprites.ts";
 import { answerAsk, headline, packetOf, lineRow, ingestReport } from "./ledger.ts";
 import { consumeApproval, renderHtml, renderPdf, chatScript } from "./claims.ts";
-import { sendClaim } from "./deliver.ts";
+import { sendClaim, sweepNotifications } from "./deliver.ts";
 import { verifyEvidence } from "./notary.ts";
 import { costSummary, RATES } from "./cost.ts";
-import { wakeAll, wakeLatestAll } from "./fleet.ts";
+import { wakeAll, wakeLatestAll, advanceLifecycle, SPRITE_CAP } from "./fleet.ts";
 import { runTry, capsState, visitorKey, CAPS } from "./try.ts";
 import { parseCents } from "../policy/money.ts";
 import { CLAUSES } from "../policy/clauses.ts";
@@ -20,6 +20,7 @@ import { scrubUiCopy } from "../house/style.ts";
 import { addReceipt, shortId } from "./ledger.ts";
 import { birth, retire, spriteNameFor } from "./fleet.ts";
 import { pollMail } from "./intake.ts";
+import { syncWatch, lastSummary } from "./watch.ts";
 
 const started = Date.now();
 const WEB = process.env.SALVOR_WEB ?? "web/dist";
@@ -82,7 +83,17 @@ function receiptsView() {
     const a = db().prepare("SELECT id, question FROM asks WHERE line_id=? AND answered_at IS NULL").get(r.line_id) as any;
     const wake = db().prepare("SELECT started_at FROM wakes WHERE sprite=? ORDER BY started_at DESC LIMIT 1").get(r.sprite ?? "") as any;
     const daysLeft = Math.max(0, (new Date(r.window_ends_at).getTime() - Date.now()) / 86_400_000);
+    const cost = db().prepare("SELECT total_usd, source FROM costs WHERE sprite=?").get(r.sprite ?? "") as any;
+    const life = r.status === "retired"
+      ? { label: "Retired", reason: "The claim was settled, so this receipt's computer was deleted after its meter was read.", cost_usd: cost?.total_usd ?? null, source: cost?.source ?? null }
+      : !r.sprite ? { label: "Waiting for a computer", reason: `A free Fly account without a card holds ${SPRITE_CAP} Sprites in total. This receipt gets one when a slot frees.` }
+      : c?.approved_at ? { label: "Claimed", reason: "The claim was approved and sent. The computer is retired next." }
+      : a ? { label: "Asking you", reason: "One question is waiting for your answer." }
+      : c ? { label: "Owed", reason: "A claim is ready for your approval." }
+      : !o ? { label: "Born", reason: "This receipt's Sprite exists and has not taken a reading yet." }
+      : { label: "Asleep", reason: "Asleep until the next scheduled reading." };
     return {
+      life,
       id: r.id, line_id: r.line_id, retailer: r.retailer, title: r.title, raw_text: r.raw_text, purchased_at: r.purchased_at, paid_cents: r.paid_cents, qty: r.qty,
       status: a ? "asking" : c && !c.approved_at ? "owed" : c?.approved_at ? "claimed" : r.status, sprite: r.sprite, window_ends_at: r.window_ends_at, days_left: Math.round(daysLeft * 10) / 10,
       household: r.household, source: r.source, listing_url: r.listing_url,
@@ -127,7 +138,8 @@ async function fleetView() {
     row.wakes = (db().prepare("SELECT substr(started_at,1,13) h, COUNT(*) c FROM wakes WHERE sprite=? GROUP BY h ORDER BY h DESC LIMIT 24").all(s.name) as any[]).reverse();
     out.push(row);
   }));
-  const v = { at: new Date().toISOString(), error, sprites: out.sort((a, b) => a.name.localeCompare(b.name)), rung: sprites.rung() };
+  const retired = (db().prepare("SELECT sprite, born_at, retired_at, total_usd, source, wakes, cpu_sec FROM costs ORDER BY retired_at DESC").all() as any[]);
+  const v = { at: new Date().toISOString(), error, sprites: out.sort((a, b) => a.name.localeCompare(b.name)), retired, cap: SPRITE_CAP, rung: sprites.rung() };
   fleetCache = { at: Date.now(), v };
   return v;
 }
@@ -176,6 +188,7 @@ function proofView() {
     zero_keys: { secret_like_env_names: keys, sprites_rung: sprites.rung(), credential_on_box: sprites.credentialOnBox(), note: "Only the household token and webhook secrets are held here; they guard Salvor's own routes and open no partner account." },
     network_policy_readonly: policy, budget: { try_caps: CAPS }, rates: RATES,
     events: (db().prepare("SELECT COUNT(*) c FROM events").get() as any).c,
+    events_tail: (db().prepare("SELECT kind, substr(body,1,160) body, at FROM events ORDER BY id DESC LIMIT 12").all() as any[]),
   };
 }
 
@@ -192,10 +205,14 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
 
   if (p === "/health") return send(res, 200, { ok: true, uptime_s: Math.round((Date.now() - started) / 1000) });
   if (p === "/api/status") return send(res, 200, await statusView());
-  if (p === "/api/stats") return send(res, 200, { ...headline(), cost: { per_receipt_usd: costSummary().per_receipt_usd }, recomputed_at: new Date().toISOString() });
+  if (p === "/api/stats") {
+    const lastWake = db().prepare("SELECT MAX(started_at) t FROM wakes").get() as { t: string | null };
+    const hooks = db().prepare("SELECT COUNT(*) c, MAX(at) t FROM events WHERE kind='hook'").get() as { c: number; t: string | null };
+    return send(res, 200, { ...headline(), cost: { per_receipt_usd: costSummary().per_receipt_usd }, watch: lastSummary(), webhook: { received: hooks.c, last_at: hooks.t }, last_wake_at: lastWake.t, recomputed_at: new Date().toISOString() });
+  }
   if (p === "/api/receipts" && m === "GET") return send(res, 200, { receipts: receiptsView(), next_wake: nextWake(), headline: headline() });
   const rm = /^\/api\/receipts\/([A-Za-z0-9-]+)$/.exec(p);
-  if (rm) { const d = receiptDetail(rm[1]); return d ? send(res, 200, d) : send(res, 404, { error: "unknown receipt" }); }
+  if (rm && m === "GET") { const d = receiptDetail(rm[1]); return d ? send(res, 200, d) : send(res, 404, { error: "unknown receipt" }); }
   if (p === "/api/fleet") return send(res, 200, await fleetView());
   if (p === "/api/proof") return send(res, 200, proofView());
   if (p === "/api/facts") return existsSync("docs/FACTS.json") ? send(res, 200, JSON.parse(readFileSync("docs/FACTS.json", "utf8"))) : send(res, 200, { empty: true });
@@ -228,6 +245,7 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     const r = consumeApproval(am[1], String(b.digest ?? ""));
     if (!r.ok) return send(res, 409, { error: r.why });
     const sent = await sendClaim(am[1]);
+    advanceLifecycle(process.env.SALVOR_APIFY_TASK).catch((e) => event("lifecycle_failed", { error: String(e.message).slice(0, 200) }));
     return send(res, 200, { approved: true, sent });
   }
   const askm = /^\/api\/asks\/(a-[a-z0-9]+)\/answer$/.exec(p);
@@ -244,6 +262,13 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
   if (vm && m === "POST") {
     const o = db().prepare("SELECT o.*, r.sprite FROM observations o JOIN lines l ON l.id=o.line_id JOIN receipts r ON r.id=l.receipt_id WHERE o.id=?").get(vm[1]) as any;
     if (!o || !o.checkpoint_id) return send(res, 404, { error: "no checkpointed evidence for this observation" });
+    const gone = db().prepare("SELECT status FROM receipts r JOIN lines l ON l.receipt_id=r.id WHERE l.id=?").get(o.line_id) as any;
+    if (gone?.status === "retired") {
+      // The Sprite is deleted, so Fly's checkpoint copy went with it. The evidence file was kept when it retired.
+      const kept = kvGet(`evidence:${o.evidence_sha256}`);
+      const h = kept === null ? null : createHash("sha256").update(kept).digest("hex");
+      return send(res, 200, { ok: h === o.evidence_sha256, method: "kept copy", checkpoint: o.checkpoint_id, day: o.evidence_day, expected_sha256: o.evidence_sha256, mount_sha256: h, live_sha256: null, live_matches_mount: null, witness: { found: false, comment_has_hash: false, created_at: null }, why: kept === null ? "This receipt's Sprite was retired and no copy of the evidence was kept." : h === o.evidence_sha256 ? "This receipt's Sprite was retired. The evidence file kept at retirement matches the hash on the claim." : "The kept evidence file does NOT match the hash on the claim.", ms: 0 });
+    }
     if (!demoBudget("verify", 200)) return send(res, 429, { error: "verification limit reached for today" });
     try { return send(res, 200, await verifyEvidence(o.sprite, o.checkpoint_id, o.evidence_day, o.evidence_sha256)); }
     catch (e) { return send(res, 502, { error: String((e as Error).message).slice(0, 200) }); }
@@ -264,13 +289,38 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     const r = addReceipt({ retailer: b.retailer, channel: "online", purchased_date: b.date, source: "api", household: "owner", lines: [{ raw_text: String(b.line).slice(0, 160), paid_cents: cents, qty: Math.max(1, Number(b.qty) || 1), listing_url: b.url || null }] });
     let born: unknown = null;
     if (b.url) { try { born = await birth(r.receiptId, r.lineIds[0]); } catch (e) { born = { error: String((e as Error).message).slice(0, 200) }; } }
-    return send(res, 201, { receipt: r.receiptId, line: r.lineIds[0], sprite: b.url ? spriteNameFor(r.receiptId) : null, born });
+    return send(res, 201, { receipt: r.receiptId, line: r.lineIds[0], sprite: born && typeof born === "object" && "name" in (born as object) ? (born as { name: string }).name : null, born });
+  }
+  const del = /^\/api\/receipts\/([A-Za-z0-9]{4})$/.exec(p);
+  if (del && m === "DELETE") {
+    // Owner tool: remove one receipt and its rows, and delete its Sprite if it has one.
+    if (!hasToken(req)) return send(res, 403, { error: "Deleting a receipt needs the household token." });
+    const r = db().prepare("SELECT id, sprite, status, household FROM receipts WHERE id=?").get(del[1]) as any;
+    if (!r) return send(res, 404, { error: "unknown receipt" });
+    if (r.household === "sample") return send(res, 409, { error: "sample household receipts are not deleted" });
+    if (r.sprite && r.status !== "retired") { try { await sprites.remove(r.sprite); } catch (e) { return send(res, 502, { error: `could not delete ${r.sprite}: ${String((e as Error).message).slice(0, 120)}` }); } }
+    for (const l of db().prepare("SELECT id FROM lines WHERE receipt_id=?").all(r.id) as { id: string }[]) {
+      for (const c of db().prepare("SELECT id FROM claims WHERE line_id=?").all(l.id) as { id: string }[]) { db().prepare("DELETE FROM approvals WHERE claim_id=?").run(c.id); db().prepare("DELETE FROM kv WHERE k=?").run(`packet:${c.id}`); }
+      for (const t of ["claims", "observations", "asks", "facts_human"]) db().prepare(`DELETE FROM ${t} WHERE line_id=?`).run(l.id);
+      db().prepare("DELETE FROM kv WHERE k=?").run(`cand:${l.id}`);
+    }
+    db().prepare("DELETE FROM lines WHERE receipt_id=?").run(r.id); db().prepare("DELETE FROM receipts WHERE id=?").run(r.id);
+    event("receipt_deleted", { id: r.id });
+    return send(res, 200, { deleted: r.id, sprite_deleted: Boolean(r.sprite && r.status !== "retired") });
+  }
+  if (p === "/api/lifecycle/advance" && m === "POST") {
+    if (!hasToken(req)) return send(res, 403, { error: "Advancing the lifecycle needs the household token." });
+    return send(res, 200, await advanceLifecycle(process.env.SALVOR_APIFY_TASK));
+  }
+  if (p === "/api/watch/sync" && m === "POST") {
+    if (!hasToken(req)) return send(res, 403, { error: "Syncing the watch needs the household token." });
+    return send(res, 200, await syncWatch());
   }
   if (p === "/api/poll" && m === "POST") {
     if (!hasToken(req)) return send(res, 403, { error: "Polling the inbox needs the household token." });
     const inbox = process.env.SALVOR_INBOX;
     if (!inbox) return send(res, 503, { error: "SALVOR_INBOX is not set" });
-    try { return send(res, 200, await pollMail(inbox)); } catch (e) { return send(res, 502, { error: String((e as Error).message).slice(0, 200) }); }
+    try { const r = await pollMail(inbox); await sweepNotifications(); return send(res, 200, r); } catch (e) { return send(res, 502, { error: String((e as Error).message).slice(0, 200) }); }
   }
   // ---- the two wake sources: Apify's schedule webhook and the backup tick
   const hook = /^\/hooks\/apify\/([A-Za-z0-9_-]+)$/.exec(p);
@@ -290,17 +340,22 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     if (killSwitch()) return send(res, 200, { kill_switch: true });
     // Answer fast, work after: Apify only needs a 2xx.
     send(res, 202, { accepted: true, runId });
-    wakeAll(runId, datasetId, finished).catch((e) => event("wake_all_failed", { runId, error: String(e.message).slice(0, 200) }));
+    wakeAll(runId, datasetId, finished).then(() => syncWatch()).catch((e) => event("wake_all_failed", { runId, error: String(e.message).slice(0, 200) }));
     return;
   }
   if (p === "/tick" && m === "POST") {
-    const t = process.env.SALVOR_TICK_SECRET ?? "";
-    if (!t || !same(String(req.headers["x-salvor-tick"] ?? ""), t)) return send(res, 403, { error: "bad secret" });
+    // The backup knock. It needs no secret because it can only do what the schedule already does: each receipt
+    // Sprite reads the newest finished run, and a run already seen returns its stored report. It is rate limited
+    // to one knock per 20 minutes so it cannot be used to run up cost.
     const task = process.env.SALVOR_APIFY_TASK ?? "";
     if (!task) return send(res, 503, { error: "SALVOR_APIFY_TASK is not set" });
     if (killSwitch()) return send(res, 200, { kill_switch: true });
+    const last = Number(kvGet("tick:last") ?? 0);
+    if (Date.now() - last < 20 * 60_000) return send(res, 429, { error: "a tick ran less than 20 minutes ago", next_at: new Date(last + 20 * 60_000).toISOString() });
+    kvSet("tick:last", String(Date.now()));
+    event("tick_received", { from: ip(req) ? "remote" : "unknown" });
     send(res, 202, { accepted: true });
-    wakeLatestAll(task).catch((e) => event("tick_failed", { error: String(e.message).slice(0, 200) }));
+    wakeLatestAll(task).then(() => syncWatch()).catch((e) => event("tick_failed", { error: String(e.message).slice(0, 200) }));
     return;
   }
   if (p.startsWith("/api/") || p.startsWith("/hooks/")) return send(res, 404, { error: "no such route" });
@@ -330,7 +385,9 @@ export function createServer() {
 export function startBackground() {
   const guard = (name: string, fn: () => Promise<unknown>) => () => { if (killSwitch()) return; fn().catch((e) => event("background_failed", { name, error: String(e?.message ?? e).slice(0, 200) })); };
   const inbox = process.env.SALVOR_INBOX;
-  if (inbox) setInterval(guard("mail", () => pollMail(inbox)), 2 * 60_000);
+  setTimeout(guard("watch", () => syncWatch()), 20_000);
+  setInterval(guard("watch", () => syncWatch()), 60 * 60_000);
+  if (inbox) setInterval(guard("mail", async () => { await pollMail(inbox); await sweepNotifications(); }), 2 * 60_000);
   // Retire Sprites whose window has closed: read the meter, book the cost, delete.
   setInterval(guard("retire", async () => {
     const due = db().prepare("SELECT id, sprite, created_at FROM receipts WHERE sprite IS NOT NULL AND status NOT IN ('retired') AND window_ends_at < ? AND NOT EXISTS (SELECT 1 FROM claims c JOIN lines l ON l.id=c.line_id WHERE l.receipt_id=receipts.id AND c.approved_at IS NULL)").all(new Date().toISOString()) as any[];

@@ -27,11 +27,16 @@ let task = (await j("GET", "/actor-tasks?limit=100")).data.items.find((t) => t.n
 if (task) { await j("PUT", `/actor-tasks/${task.id}`, { input }); console.log(`updated task ${task.id}`); }
 else { task = (await j("POST", "/actor-tasks", { actId: actor, name: taskName, input })).data; console.log(`created task ${task.id}`); }
 
-const schedName = "salvor-every-6h";
-let sched = (await j("GET", "/schedules?limit=100")).data.items.find((s) => s.name === schedName);
-const body = { name: schedName, cronExpression: "0 */6 * * *", timezone: "UTC", isEnabled: true, isExclusive: true, actions: [{ type: "RUN_ACTOR_TASK", actorTaskId: task.id }] };
-sched = sched ? (await j("PUT", `/schedules/${sched.id}`, body)).data : (await j("POST", "/schedules", body)).data;
-console.log(`schedule ${sched.id}: every 6 hours UTC`);
+// Black Friday cadence (PROOF_PLAN amendment 3): every 4 hours Friday and Saturday, every 6 hours Sunday,
+// midnight and 06:00 UTC Monday, then nothing. Idempotent: schedules are found by name and updated.
+const PLAN = [["salvor-bf-4h-fri-sat", "0 0,4,8,12,16,20 * * 5,6"], ["salvor-6h-sun", "0 0,6,12,18 * * 0"], ["salvor-mon-morning", "0 0,6 * * 1"]];
+const existing = (await j("GET", "/schedules?limit=100")).data.items;
+for (const [name, cron] of PLAN) {
+  const body = { name, cronExpression: cron, timezone: "UTC", isEnabled: true, isExclusive: true, actions: [{ type: "RUN_ACTOR_TASK", actorTaskId: task.id }] };
+  const ex = existing.find((s) => s.name === name);
+  const r = ex ? (await j("PUT", `/schedules/${ex.id}`, body)).data : (await j("POST", "/schedules", body)).data;
+  console.log(`schedule ${name} (${cron}) ${r.id}`);
+}
 
 // Webhook payload carries just what slv-home needs. A duplicate delivery is harmless (idempotent by run id).
 if (!HOOK) { console.log("no SALVOR_URL yet: schedule created, webhook skipped (re-run once slv-home is live)"); console.log(`\nSALVOR_APIFY_TASK=${task.id}`); process.exit(0); }

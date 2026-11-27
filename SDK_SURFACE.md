@@ -14,7 +14,7 @@ Connection: `apify-eyes`
 
 | Method | Path | Where |
 |---|---|---|
-| POST | `/v2/acts/:x/run-sync-get-dataset-items?timeout=:x&clean=true` | `src/connectors/apify.ts:15` |
+| POST | `/v2/acts/:x/run-sync-get-dataset-items?timeout=:x&clean=true` | `src/connectors/apify.ts:16` |
 
 ## Pinecone
 

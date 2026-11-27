@@ -6,6 +6,7 @@ import type { Exclusion } from "../policy/clauses.ts";
 import type { TypedListing } from "../policy/engine.ts";
 
 const CONN = "apify-eyes";
+const HISTORY = "apify-history";   // custom connector: the dedicated one refuses task run lists
 
 export type RawItem = Record<string, any>;
 
@@ -123,6 +124,16 @@ export async function datasetItemsFor(datasetId: string, listingUrl: string): Pr
 
 // Newest successful run of the scheduled task. Used by the backup knock path.
 export async function lastRun(taskId: string): Promise<{ id: string; defaultDatasetId: string; finishedAt: string | null }> {
-  const j = await json<{ data: { id: string; defaultDatasetId: string; finishedAt?: string } }>(CONN, "GET", `/v2/actor-tasks/${encodeURIComponent(taskId)}/runs/last?status=SUCCEEDED`);
+  const j = await json<{ data: { id: string; defaultDatasetId: string; finishedAt?: string } }>(HISTORY, "GET", `/v2/actor-tasks/${encodeURIComponent(taskId)}/runs/last?status=SUCCEEDED`);
   return { id: j.data.id, defaultDatasetId: j.data.defaultDatasetId, finishedAt: j.data.finishedAt ?? null };
+}
+
+// Run history of the scheduled task, for the live watch summary (read from inside an eyes Sprite).
+export async function listRuns(taskId: string): Promise<{ id: string; status: string; startedAt: string; finishedAt: string | null; defaultDatasetId: string }[]> {
+  const j = await json<{ data: { items: any[] } }>(HISTORY, "GET", `/v2/actor-tasks/${encodeURIComponent(taskId)}/runs?limit=100&desc=0`);
+  return j.data.items;
+}
+export async function runOrigin(runId: string): Promise<{ origin: string; usd: number | null }> {
+  const j = await json<{ data: any }>(CONN, "GET", `/v2/actor-runs/${encodeURIComponent(runId)}`);
+  return { origin: j.data.meta?.origin ?? j.data.origin ?? "unknown", usd: j.data.usageTotalUsd ?? null };
 }

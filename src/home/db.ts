@@ -51,6 +51,9 @@ export function db(): DatabaseSync {
     try { handle.exec(`ALTER TABLE observations RENAME COLUMN ${a} TO ${b}`); } catch { /* new database, or already renamed */ }
   }
   try { handle.exec("ALTER TABLE observations ADD COLUMN m_model TEXT"); } catch { /* already there */ }
+  for (const c of ["ALTER TABLE wakes ADD COLUMN cpu_ms REAL", "ALTER TABLE wakes ADD COLUMN wall_ms REAL", "ALTER TABLE wakes ADD COLUMN rss_mb REAL", "ALTER TABLE costs ADD COLUMN source TEXT", "ALTER TABLE costs ADD COLUMN retired_at TEXT", "ALTER TABLE costs ADD COLUMN born_at TEXT", "ALTER TABLE costs ADD COLUMN wakes INTEGER"]) {
+    try { handle.exec(c); } catch { /* column already there */ }
+  }
   return handle;
 }
 

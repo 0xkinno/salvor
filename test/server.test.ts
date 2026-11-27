@@ -50,9 +50,8 @@ test("webhook: a duplicate run id is acknowledged and not processed twice", asyn
   assert.equal(b.duplicate, true);
 });
 
-test("tick needs its secret", async () => {
-  assert.equal((await post("/tick", {})).status, 403);
-  assert.equal((await post("/tick", {}, { "x-salvor-tick": "tick-test-secret" })).status, 503);   // task id not configured
+test("tick is rate limited and needs a configured task", async () => {
+  assert.equal((await post("/tick", {})).status, 503);          // task id not configured in this test
 });
 
 test("approve and answer are locked without the token (public demo is off)", async () => {

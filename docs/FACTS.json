@@ -2,114 +2,25 @@
   "empty": false,
   "p1": {
     "n_listed": 24,
-    "n_items": 0,
-    "share_cheaper": null,
+    "n_items": 24,
+    "share_cheaper": 0,
     "owed_total_cents": 0,
     "median_owed_cents": null,
-    "misses": [
-      {
-        "id": "W01",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W02",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W03",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W04",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W05",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W06",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W07",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W08",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W09",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W10",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W11",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W12",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W13",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W14",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W15",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W16",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W17",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W18",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W19",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W20",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W21",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W22",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W23",
-        "reason": "only one reading so far"
-      },
-      {
-        "id": "W24",
-        "reason": "only one reading so far"
-      }
-    ]
+    "misses": []
   },
   "p2": {
-    "runs_completed": 0,
+    "runs_completed": 3,
+    "runs_total": 4,
+    "items_watched": 24,
+    "items_changed": 0,
+    "items_cheaper_now": 0,
+    "owed_total_cents": 0,
+    "median_owed_cents": null,
+    "largest_drop": null,
     "drops_seen": 0,
-    "first_run_at": null,
-    "last_run_at": null
+    "first_run_at": "2026-11-26T15:55:40.206Z",
+    "last_run_at": "2026-11-27T06:02:05.202Z",
+    "hours_watched": 14
   },
   "p3": {
     "rank": {
@@ -226,16 +137,17 @@
   ],
   "hero": null,
   "sources": {
-    "p1.jsonl": "38715cf32ab74de922ec01d6c0d85fdc796b32d82bfefe0c1503af861ec9f6c3",
+    "p1.jsonl": "e3b791a3a8c91cdeb502c8f699dc188f03f951c08d4894f45c918d1f79e7386d",
+    "p2.jsonl": "b4a653fae03480f7594ba9ce263fd78716bd1335c5a29d5462f84dd4cc4b5de2",
     "p3.jsonl": "e8546638db520d5ae3f4b6433716cda41326ff695be3de6362a6a9454cf83ed3",
     "p3b.jsonl": "6e61d50ecc46c47905e7a6e685baa9a00f03733780a9932e1bd4fb3d5b83fa75",
     "p5.jsonl": "78a8384a247d181c664281eee94ebb3025c83587f4b1741bf0ea54f2790cd4fd",
-    "watch.jsonl": "417b40555196cc83fc85ef322f16b5f7421d8c9d3bca023bae13013786baa524"
+    "watch.jsonl": "2be76df65f132ee3e4f678c4eb9e239f0db8ebdf5cad156cc81dd7a06d8fc07d"
   },
-  "n_items": 0,
+  "n_items": 24,
   "owed_total_cents": 0,
-  "share_cheaper": null,
+  "share_cheaper": 0,
   "cost_per_receipt_usd": null,
   "wrong_claim_rate": 0,
-  "generated_at": "2026-11-26T17:21:06.812Z"
+  "generated_at": "2026-11-27T12:23:38.154Z"
 }

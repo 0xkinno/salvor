@@ -34,7 +34,9 @@ export function useGet<T>(path: string, every = 0): State<T> {
   return { data, error, loading, reload: () => setN((x) => x + 1) };
 }
 
+export type Life = { label: string; reason: string; cost_usd?: number | null; source?: string | null };
 export type Receipt = {
+  life: Life;
   id: string; line_id: string; retailer: "target" | "bestbuy"; title: string; raw_text: string; purchased_at: string; paid_cents: number; qty: number;
   status: string; sprite: string | null; window_ends_at: string; days_left: number; household: string; source: string; listing_url: string | null;
   last: { observed_at: string; price_cents: number | null; decision: string; owed_cents: number | null } | null;

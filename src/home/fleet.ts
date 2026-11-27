@@ -69,7 +69,7 @@ export async function wake(name: string, runId: string, datasetId: string, obser
     let report: Report;
     try { report = JSON.parse(r.stdout.trim().split("\n").pop() ?? ""); } catch { throw new Error(`worker printed no report (exit ${r.code}): ${(r.stderr || r.stdout).slice(0, 200)}`); }
     if ((report as any).error) throw new Error((report as any).error);
-    db().prepare("UPDATE wakes SET finished_at=?, ok=1, cold_ms=? WHERE run_id=? AND sprite=?").run(new Date().toISOString(), ms, runId, name);
+    db().prepare("UPDATE wakes SET finished_at=?, ok=1, cold_ms=?, cpu_ms=?, wall_ms=?, rss_mb=? WHERE run_id=? AND sprite=?").run(new Date().toISOString(), ms, report.usage?.cpu_ms ?? null, report.usage?.wall_ms ?? null, report.usage?.rss_mb ?? null, runId, name);
     const at = new Date().toISOString();
     for (const c of report.calls ?? []) db().prepare("INSERT INTO sponsor_calls VALUES (?,?,?,?,?,?)").run(c.provider, c.route, c.status, c.ms, name, at);
     return { sprite: name, ok: true, cold_ms: ms, report };
@@ -109,6 +109,7 @@ export async function wakeAll(runId: string, datasetId: string, observedAt: stri
 // Death: read the meter first, then delete. The usage API keeps usage for deleted Sprites, so the
 // cost of this receipt stays readable afterwards.
 export async function retire(name: string, createdAtIso: string) {
+  const retiredAt = new Date().toISOString();
   const days = Math.max(0.01, (Date.now() - new Date(createdAtIso).getTime()) / 86_400_000);
   let storageGb: number | null = null;
   try {
@@ -116,12 +117,40 @@ export async function retire(name: string, createdAtIso: string) {
     const used = Number(df.stdout.trim());
     if (Number.isFinite(used) && used > 0) storageGb = used / 1024 ** 3;
   } catch { /* storage stays unmeasured and is shown as such */ }
-  const u = await sprites.usage(name, createdAtIso);
-  const priced = bookCost(name, u, storageGb, days);
+  // Keep the evidence files before the computer goes: the claim page can still show them and a person can still
+  // check their hash against the claim, even though the Sprite's checkpoint copy is gone with it.
+  const kept: string[] = [];
+  for (const o of db().prepare("SELECT DISTINCT evidence_day d, evidence_sha256 h FROM observations o JOIN lines l ON l.id=o.line_id JOIN receipts r ON r.id=l.receipt_id WHERE r.sprite=? AND o.evidence_sha256 IS NOT NULL").all(name) as { d: string; h: string }[]) {
+    try { const b = await sprites.readFile(name, `/home/sprite/salvor/evidence/${o.d}.json`); db().prepare("INSERT OR REPLACE INTO kv (k,v) VALUES (?,?)").run(`evidence:${o.h}`, new TextDecoder().decode(b)); kept.push(o.h); } catch { /* not readable: the claim says so */ }
+  }
+  const u = await sprites.usage(name, createdAtIso);      // the meter is read BEFORE deleting: deleted Sprites return 404
+  const priced = bookCost(name, u, storageGb, days, { born_at: createdAtIso, retired_at: retiredAt });
   await sprites.remove(name);
   db().prepare("UPDATE receipts SET status='retired' WHERE sprite=?").run(name);
-  event("sprite_retired", { sprite: name, cpu_sec: u.cpu_time_sec, partial: u.partial, total_usd: priced.total_usd });
-  return { usage: u, priced, storageGb };
+  event("sprite_retired", { sprite: name, source: priced.source, total_usd: priced.total_usd, kept_evidence: kept.length });
+  return { usage: u, priced, storageGb, kept };
+}
+
+// The cap on Sprites without a card is 3 in total (FINDINGS Q8): home, the try-it pool and the receipts share it.
+export const SPRITE_CAP = Number(process.env.SALVOR_SPRITE_CAP ?? 3);
+
+// The lifecycle: a receipt whose claim is approved is settled, so its computer is retired (meter read, cost booked,
+// evidence kept, Sprite deleted). The freed slot goes to the next receipt waiting for a computer.
+export async function advanceLifecycle(taskId?: string) {
+  const out = { retired: [] as string[], born: [] as string[], waiting: 0, errors: [] as string[] };
+  const settled = db().prepare(`SELECT DISTINCT r.id, r.sprite, r.created_at FROM receipts r JOIN lines l ON l.receipt_id=r.id JOIN claims c ON c.line_id=l.id
+    WHERE r.sprite IS NOT NULL AND r.status!='retired' AND c.approved_at IS NOT NULL`).all() as { id: string; sprite: string; created_at: string }[];
+  for (const r of settled) { try { await retire(r.sprite, r.created_at); out.retired.push(r.sprite); } catch (e) { out.errors.push(`${r.sprite}: ${(e as Error).message.slice(0, 100)}`); } }
+  const live = (await sprites.list("slv-")).length;
+  let free = SPRITE_CAP - live;
+  const waiting = db().prepare(`SELECT r.id, l.id AS line_id FROM receipts r JOIN lines l ON l.receipt_id=r.id WHERE r.sprite IS NULL AND r.status IN ('new') AND l.listing_url IS NOT NULL AND l.listing_url != '' ORDER BY r.created_at`).all() as { id: string; line_id: string }[];
+  for (const w of waiting) {
+    if (free <= 0) { out.waiting++; continue; }
+    try { const b = await birth(w.id, w.line_id); out.born.push(b.name); free--; } catch (e) { out.errors.push(`${w.id}: ${(e as Error).message.slice(0, 100)}`); out.waiting++; }
+  }
+  if (out.born.length && taskId) { try { await wakeLatestAll(taskId); } catch (e) { out.errors.push(`first reading: ${(e as Error).message.slice(0, 100)}`); } }
+  event("lifecycle", out);
+  return out;
 }
 
 // Backup knock: each watching Sprite finds the newest successful scheduled run itself.
