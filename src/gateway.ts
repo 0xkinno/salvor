@@ -99,9 +99,22 @@ export async function call(conn: string, method: string, path: string, body?: un
   }
   let status = 0;
   try {
-    const r = await fetch(url, { ...init, signal: extra.signal ?? AbortSignal.timeout(60_000) });
-    status = r.status;
-    return r;
+    // The gateway closes idle connections, so a reused one can reset. A read is safe to repeat; a write is not.
+    for (let attempt = 0; ; attempt++) {
+      try {
+        const r = await fetch(url, { ...init, signal: extra.signal ?? AbortSignal.timeout(60_000) });
+        status = r.status;
+        return r;
+      } catch (e) {
+        const code = (e as any)?.cause?.code;
+        if (method !== "GET" || attempt >= 3 || !["ECONNRESET", "UND_ERR_SOCKET", "EPIPE"].includes(code)) throw e;
+        await new Promise((res) => setTimeout(res, 250 * (attempt + 1)));
+      }
+    }
+  } catch (e) {
+    const c = (e as any)?.cause;   // undici hides the reason behind "fetch failed"; keep it
+    if (c) throw new Error(`${conn} ${method} ${routeShape(path)}: ${(e as Error).message} (${c.code ?? c.message ?? c})`);
+    throw e;
   } finally {
     recorder(conn, `${method} ${routeShape(path)}`, status, Date.now() - t0);
   }

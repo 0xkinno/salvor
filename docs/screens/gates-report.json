@@ -1,14 +1,7 @@
 {
-  "at": "2026-11-26T16:11:25.413Z",
+  "at": "2026-11-27T15:25:47.627Z",
   "routes": [
-    "/",
-    "/app",
-    "/app/r/7Q2A",
-    "/try",
-    "/fleet",
-    "/proof",
-    "/how",
-    "/judge"
+    "/proof"
   ],
   "views": [
     "iphone",
@@ -18,5 +11,5 @@
     "desktop"
   ],
   "failures": [],
-  "runs": 80
+  "runs": 10
 }

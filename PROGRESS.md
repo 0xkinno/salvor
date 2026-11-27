@@ -37,10 +37,18 @@ Dated, honest log. Things that could not be done, and why, are written here with
 - Real results: a claim of $12.00 matched and computed with no model, a real email delivered, 9 of 9 break tests, P3 on 108 curated pairs, Pinecone ranks 24 of 24 lines first against 22 of 24 for word overlap.
 - The no-card Fly trial allows 3 Sprites, so the live system runs home, one receipt Sprite and one try-it Sprite.
 
+## 2026-11-27: upgrade pass
+
+- Black Friday watch summary on the landing page and `/api/stats`; the schedule is every 4 hours Friday and Saturday (PROOF_PLAN amendment 3); backup tick needs no secret and is rate limited.
+- Receipt lifecycle: a settled receipt's Sprite is retired (evidence kept, usage read first, bill recorded and labelled), the next receipt is born; `/fleet` lists retired Sprites and bills.
+- P5 a and b run live; hard ranking set frozen and hashed before it ran; household memory wired to confirmed answers; `/try` read live on the pooled Sprite end to end (45.9 s, checkpoint, evidence, restore).
+- Platform and partner findings added: Pinecone free rerank limit (500 a month), the gateway cutting one long request (so runs are started and polled), idle connection resets, Ollama measured on the home Sprite (not part of the product).
+- Jev removed from code and docs except one findings line.
+
 ## Open
 
 | Item | Needs |
 |---|---|
-| Ingest the first scheduled run | the 18:00 UTC Apify run, then `node scripts/ingest-watch.mjs` |
-| Rotate the stray Sprites tokens | deleting them on the Sprites account page; one is in use by `slv-home` |
+| Reply YES to the question email (ask a-0bbf5966) | the owner; it confirms the item, writes the memory vector, and lets the claim form |
+| Box login (optional) | the owner's own Box OAuth; no Box code is active without it |
 | Video, posts, submission form | the owner's approval |

@@ -22,11 +22,11 @@ Every receipt gets its own sleeping <a href="https://fly.io/sprites">Fly.io Spri
 
 ---
 
-## The idea in one minute
+## What happened this week
 
-Teresa is a night shift pharmacist. On November 9 she buys an air fryer at Target on her phone. On Black Friday it costs less, and Target's own **Holiday Price Match Guarantee** says the store owes her the difference. The store will not tell her. Re-checking every item she bought, every day, is the job nobody does.
+These lines are generated from `docs/FACTS.json`, which is generated from run files. A line appears only once it has a measured value.
 
-Salvor does it with one idea: **give every receipt its own computer, and let it sleep.** A Sprite costs nothing asleep, wakes on a knock, keeps its disk, can be checkpointed, and reaches the world only through a gateway whose policy it cannot change. That is the shape of this problem: many small, long waits, each needing a clean wall between it and the others.
+- **End to end, on the real platform:** an Apify schedule knocked the home Sprite, which woke a receipt Sprite; it read a live Target price, matched the listing with Pinecone, wrote a checkpointed evidence file, and AgentMail delivered the claim to the owner's inbox. A settled receipt's Sprite was then retired with its bill recorded, and the next receipt was born.
 
 <!-- FACTS:START -->
 - **Black Friday watch:** 4 runs over 20 hours across 24 items; 0 changed price so far (0 cheaper than at first sight). The schedule keeps running through Monday.
@@ -35,6 +35,15 @@ Salvor does it with one idea: **give every receipt its own computer, and let it 
 - **Hard ranking set:** 61 receipt lines, each against 137 real listings; Pinecone rerank first place 91.8% (top three 96.7%), word overlap 90.2% (96.7%). 39 more lines were not ranked because Pinecone's monthly free rerank limit ran out; they are listed by id on /proof.
 - **Break campaign:** 9 of 9 cases passed, including a poisoned page and a swapped listing; failures are listed on /proof.
 <!-- FACTS:END -->
+
+---
+
+## The idea in one minute
+
+Teresa is a night shift pharmacist. On November 9 she buys an air fryer at Target on her phone. On Black Friday it costs less, and Target's own **Holiday Price Match Guarantee** says the store owes her the difference. The store will not tell her. Re-checking every item she bought, every day, is the job nobody does.
+
+Salvor does it with one idea: **give every receipt its own computer, and let it sleep.** A Sprite costs nothing asleep, wakes on a knock, keeps its disk, can be checkpointed, and reaches the world only through a gateway whose policy it cannot change. That is the shape of this problem: many small, long waits, each needing a clean wall between it and the others.
+
 
 <p align="center">
 <img src="docs/screens/readme-household.png" width="49%" alt="The household: receipt cards, each with its own Sprite">
@@ -144,12 +153,12 @@ A Sprite has no clock and holds no keys of its own. It sleeps until something kn
 |---|---|
 | Real run, end to end | Apify webhook, wake, real Target price, evidence file, checkpoint, claim of $12.00, email delivered through AgentMail |
 | Tamper detection | Edited the live evidence file after its checkpoint. Verification still matched Fly's copy and flagged the live file |
-| Break tests (P5) | 9 of 9 pass: an eyes Sprite cannot reach the mail or Sprites API connections, cannot resolve `target.com` or `bestbuy.com`, cannot rewrite its own network policy; edited evidence is caught; text with a foreign amount is rejected |
+| Break tests (P5) | All pass, run on the live Sprite: a poisoned page text and a swapped 8 quart listing cannot produce a claim; an eyes Sprite cannot reach the mail or Sprites API connections, cannot resolve `target.com` or `bestbuy.com`, cannot rewrite its own network policy; edited evidence is caught; text with a foreign amount is rejected |
 | Match decision, curated pairs | 108 pairs built from real Target listings; threshold chosen on a tune split only; see the measured block above |
-| Pinecone's contribution | Ranks the right listing first for 24 of 24 cryptic lines among 24 real candidates, against 22 of 24 for plain word overlap |
-| Code | 80 tests; 17 end-to-end interface checks in Playwright; axe WCAG 2.2 AA at five viewports in normal and reduced motion |
+| Pinecone's contribution | Finds the right listing for a cryptic line: first place for 24 of 24 lines among 24 real candidates against 22 of 24 for word overlap, and on the 100 line hard set a small edge over word overlap (see the measured block above, with the lines it could not rank listed by id) |
+| Code | 81 tests; 17 end-to-end interface checks in Playwright; axe WCAG 2.2 AA at five viewports in normal and reduced motion |
 
-Limits, stated plainly: the curated set is easy, so rules alone match Pinecone there; the ranking study is where Pinecone shows its value. The study is "watched from Nov 26": early-November prices could not be read from archives. Best Buy's policy page could not be verified, so Best Buy items are held, never estimated.
+Limits, stated plainly: Pinecone's free plan allows 500 rerank requests a month, which ran out during the hard ranking run, so part of that set is unranked and the live match falls back to the typed rules (stricter, so more lines go to a person); the curated set is easy, so rules alone match Pinecone there; the ranking study is where Pinecone shows its value. The study is "watched from Nov 26": early-November prices could not be read from archives. Best Buy's policy page could not be verified, so Best Buy items are held, never estimated.
 
 ## Friction report
 
@@ -160,7 +169,10 @@ What the platform surprised us with (from `FINDINGS.md`):
 - The usage API returns 404 for a deleted Sprite, so Salvor reads the meter before deleting.
 - Connector path patterns are an exact path or a trailing `*` only.
 - Fly allows one dedicated connector per provider; eyes and hands each use a named custom connector for Pinecone.
-- The no-card trial allows 3 Sprites in total: home, one receipt and one try-it Sprite.
+- The no-card trial allows 3 Sprites in total: home, one receipt and one try-it Sprite. Settled receipts are retired to free a slot.
+- The dedicated Apify connector allows only run details and dataset reads, so starting a run uses a named custom connector pinned to one path.
+- A gateway request that waits about a minute is cut, and a page read takes 35 to 60 seconds, so Salvor starts the Apify run, polls it with short requests and then reads its dataset.
+- The gateway closes idle connections; a repeated read after a reset is safe, a repeated write is not, so only reads are retried.
 
 ## Recovery
 

@@ -37,7 +37,7 @@ README come from `docs/FACTS.json`.
 - [x] Apify task and 6-hour schedule over 24 frozen Target items; webhook to `slv-home`
 - [x] Webhook handler: secret, idempotent by run id, wakes receipt Sprites
 - [x] Backup tick workflow (needs the two repository secrets to run)
-- [ ] First scheduled (unattended) run ingested into `evidence/runs/watch.jsonl`: `node scripts/ingest-watch.mjs` after the 18:00 UTC run
+- [x] Unattended runs ingested into `evidence/runs/watch.jsonl` (`node scripts/ingest-watch.mjs`); the schedule runs every 4 hours Friday and Saturday, every 6 hours Sunday, then Monday
 
 ## Phase 6. Proof
 - [x] `PROOF_PLAN.md` committed before any result, with two dated amendments
@@ -45,8 +45,9 @@ README come from `docs/FACTS.json`.
 - [x] P3b: Pinecone against word overlap, 24 lines against 24 real candidates
 - [x] P5 break tests c, d, e, f on real Sprites (9 of 9)
 - [ ] P1 results: needs more scheduled readings after Nov 26
-- [ ] P4 cost per receipt: needs a retired receipt Sprite metered
-- [ ] P5 a and b (poisoned page and variant swap on the live service)
+- [x] P4 cost per receipt: a settled receipt Sprite was retired and its bill recorded (labelled when measured by the Sprite)
+- [x] P5 a and b (poisoned page text and variant swap) run live on the Sprite, 9 of 9 recorded
+- [x] P3c hard ranking set: 100 frozen lines against 137 real listings, 61 ranked before Pinecone's monthly rerank limit; the rest listed by id
 
 ## Phase 7. Interface
 - [x] Design system, fonts, mark, luxury redesign with SVG illustration

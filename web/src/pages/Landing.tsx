@@ -11,21 +11,19 @@ type Stats = { watch: null | { runs_total: number; runs_unattended: number; item
 function BlackFridayBand() {
   const { data, error } = useGet<Stats>("/api/stats", 60000);
   const w = data?.watch;
-  const cell = (k: string, v: string, hint?: string) => (<div key={k} className="rounded-2xl border border-hair bg-white/70 p-4"><dt className="eyebrow">{k}</dt><dd className="h-display num mt-2 text-[34px]">{v}</dd>{hint && <p className="mt-1 text-[12px] text-muted">{hint}</p>}</div>);
+  const cell = (k: string, v: string, hint?: string) => (<div key={k} className="rounded-2xl border border-hair bg-white/70 p-4"><dt className="eyebrow">{k}</dt><dd><span className="h-display num mt-2 block text-[34px]">{v}</span>{hint && <span className="mt-1 block text-[12px] text-muted">{hint}</span>}</dd></div>);
   return (
     <section aria-label="Black Friday, live" className="mx-auto max-w-[1180px] px-5 pt-14 sm:px-6">
       <div className="stage relative overflow-hidden rounded-[28px] p-6 text-paper sm:p-9">
         <div className="relative flex flex-wrap items-center justify-between gap-3"><div><p className="eyebrow !text-gold">Black Friday, live</p><h2 className="h-display mt-2 text-[clamp(26px,3.4vw,42px)]">24 real Target items, read every few hours.</h2></div>
           <span className="chip chip-gold">{w ? `last reading ${when(w.last_reading_at)}` : error ? "stats unavailable" : "collecting"}</span></div>
-        <dl className="relative mt-6 grid gap-3 text-ink sm:grid-cols-2 lg:grid-cols-5">
-          {w ? <>
-            {cell("Runs", `${w.runs_unattended}`, `started by the schedule, over ${w.hours_watched} hours`)}
+        {w ? <dl className="relative mt-6 grid gap-3 text-ink sm:grid-cols-2 lg:grid-cols-5">
+          {cell("Runs", `${w.runs_unattended}`, `started by the schedule, over ${w.hours_watched} hours`)}
             {cell("Items watched", `${w.items_watched}`, `${w.runs_total} readings each`)}
             {cell("Changed price", `${w.items_changed}`, "at least once since first sight")}
             {cell("Cheaper now", `${w.items_cheaper_now}`, w.items_cheaper_now ? `${money(w.owed_total_cents)} owed to a buyer from first sight` : "than at first sight")}
             {cell("Last wake", data?.last_wake_at ? when(data.last_wake_at) : "none yet", `${data?.webhook.received ?? 0} webhook knocks received`)}
-          </> : <div className="rounded-2xl border border-hair bg-white/70 p-4 text-muted sm:col-span-2 lg:col-span-5">Reading the watch from Fly and Apify now. The first numbers appear here the moment the Sprite returns them.</div>}
-        </dl>
+        </dl> : <div className="relative mt-6 rounded-2xl border border-hair bg-white/70 p-4 text-muted">Reading the watch from Fly and Apify now. The first numbers appear here the moment the Sprite returns them.</div>}
         {w && <p className="relative mt-4 text-[13px] text-lilac-100">Since {when(w.first_reading_at)}. {w.items_cheaper_now === 0 ? "No item has fallen below its first price yet. Salvor reports exactly that, and the band updates on every reading." : `Largest drop ${money(w.largest_drop?.drop_cents)} on item ${w.largest_drop?.id}.`}</p>}
       </div>
     </section>

@@ -16,7 +16,7 @@ const ctx = await b.newContext({ viewport: { width: 1600, height: 900 }, deviceS
 const p = await ctx.newPage();
 const shot = async (path, file, wait = 2600) => { await p.goto(base + path, { waitUntil: "networkidle" }); await p.waitForTimeout(wait); await p.screenshot({ path: file }); console.log("wrote", file); };
 await shot("/", "docs/hero.png", 3200);
-await shot(process.argv.some((a) => a.startsWith("--base=")) ? "/app/r/3B9F" : "/app/r/7Q2A", "docs/screens/readme-receipt.png");
+await shot(process.argv.some((a) => a.startsWith("--base=")) ? "/app/r/D1E1" : "/app/r/7Q2A", "docs/screens/readme-receipt.png");
 await shot("/app", "docs/screens/readme-household.png");
 await shot("/proof", "docs/screens/readme-proof.png");
 await shot("/fleet", "docs/screens/readme-fleet.png");

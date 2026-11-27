@@ -27,7 +27,8 @@ async function api(method: string, path: string, body?: unknown, extra: RequestI
     if (body instanceof Uint8Array || typeof body === "string") init.body = body as BodyInit;
     else { headers["content-type"] = "application/json"; init.body = JSON.stringify(body); }
   }
-  return fetch(DIRECT + path, { ...init, signal: extra.signal ?? AbortSignal.timeout(120_000) });
+  try { return await fetch(DIRECT + path, { ...init, signal: extra.signal ?? AbortSignal.timeout(120_000) }); }
+  catch (e) { const c = (e as any)?.cause; if (c) throw new Error(`sprites ${method} ${path.split("?")[0]}: ${(e as Error).message} (${c.code ?? c.message ?? c})`); throw e; }
 }
 
 async function ok(r: Response, what: string): Promise<Response> {

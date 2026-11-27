@@ -23,7 +23,7 @@ export default function Try() {
     <div className="mx-auto max-w-[920px] px-5 pb-10 pt-10 sm:px-6">
       <Banner motif="try"><Eyebrow n="01">Your own receipt</Eyebrow>
       <h1 className="h-display mt-3 text-[clamp(36px,5vw,64px)]">Try a receipt of yours.</h1>
-      <p className="mt-3 max-w-2xl text-muted">Paste a Target or Best Buy product link, what you paid and the date. A pooled Sprite wakes, reads the page through Apify, and Salvor decides. Nothing about you is kept: the Sprite is restored to a blank checkpoint afterwards.</p></Banner>
+      <p className="mt-3 max-w-2xl text-muted">Paste a Target or Best Buy product link, what you paid and the date. A pooled Sprite wakes, reads the page through Apify, and Salvor decides. The product on that page is treated as the item you bought. Nothing about you is kept: the Sprite is restored to a blank checkpoint afterwards.</p></Banner>
 
       <form onSubmit={go} className="mt-8 grid gap-4 rounded-2xl border border-hair bg-white/70 p-5 sm:p-6">
         <label className="block"><span className="text-[14px] font-medium">Product link</span>

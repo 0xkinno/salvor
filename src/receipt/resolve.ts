@@ -48,12 +48,15 @@ export async function resolve(): Promise<{ candidates: Candidate[]; remembered: 
 // same decision code, and returns typed fields. Nothing about the visitor is kept beyond the hour.
 export async function trynew(url: string, paid_cents: number, purchased_date: string, retailer: Job["retailer"]): Promise<Report> {
   const t0 = new Date().toISOString();
+  const { items, runId } = await runSync(ACTOR(), fill(INPUT_TEMPLATE(), url));
+  const finish = (r: any): Report => { const full = { job_id: "try", run_id: `try-${Date.now()}`, observed_at: t0, sabotage: "none", calls: [], ...r } as Report; writeReport(full); return full; };
+  if (!items.length) return finish({ decision: "stale", reason: "the page returned nothing readable" });
+  // The visitor pasted this product's own link, so the item they bought is the item on that page: the line is the page's
+  // own title. The match step still runs, and the typed rules and the store's clause still decide the money.
+  const title = String(items[0]?.name ?? items[0]?.title ?? "").trim() || "visitor receipt";
   const job: Job = {
     id: "try", sprite: process.env.SPRITE_NAME ?? "slv-try", listing_url: url, retailer,
-    line: { raw_text: "visitor receipt", paid_cents, qty: 1 }, clause: { id: "target-holiday-2026", text: "" },
+    line: { raw_text: title, paid_cents, qty: 1 }, clause: { id: "target-holiday-2026", text: "" },
   };
-  const finish = (r: any): Report => { const full = { job_id: "try", run_id: `try-${Date.now()}`, observed_at: t0, sabotage: "none", calls: [], ...r } as Report; writeReport(full); return full; };
-  const { items, runId } = await runSync(ACTOR(), fill(INPUT_TEMPLATE(), url));
-  if (!items.length) return finish({ decision: "stale", reason: "the page returned nothing readable" });
   return decideFromItems(job, items, runId ?? `try-${Date.now()}`, "direct", t0, finish);
 }
