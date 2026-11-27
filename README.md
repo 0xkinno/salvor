@@ -1,5 +1,3 @@
-<p align="center"><img src="docs/hero.png" alt="Salvor: a receipt held by its own sleeping computer, and the money owed" width="100%"></p>
-
 <h1 align="center">Salvor</h1>
 
 <p align="center"><b>The store owes you. Your receipt knows.</b><br>
@@ -10,6 +8,8 @@ Every receipt gets its own sleeping <a href="https://fly.io/sprites">Fly.io Spri
 <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-6A4BE0"></a>
 <img alt="Built for Fly.io Hacksgiving 2026" src="https://img.shields.io/badge/Hacksgiving-2026-C9A45C">
 </p>
+
+<p align="center"><img src="docs/hero.png" alt="Salvor: a receipt held by its own sleeping computer, and the money owed" width="100%"></p>
 
 | | |
 |---|---|
